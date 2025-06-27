@@ -1,5 +1,89 @@
 import Link from "next/link";
 
+// Tool data structure
+const tools = [
+  {
+    id: "fire-event-explorer",
+    name: "Fire Event Explorer",
+    organization: "Development Seed",
+    description: "Explore wildfire perimeters, track fire progression over time, and analyze burn severity. Perfect for emergency management and fire risk communication.",
+    url: "https://www.earthdata.nasa.gov/dashboard/tools/fire-event-explorer",
+    embedUrl: "https://fire-event-explorer.dev-seed.org/embed",
+    license: "MIT",
+    category: "Disasters",
+    features: ["Real-time fire tracking", "Burn severity analysis", "Interactive timelines"],
+    icon: "🔥",
+    status: "Production"
+  },
+  {
+    id: "nasa-worldview",
+    name: "NASA Worldview",
+    organization: "NASA GIBS",
+    description: "Browse 1,200+ global satellite imagery layers with near real-time data from NASA's Global Imagery Browse Services.",
+    url: "https://worldview.earthdata.nasa.gov/",
+    embedUrl: "https://worldview.earthdata.nasa.gov/?embed=true",
+    license: "Apache 2.0",
+    category: "Satellite Imagery",
+    features: ["1,200+ data layers", "Near real-time data", "Animation tools"],
+    icon: "🌍",
+    status: "Production"
+  },
+  {
+    id: "usgs-earthquakes",
+    name: "USGS Real-time Earthquakes",
+    organization: "U.S. Geological Survey",
+    description: "Global earthquake monitoring with magnitude and location data updated in real-time from seismic monitoring stations worldwide.",
+    url: "https://earthquake.usgs.gov/earthquakes/map/",
+    embedUrl: "https://earthquake.usgs.gov/earthquakes/map/?embed=true",
+    license: "Public Domain",
+    category: "Disasters",
+    features: ["Real-time updates", "Global coverage", "Magnitude filtering"],
+    icon: "🌍",
+    status: "Production"
+  },
+  {
+    id: "usgs-water-data",
+    name: "USGS Water Data Dashboard",
+    organization: "U.S. Geological Survey",
+    description: "Real-time water monitoring including stream flow and groundwater levels across the United States from USGS monitoring stations.",
+    url: "https://dashboard.waterdata.usgs.gov/",
+    embedUrl: "https://dashboard.waterdata.usgs.gov/embed",
+    license: "Public Domain",
+    category: "Water Resources",
+    features: ["Stream flow data", "Groundwater levels", "Station networks"],
+    icon: "🌊",
+    status: "Production"
+  },
+  {
+    id: "nasa-ocean-color",
+    name: "NASA Ocean Color Web",
+    organization: "NASA Ocean Biology",
+    description: "Marine ecosystem and climate indicators showing ocean color and temperature data from satellite observations.",
+    url: "https://oceancolor.gsfc.nasa.gov/",
+    embedUrl: "https://oceancolor.gsfc.nasa.gov/cgi/browse.pl?embed=1",
+    license: "Open Source",
+    category: "Ocean & Climate",
+    features: ["Ocean color data", "Temperature maps", "Climate indicators"],
+    icon: "🌊",
+    status: "Production"
+  },
+  {
+    id: "noaa-climate-explorer",
+    name: "NOAA Climate Explorer",
+    organization: "NOAA",
+    description: "Local climate projections and trend analysis showing historical trends and future projections for temperature and precipitation.",
+    url: "https://toolkit.climate.gov/climate-explorer2/",
+    embedUrl: "https://toolkit.climate.gov/climate-explorer2/?embed=true",
+    license: "Public Domain",
+    category: "Climate",
+    features: ["Climate projections", "Historical trends", "Local data"],
+    icon: "🌡️",
+    status: "Production"
+  }
+];
+
+const categories = ["All", "Disasters", "Climate", "Water Resources", "Ocean & Climate", "Satellite Imagery"];
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -109,103 +193,158 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Featured Tools Preview */}
-          <div className="py-16">
+          {/* Tools Directory Section */}
+          <div id="tools" className="py-16">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-light text-ds-dark-gray mb-4">Featured Tools</h2>
+              <h2 className="text-3xl font-light text-ds-dark-gray mb-4">Tools Directory</h2>
               <p className="text-lg text-ds-light-gray max-w-2xl mx-auto">
                 Explore our curated collection of open source Earth science visualization tools, 
                 all vetted for quality, security, and ease of integration.
               </p>
             </div>
+
+            {/* Category Filter */}
+            <div className="flex flex-wrap justify-center gap-2 mb-12">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    category === "All" 
+                      ? "bg-ds-orange text-white" 
+                      : "bg-gray-100 text-ds-gray hover:bg-orange-50 hover:text-ds-orange"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
             
+            {/* Tools Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Tool Card 1 */}
-              <div className="border border-gray-200 rounded-lg p-6 hover:border-ds-orange transition-colors">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-ds-orange rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-white font-semibold text-lg">🔥</span>
+              {tools.map((tool) => (
+                <div key={tool.id} className="border border-gray-200 rounded-lg p-6 hover:border-ds-orange transition-colors group">
+                  {/* Tool Header */}
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-ds-orange rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-semibold text-lg">{tool.icon}</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-ds-dark-gray group-hover:text-ds-orange transition-colors">
+                        {tool.name}
+                      </h3>
+                      <p className="text-sm text-ds-light-gray">{tool.organization}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-ds-dark-gray">Fire Event Explorer</h3>
-                    <p className="text-sm text-ds-light-gray">Development Seed</p>
-                  </div>
-                </div>
-                <p className="text-ds-light-gray text-sm mb-4">
-                  Explore wildfire perimeters, track fire progression over time, and analyze burn severity. 
-                  Perfect for emergency management and fire risk communication.
-                </p>
-                <div className="flex gap-2">
-                  <span className="text-xs px-3 py-1 bg-orange-50 text-orange-600 rounded-full">
-                    Embed Ready
-                  </span>
-                  <span className="text-xs px-3 py-1 bg-green-50 text-green-600 rounded-full">
-                    MIT License
-                  </span>
-                </div>
-              </div>
 
-              {/* Tool Card 2 */}
-              <div className="border border-gray-200 rounded-lg p-6 hover:border-ds-orange transition-colors">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-ds-orange rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-white font-semibold text-lg">🌍</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-ds-dark-gray">NASA Worldview</h3>
-                    <p className="text-sm text-ds-light-gray">NASA GIBS</p>
-                  </div>
-                </div>
-                <p className="text-ds-light-gray text-sm mb-4">
-                  Browse 1,200+ global satellite imagery layers with near real-time data from NASA's 
-                  Global Imagery Browse Services.
-                </p>
-                <div className="flex gap-2">
-                  <span className="text-xs px-3 py-1 bg-orange-50 text-orange-600 rounded-full">
-                    Embed Ready
-                  </span>
-                  <span className="text-xs px-3 py-1 bg-green-50 text-green-600 rounded-full">
-                    Open Source
-                  </span>
-                </div>
-              </div>
+                  {/* Description */}
+                  <p className="text-ds-light-gray text-sm mb-4 leading-relaxed">
+                    {tool.description}
+                  </p>
 
-              {/* Tool Card 3 */}
-              <div className="border border-gray-200 rounded-lg p-6 hover:border-ds-orange transition-colors">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-ds-orange rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-white font-semibold text-lg">🌊</span>
+                  {/* Features */}
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1">
+                      {tool.features.slice(0, 3).map((feature, index) => (
+                        <span 
+                          key={index}
+                          className="text-xs px-2 py-1 bg-gray-100 text-ds-gray rounded"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-ds-dark-gray">USGS Water Data</h3>
-                    <p className="text-sm text-ds-light-gray">U.S. Geological Survey</p>
+
+                  {/* Badges */}
+                  <div className="flex gap-2 mb-4">
+                    <span className="text-xs px-3 py-1 bg-orange-50 text-orange-600 rounded-full">
+                      Embed Ready
+                    </span>
+                    <span className="text-xs px-3 py-1 bg-green-50 text-green-600 rounded-full">
+                      {tool.license}
+                    </span>
+                    <span className="text-xs px-3 py-1 bg-blue-50 text-blue-600 rounded-full">
+                      {tool.category}
+                    </span>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
+                    <Link 
+                      href={tool.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 text-center px-3 py-2 border border-ds-orange text-ds-orange text-sm font-medium hover:bg-orange-50 transition-colors"
+                    >
+                      View Tool
+                    </Link>
+                    <button className="px-3 py-2 bg-ds-orange text-white text-sm font-medium hover:bg-ds-dark-orange transition-colors">
+                      Embed Code
+                    </button>
                   </div>
                 </div>
-                <p className="text-ds-light-gray text-sm mb-4">
-                  Real-time water monitoring including stream flow and groundwater levels across 
-                  the United States from USGS monitoring stations.
-                </p>
-                <div className="flex gap-2">
-                  <span className="text-xs px-3 py-1 bg-orange-50 text-orange-600 rounded-full">
-                    Embed Ready
-                  </span>
-                  <span className="text-xs px-3 py-1 bg-green-50 text-green-600 rounded-full">
-                    Public Domain
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
 
+            {/* Load More */}
             <div className="text-center mt-12">
-              <Link 
-                href="#tools" 
-                className="inline-flex items-center px-6 py-3 border border-ds-orange text-base font-medium text-ds-orange hover:bg-orange-50 transition-colors"
-              >
-                View All Tools
+              <button className="inline-flex items-center px-6 py-3 border border-ds-orange text-base font-medium text-ds-orange hover:bg-orange-50 transition-colors">
+                Load More Tools
                 <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </Link>
+              </button>
+            </div>
+          </div>
+
+          {/* Implementation Guides Section */}
+          <div id="guides" className="py-16 border-t section-divider">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-light text-ds-dark-gray mb-4">Implementation Guides</h2>
+              <p className="text-lg text-ds-light-gray max-w-2xl mx-auto">
+                Everything you need to safely embed and integrate these tools into your projects.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-ds-orange rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">🔒</span>
+                </div>
+                <h3 className="text-lg font-semibold text-ds-dark-gray mb-3">Security Best Practices</h3>
+                <p className="text-ds-light-gray mb-4">
+                  Complete guide to safe iframe embedding with CSP headers, sandbox attributes, and HTTPS requirements.
+                </p>
+                <Link href="#security" className="text-ds-orange hover:text-ds-dark-orange font-medium">
+                  Read Security Guide →
+                </Link>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-ds-orange rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">⚡</span>
+                </div>
+                <h3 className="text-lg font-semibold text-ds-dark-gray mb-3">Quick Start Templates</h3>
+                <p className="text-ds-light-gray mb-4">
+                  Copy-paste ready code examples for popular platforms like WordPress, Drupal, and static sites.
+                </p>
+                <Link href="#templates" className="text-ds-orange hover:text-ds-dark-orange font-medium">
+                  Get Templates →
+                </Link>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-ds-orange rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">📋</span>
+                </div>
+                <h3 className="text-lg font-semibold text-ds-dark-gray mb-3">Quality Standards</h3>
+                <p className="text-ds-light-gray mb-4">
+                  Learn what makes a tool "directory-worthy" and how to submit your own tools for inclusion.
+                </p>
+                <Link href="#standards" className="text-ds-orange hover:text-ds-dark-orange font-medium">
+                  View Standards →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
