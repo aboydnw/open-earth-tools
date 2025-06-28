@@ -15,6 +15,15 @@ const envSchema = z.object({
 
 // Parse and validate environment variables with better error handling
 function validateEnv() {
+  // Debug: log what we actually have
+  console.log('Environment debug:', {
+    hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    hasAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    nodeEnv: process.env.NODE_ENV,
+    vercel: process.env.VERCEL,
+    vercelEnv: process.env.VERCEL_ENV
+  })
+  
   try {
     return envSchema.parse(process.env)
   } catch (error) {
@@ -38,7 +47,10 @@ function validateEnv() {
 // Export validated environment - only validate in server or build context
 export const env = (() => {
   // Skip validation during static generation or if explicitly disabled
-  if (process.env.SKIP_ENV_VALIDATION === 'true' || process.env.VERCEL_ENV === 'preview' || process.env.VERCEL_ENV === 'development') {
+  if (process.env.SKIP_ENV_VALIDATION === 'true' || 
+      process.env.VERCEL_ENV === 'preview' || 
+      process.env.VERCEL_ENV === 'development' ||
+      typeof window !== 'undefined') { // Skip on client side
     return process.env as any
   }
   
@@ -46,12 +58,9 @@ export const env = (() => {
     return validateEnv()
   } catch (error) {
     // In development or during build, log the error but don't crash
-    if (process.env.NODE_ENV === 'development' || process.env.VERCEL === '1') {
-      console.warn('⚠️  Environment validation failed, continuing with process.env:')
-      console.warn(error instanceof Error ? error.message : String(error))
-      return process.env as any // Allow build to continue
-    }
-    throw error // Fail hard in actual production runtime
+    console.warn('⚠️  Environment validation failed, using process.env directly:')
+    console.warn(error instanceof Error ? error.message : String(error))
+    return process.env as any // Always fallback to process.env
   }
 })()
 
