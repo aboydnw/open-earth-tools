@@ -278,13 +278,13 @@ export class ToolsDatabase {
     const latestAssessment = dbTool.openness_assessments?.[0]
     
     // Transform assessment dimensions to our format
-    const defaultDimensions = {
-      "Software Licensing": { score: "red" as const, note: "No assessment available" },
-      "Data Licensing": { score: "red" as const, note: "No assessment available" },
-      "Technical Accessibility": { score: "red" as const, note: "No assessment available" },
-      "Data Standards": { score: "red" as const, note: "No assessment available" },
-      "Infrastructure": { score: "red" as const, note: "No assessment available" },
-      "Community Governance": { score: "red" as const, note: "No assessment available" }
+    const defaultDimensions: Record<string, { score: "green" | "yellow" | "red"; note: string }> = {
+      "Software Licensing": { score: "red", note: "No assessment available" },
+      "Data Licensing": { score: "red", note: "No assessment available" },
+      "Technical Accessibility": { score: "red", note: "No assessment available" },
+      "Data Standards": { score: "red", note: "No assessment available" },
+      "Infrastructure": { score: "red", note: "No assessment available" },
+      "Community Governance": { score: "red", note: "No assessment available" }
     }
     
     const dimensions = { ...defaultDimensions }
