@@ -66,7 +66,9 @@ export class ToolsDatabase {
   
   // Get all tools with their attributes and assessments
   async getTools(): Promise<Tool[]> {
-    console.log('🔍 Fetching tools from database...');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔍 Fetching tools from database...');
+    }
     
     const { data, error } = await supabase
       .from('tools')
@@ -98,23 +100,27 @@ export class ToolsDatabase {
       throw new Error(`Failed to fetch tools: ${error.message}`)
     }
 
-    console.log('📊 Raw database data:', {
-      toolsCount: data?.length || 0,
-      sampleTool: data?.[0] ? {
-        name: data[0].name,
-        hasAssessments: !!data[0].openness_assessments?.length,
-        assessmentCount: data[0].openness_assessments?.length || 0,
-        sampleAssessment: data[0].openness_assessments?.[0],
-        dimensionCount: data[0].openness_assessments?.[0]?.assessment_dimensions?.length || 0
-      } : null
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📊 Raw database data:', {
+        toolsCount: data?.length || 0,
+        sampleTool: data?.[0] ? {
+          name: data[0].name,
+          hasAssessments: !!data[0].openness_assessments?.length,
+          assessmentCount: data[0].openness_assessments?.length || 0,
+          sampleAssessment: data[0].openness_assessments?.[0],
+          dimensionCount: data[0].openness_assessments?.[0]?.assessment_dimensions?.length || 0
+        } : null
+      });
+    }
 
     const transformedTools = data?.map((dbTool) => this.transformDbToolToTool(dbTool)) || [];
     
-    console.log('✅ Transformed tools:', {
-      count: transformedTools.length,
-      sampleOpenness: transformedTools[0]?.openness
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Transformed tools:', {
+        count: transformedTools.length,
+        sampleOpenness: transformedTools[0]?.openness
+      });
+    }
     
     return transformedTools;
   }
@@ -234,11 +240,13 @@ export class ToolsDatabase {
 
   // Transform database tool to our Tool interface
   private transformDbToolToTool(dbTool: any): Tool {
-    console.log('🔄 Transforming tool:', {
-      name: dbTool.name,
-      hasAssessments: !!dbTool.openness_assessments?.length,
-      assessments: dbTool.openness_assessments
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔄 Transforming tool:', {
+        name: dbTool.name,
+        hasAssessments: !!dbTool.openness_assessments?.length,
+        assessments: dbTool.openness_assessments
+      });
+    }
     
     // Group attributes by type
     const attributes = new Map<string, string[]>()
@@ -257,7 +265,9 @@ export class ToolsDatabase {
 
     // Get the latest openness assessment
     const latestAssessment = dbTool.openness_assessments?.[0]
-    console.log('📊 Latest assessment for', dbTool.name, ':', latestAssessment);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📊 Latest assessment for', dbTool.name, ':', latestAssessment);
+    }
     
     // Transform assessment dimensions to our format
     const dimensions: any = {}
@@ -268,7 +278,9 @@ export class ToolsDatabase {
           note: dim.note
         }
       });
-      console.log('📋 Dimensions for', dbTool.name, ':', dimensions);
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📋 Dimensions for', dbTool.name, ':', dimensions);
+      }
     }
 
     // Generate ID from name if needed (for compatibility)
@@ -295,7 +307,9 @@ export class ToolsDatabase {
       }
     }
     
-    console.log('✅ Final tool openness for', dbTool.name, ':', tool.openness);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Final tool openness for', dbTool.name, ':', tool.openness);
+    }
     return tool;
   }
 

@@ -51,12 +51,6 @@ export default function Home() {
         console.error('❌ Failed to load data:', err);
         const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
         setError(errorMessage);
-        
-        // Log environment status for debugging
-        console.log('Environment status:', {
-          hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-          hasAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-        });
       } finally {
         setLoading(false);
       }
@@ -134,18 +128,20 @@ export default function Home() {
         
         <AboutSection />
         
-        {/* Success banner */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-          <div className="flex items-center">
-            <div className="text-green-400 text-xl mr-3">✅</div>
-            <div>
-              <h3 className="text-green-800 font-medium">Connected to Database</h3>
-              <p className="text-green-700 text-sm mt-1">
-                Successfully loaded {tools.length} tools from Supabase with full openness assessments.
-              </p>
+        {/* Conditional success banner - only show when data loaded successfully */}
+        {tools.length > 0 && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center">
+              <div className="text-green-400 text-xl mr-3">✅</div>
+              <div>
+                <h3 className="text-green-800 font-medium">Connected to Database</h3>
+                <p className="text-green-700 text-sm mt-1">
+                  Successfully loaded {tools.length} tools from Supabase with full openness assessments.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         
         <StatsSection tools={tools} />
 

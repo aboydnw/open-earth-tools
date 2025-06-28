@@ -1,19 +1,7 @@
 import { Tool } from './types';
 
-export function filterToolsByCategory(tools: Tool[], category: string): Tool[] {
-  if (category === "All") return tools;
-  return tools.filter(tool => tool.category === category);
-}
-
-export function filterToolsByOpenness(tools: Tool[], opennessLevel: string): Tool[] {
-  if (opennessLevel === "All") return tools;
-  return tools.filter(tool => tool.openness.level === opennessLevel);
-}
-
-export function getUniqueCategories(tools: Tool[]): string[] {
-  const categories = new Set(tools.map(tool => tool.category));
-  return ["All", ...Array.from(categories).sort()];
-}
+// Note: Most filtering functions moved to client-side components
+// Keeping this file minimal with only actively used utilities
 
 export function getToolsByOpennessLevel(tools: Tool[]): Record<string, Tool[]> {
   const grouped: Record<string, Tool[]> = {};
@@ -27,4 +15,14 @@ export function getToolsByOpennessLevel(tools: Tool[]): Record<string, Tool[]> {
   });
   
   return grouped;
+}
+
+// Helper function for formatting tool IDs
+export function generateIdFromName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
 }

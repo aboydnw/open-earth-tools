@@ -51,3 +51,8 @@ yarn-error.log*
 
 # Turbo
 .turbo
+
+# Backup files from cleanup
+*.backup
+scripts_removed/
+examples/

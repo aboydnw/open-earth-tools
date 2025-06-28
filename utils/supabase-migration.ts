@@ -1,8 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
-import { tools } from '../data/tools'
+// import { tools } from '../data/tools' // Static data moved to backup
+// For migration, use the backup file or database export
 import type { Tool } from '../lib/types'
 import { config } from 'dotenv'
 import { join } from 'path'
+
+// Note: If you need to re-run migration, restore tools.ts.backup temporarily
+// or export data from existing database
+const tools: Tool[] = []; // Empty for now - use database export if needed
 
 // Load environment variables from .env.local
 config({ path: join(process.cwd(), '.env.local') })

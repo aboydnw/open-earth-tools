@@ -1,17 +1,9 @@
 import { OpennessLevelConfig } from './types';
 
-export const categories = [
-  "All", 
-  "Disasters", 
-  "Climate", 
-  "Water Resources", 
-  "Ocean & Climate", 
-  "Satellite Imagery", 
-  "Data Visualization", 
-  "Weather",
-  "Food Systems"
-];
+// Note: Categories are now retrieved dynamically from database
+// via toolsDb.getCategories() - no hardcoded list needed
 
+// Openness level configurations for UI styling
 export const opennessLevels: Record<string, OpennessLevelConfig> = {
   "Fully Open": { 
     color: "emerald", 
