@@ -73,7 +73,10 @@ export function ToolModal({ tool, isOpen, onClose }: ToolModalProps) {
                         src={tool.embedUrl}
                         className="w-full h-full rounded"
                         title={`${tool.name} - ${tool.organization}`}
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                        sandbox="allow-scripts allow-forms"
+                        allow="camera 'none'; microphone 'none'; geolocation 'none'; payment 'none'"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        loading="lazy"
                       />
                     ) : (
                       <div className="text-center">
