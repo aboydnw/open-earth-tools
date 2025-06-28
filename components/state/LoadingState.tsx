@@ -1,6 +1,6 @@
 import { PageHeader } from '@/components/layout/PageHeader';
 import { AboutSection } from '@/components/layout/AboutSection';
-import { ToolGridSkeleton } from '@/components/features/tools/ToolGridSkeleton';
+import ToolGridSkeleton from '@/components/features/tools/ToolGridSkeleton';
 
 export function LoadingState() {
   return (
