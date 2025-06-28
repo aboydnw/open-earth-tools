@@ -3,19 +3,16 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { toolRepository } from '../lib/repository';
 import { Tool } from '../lib/types';
-import { 
-  PageHeader, 
-  ToolCard, 
-  ToolModal,
-  AboutSection,
-  StatsSection,
-  Footer,
-  ErrorBoundary,
-  ToolGridSkeleton,
-  // Phase 3 Advanced Components
-  SearchBar,
-  EmbedCodeGenerator
-} from '../components';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { AboutSection } from '@/components/layout/AboutSection';
+import { StatsSection } from '@/components/layout/StatsSection';
+import { Footer } from '@/components/layout/Footer';
+import { ToolCard } from '@/components/features/tools/ToolCard';
+import ToolGridSkeleton from '@/components/features/tools/ToolGridSkeleton';
+import { ToolModal } from '@/components/ui/modals/ToolModal';
+import { ErrorBoundary } from '@/components/state/ErrorBoundary';
+import { SearchBar } from '@/components/ui/forms/SearchBar';
+import { EmbedCodeGenerator } from '@/components/ui/modals/EmbedCodeGenerator';
 
 // Simple filters interface
 interface SimpleFilters {
