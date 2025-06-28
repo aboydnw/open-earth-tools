@@ -5,9 +5,10 @@ import { OpennessScore } from './OpennessScore';
 interface ToolCardProps {
   tool: Tool;
   onOpenModal: (tool: Tool) => void;
+  onGenerateEmbed?: (tool: Tool) => void;
 }
 
-export function ToolCard({ tool, onOpenModal }: ToolCardProps) {
+export function ToolCard({ tool, onOpenModal, onGenerateEmbed }: ToolCardProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 hover:shadow-lg">
       <div className="p-6">
@@ -69,6 +70,17 @@ export function ToolCard({ tool, onOpenModal }: ToolCardProps) {
           >
             Open Direct
           </Link>
+          {onGenerateEmbed && (
+            <button
+              onClick={() => onGenerateEmbed(tool)}
+              className="px-3 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 transition-colors"
+              title="Generate Embed Code"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </div>

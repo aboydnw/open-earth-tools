@@ -1,11 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Tool } from './types'
-import { getValidatedEnv, devLog } from './env-utils'
 
-// Get validated database environment variables
-const { url, key } = getValidatedEnv()
+// Get database environment variables
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-export const supabase = createClient(url, key)
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing Supabase environment variables')
+}
+
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Database types matching your improved Supabase schema
 export interface DbTool {
@@ -87,8 +91,6 @@ export class ToolsDatabase {
   
   // Get all tools with their attributes and assessments
   async getTools(filters?: { category?: string }): Promise<Tool[]> {
-    devLog('🔍 Fetching tools from database...', filters)
-    
     const { data, error } = await supabase
       .from('tools')
       .select(`
@@ -119,23 +121,7 @@ export class ToolsDatabase {
       throw new Error(`Failed to fetch tools: ${error.message}`)
     }
 
-    devLog('📊 Raw database data:', {
-      toolsCount: data?.length || 0,
-      sampleTool: data?.[0] ? {
-        name: data[0].name,
-        hasAssessments: !!data[0].openness_assessments?.length,
-        assessmentCount: data[0].openness_assessments?.length || 0,
-        sampleAssessment: data[0].openness_assessments?.[0],
-        dimensionCount: data[0].openness_assessments?.[0]?.assessment_dimensions?.length || 0
-      } : null
-    })
-
     const transformedTools = data?.map((dbTool) => this.transformDbToolToTool(dbTool)) || [];
-    
-    devLog('✅ Transformed tools:', {
-      count: transformedTools.length,
-      sampleOpenness: transformedTools[0]?.openness
-    })
     
     return transformedTools;
   }
@@ -255,12 +241,6 @@ export class ToolsDatabase {
 
   // Transform database tool to our Tool interface
   private transformDbToolToTool(dbTool: DbToolWithRelations): Tool {
-    devLog('🔄 Transforming tool:', {
-      name: dbTool.name,
-      hasAssessments: !!dbTool.openness_assessments?.length,
-      assessments: dbTool.openness_assessments
-    })
-    
     // Group attributes by type
     const attributes = new Map<string, string[]>()
     
@@ -278,7 +258,6 @@ export class ToolsDatabase {
 
     // Get the latest openness assessment
     const latestAssessment = dbTool.openness_assessments?.[0]
-    devLog('📊 Latest assessment for', dbTool.name, ':', latestAssessment)
     
     // Transform assessment dimensions to our format
     const dimensions: Record<string, { score: string; note: string }> = {}
@@ -288,8 +267,7 @@ export class ToolsDatabase {
           score: dim.score,
           note: dim.note
         }
-      });
-      devLog('📋 Dimensions for', dbTool.name, ':', dimensions)
+      })
     }
 
     // Generate ID from name if needed (for compatibility)
@@ -316,7 +294,6 @@ export class ToolsDatabase {
       }
     }
     
-    devLog('✅ Final tool openness for', dbTool.name, ':', tool.openness)
     return tool;
   }
 

@@ -1,29 +1,48 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { toolRepository } from '../lib/repository';
 import { Tool } from '../lib/types';
-import { devLog } from '../lib/env-utils';
 import { 
   PageHeader, 
-  ToolFilters, 
   ToolCard, 
   ToolModal,
   AboutSection,
   StatsSection,
   Footer,
-  EnvDebugInfo,
   ErrorBoundary,
-  ToolGridSkeleton
+  ToolGridSkeleton,
+  // Phase 3 Advanced Components
+  SearchBar,
+  EmbedCodeGenerator
 } from '../components';
 
+// Simple filters interface
+interface SimpleFilters {
+  category: string;
+  opennessLevel: string;
+  embedSupported: string;
+}
+
 export default function Home() {
+  // Basic data state
   const [tools, setTools] = useState<Tool[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedOpenness, setSelectedOpenness] = useState("All");
+
+  // Simple filtering state
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState<SimpleFilters>({
+    category: 'All',
+    opennessLevel: 'All',
+    embedSupported: 'All'
+  });
+  const [sortOption, setSortOption] = useState('name-asc');
+  
+  // UI state
+  const [showEmbedGenerator, setShowEmbedGenerator] = useState(false);
+  const [selectedToolForEmbed, setSelectedToolForEmbed] = useState<Tool | null>(null);
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
 
   // Load data on component mount
@@ -33,19 +52,11 @@ export default function Home() {
         setLoading(true);
         setError(null);
         
-        devLog('🚀 Loading tools from database...');
-        
-        // Load tools and categories in parallel using the repository
+        // Load tools and categories in parallel
         const [toolsData, categoriesData] = await Promise.all([
           toolRepository.getTools(),
           toolRepository.getCategories()
         ]);
-        
-        devLog('✅ Successfully loaded:', {
-          tools: toolsData.length,
-          categories: categoriesData.length,
-          sampleTool: toolsData[0]
-        });
         
         setTools(toolsData);
         setCategories(['All', ...categoriesData]);
@@ -62,21 +73,103 @@ export default function Home() {
     loadData();
   }, []);
 
-  const filteredTools = useMemo(() => {
-    return tools.filter(tool => {
-      const categoryMatch = selectedCategory === "All" || tool.category === selectedCategory;
-      const opennessMatch = selectedOpenness === "All" || tool.openness.level === selectedOpenness;
-      return categoryMatch && opennessMatch;
+  // Simple filtering and sorting logic
+  const filteredAndSortedTools = useMemo(() => {
+    let filtered = tools.filter(tool => {
+      // Search term filter
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = 
+          tool.name.toLowerCase().includes(searchLower) ||
+          tool.description.toLowerCase().includes(searchLower) ||
+          tool.organization.toLowerCase().includes(searchLower) ||
+          tool.features.some(feature => feature.toLowerCase().includes(searchLower));
+        
+        if (!matchesSearch) return false;
+      }
+
+      // Category filter
+      if (filters.category !== 'All' && tool.category !== filters.category) {
+        return false;
+      }
+
+      // Openness level filter
+      if (filters.opennessLevel !== 'All' && tool.openness.level !== filters.opennessLevel) {
+        return false;
+      }
+
+      // Embed support filter
+      if (filters.embedSupported !== 'All') {
+        const isEmbeddable = filters.embedSupported === 'Embeddable';
+        if (tool.embedSupported !== isEmbeddable) {
+          return false;
+        }
+      }
+
+      return true;
     });
-  }, [tools, selectedCategory, selectedOpenness]);
 
-  const handleOpenModal = (tool: Tool) => {
+    // Apply sorting
+    filtered.sort((a, b) => {
+      switch (sortOption) {
+        case 'name-asc':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        case 'openness-desc':
+          return b.openness.score - a.openness.score;
+        case 'openness-asc':
+          return a.openness.score - b.openness.score;
+        case 'recent':
+          // For now, sort by name as we don't have creation dates
+          return a.name.localeCompare(b.name);
+        default:
+          return a.name.localeCompare(b.name);
+      }
+    });
+
+    return filtered;
+  }, [tools, searchTerm, filters, sortOption]);
+
+  // Handlers
+  const handleSearch = useCallback((term: string) => {
+    setSearchTerm(term);
+  }, []);
+
+  const handleFilterChange = useCallback((filterType: keyof SimpleFilters, value: string) => {
+    setFilters(prev => ({ ...prev, [filterType]: value }));
+  }, []);
+
+  const handleSortChange = useCallback((sort: string) => {
+    setSortOption(sort);
+  }, []);
+
+  const handleOpenModal = useCallback((tool: Tool) => {
     setSelectedTool(tool);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedTool(null);
-  };
+  }, []);
+
+  const handleGenerateEmbed = useCallback((tool: Tool) => {
+    setSelectedToolForEmbed(tool);
+    setShowEmbedGenerator(true);
+  }, []);
+
+  const handleCloseEmbedGenerator = useCallback(() => {
+    setShowEmbedGenerator(false);
+    setSelectedToolForEmbed(null);
+  }, []);
+
+  const clearAllFilters = useCallback(() => {
+    setSearchTerm('');
+    setFilters({
+      category: 'All',
+      opennessLevel: 'All',
+      embedSupported: 'All'
+    });
+  }, []);
 
   // Loading state
   if (loading) {
@@ -84,7 +177,6 @@ export default function Home() {
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <PageHeader />
-          <EnvDebugInfo />
           <AboutSection />
           
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
@@ -138,36 +230,99 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <PageHeader />
           
-          <EnvDebugInfo />
-          
           <AboutSection />
-          
-          {/* Conditional success banner - only show when data loaded successfully */}
-          {tools.length > 0 && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-              <div className="flex items-center">
-                <div className="text-green-400 text-xl mr-3">✅</div>
-                <div>
-                  <h3 className="text-green-800 font-medium">Connected to Database</h3>
-                  <p className="text-green-700 text-sm mt-1">
-                    Successfully loaded {tools.length} tools from Supabase with full openness assessments.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
           
           <StatsSection tools={tools} />
 
-          <ToolFilters
-            categories={categories}
-            selectedCategory={selectedCategory}
-            selectedOpenness={selectedOpenness}
-            onCategoryChange={setSelectedCategory}
-            onOpennessChange={setSelectedOpenness}
-            toolCount={filteredTools.length}
-          />
+          {/* Search and Filter Interface */}
+          <div className="space-y-6 mb-8">
+            {/* Search Bar */}
+            <SearchBar 
+              onSearch={handleSearch}
+              placeholder="Search tools by name, description, organization, or features..."
+              className="w-full"
+            />
 
+            {/* Simple Filter Dropdowns */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Category Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select
+                  value={filters.category}
+                  onChange={(e) => handleFilterChange('category', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                >
+                  {categories.map(category => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Openness Level Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Openness Level</label>
+                <select
+                  value={filters.opennessLevel}
+                  onChange={(e) => handleFilterChange('opennessLevel', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                >
+                  <option value="All">All Levels</option>
+                  <option value="Fully Open">Fully Open</option>
+                  <option value="Mostly Open">Mostly Open</option>
+                  <option value="Partially Open">Partially Open</option>
+                  <option value="Minimally Open">Minimally Open</option>
+                </select>
+              </div>
+
+              {/* Embed Support Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Embed Support</label>
+                <select
+                  value={filters.embedSupported}
+                  onChange={(e) => handleFilterChange('embedSupported', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                >
+                  <option value="All">All Tools</option>
+                  <option value="Embeddable">Embeddable Only</option>
+                  <option value="Non-Embeddable">Non-Embeddable Only</option>
+                </select>
+              </div>
+
+              {/* Sort Control */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                <select
+                  value={sortOption}
+                  onChange={(e) => handleSortChange(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                >
+                  <option value="name-asc">Name (A-Z)</option>
+                  <option value="name-desc">Name (Z-A)</option>
+                  <option value="openness-desc">Openness Score (High to Low)</option>
+                  <option value="openness-asc">Openness Score (Low to High)</option>
+                  <option value="recent">Recently Added</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Results Count */}
+            <div className="flex items-center justify-between text-sm text-gray-600">
+              <span>
+                Showing {filteredAndSortedTools.length} of {tools.length} tools
+              </span>
+              {(searchTerm || Object.values(filters).some(value => value !== 'All')) && (
+                <button
+                  onClick={clearAllFilters}
+                  className="text-ds-orange-600 hover:text-ds-orange-700"
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Tools Grid */}
           <ErrorBoundary fallback={
             <div className="text-center py-12">
               <div className="text-red-400 text-6xl mb-4">⚠️</div>
@@ -184,7 +339,7 @@ export default function Home() {
             </div>
           }>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {filteredTools.map((tool) => (
+              {filteredAndSortedTools.map((tool) => (
                 <ErrorBoundary
                   key={tool.id}
                   fallback={
@@ -198,22 +353,31 @@ export default function Home() {
                   <ToolCard
                     tool={tool}
                     onOpenModal={handleOpenModal}
+                    onGenerateEmbed={handleGenerateEmbed}
                   />
                 </ErrorBoundary>
               ))}
             </div>
           </ErrorBoundary>
 
-          {filteredTools.length === 0 && tools.length > 0 && (
+          {/* No results state */}
+          {filteredAndSortedTools.length === 0 && tools.length > 0 && (
             <div className="text-center py-12">
               <div className="text-gray-400 text-6xl mb-4">🔍</div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">No tools found</h3>
-              <p className="text-gray-600">
-                Try adjusting your filters to see more tools.
+              <p className="text-gray-600 mb-4">
+                Try adjusting your search terms or filters to see more tools.
               </p>
+              <button
+                onClick={clearAllFilters}
+                className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
+              >
+                Clear All Filters
+              </button>
             </div>
           )}
 
+          {/* Tool Modal */}
           {selectedTool && (
             <ErrorBoundary
               fallback={
@@ -237,6 +401,15 @@ export default function Home() {
                 onClose={handleCloseModal}
               />
             </ErrorBoundary>
+          )}
+
+          {/* Embed Code Generator Modal */}
+          {selectedToolForEmbed && (
+            <EmbedCodeGenerator
+              tool={selectedToolForEmbed}
+              isOpen={showEmbedGenerator}
+              onClose={handleCloseEmbedGenerator}
+            />
           )}
         </div>
         
