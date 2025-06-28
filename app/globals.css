@@ -1,32 +1,22 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #374151;
-  --ds-orange: #ea580c;
-  --ds-dark-orange: #c2410c;
-  --ds-light-orange: #fb923c;
-  --ds-gray: #374151;
-  --ds-light-gray: #6b7280;
-  --ds-dark-gray: #1f2937;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-ds-orange: var(--ds-orange);
-  --color-ds-dark-orange: var(--ds-dark-orange);
-  --color-ds-light-orange: var(--ds-light-orange);
-  --color-ds-gray: var(--ds-gray);
-  --color-ds-light-gray: var(--ds-light-gray);
-  --color-ds-dark-gray: var(--ds-dark-gray);
 }
 
 body {
   background: var(--background);
-  color: var(--ds-gray);
+  color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
@@ -36,106 +26,39 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Development Seed brand colors */
-.text-ds-orange {
-  color: var(--ds-orange);
-}
-
-.text-ds-dark-orange {
-  color: var(--ds-dark-orange);
-}
-
-.text-ds-light-orange {
-  color: var(--ds-light-orange);
-}
-
-.text-ds-gray {
-  color: var(--ds-gray);
-}
-
-.text-ds-light-gray {
-  color: var(--ds-light-gray);
-}
-
-.text-ds-dark-gray {
-  color: var(--ds-dark-gray);
-}
-
-.bg-ds-orange {
-  background-color: var(--ds-orange);
-}
-
-.bg-ds-dark-orange {
-  background-color: var(--ds-dark-orange);
-}
-
-.bg-ds-light-orange {
-  background-color: var(--ds-light-orange);
-}
-
-.border-ds-orange {
-  border-color: var(--ds-orange);
-}
-
 /* Custom button styles to match Development Seed */
 .btn-primary {
-  @apply inline-flex items-center px-8 py-3 border border-transparent text-base font-medium bg-ds-orange text-white hover:bg-ds-dark-orange transition-colors;
+  @apply inline-flex items-center px-8 py-3 border border-transparent text-base font-medium bg-ds-orange-500 text-white hover:bg-ds-orange-600 transition-colors;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center px-8 py-3 border border-ds-orange text-base font-medium bg-white text-ds-orange hover:bg-orange-50 transition-colors;
+  @apply inline-flex items-center px-8 py-3 border border-ds-orange-500 text-base font-medium bg-white text-ds-orange-500 hover:bg-ds-orange-50 transition-colors;
 }
 
 /* Typography improvements */
 .headline-large {
-  @apply text-5xl lg:text-7xl font-light leading-tight;
-  color: var(--ds-dark-gray);
+  @apply text-5xl lg:text-7xl font-light leading-tight text-ds-gray-800;
 }
 
 .headline-medium {
-  @apply text-xl lg:text-2xl font-light leading-relaxed;
-  color: var(--ds-light-gray);
+  @apply text-xl lg:text-2xl font-light leading-relaxed text-ds-gray-500;
 }
 
 .body-large {
-  @apply text-lg leading-relaxed;
-  color: var(--ds-gray);
+  @apply text-lg leading-relaxed text-ds-gray-700;
 }
 
 /* Navigation hover effects */
 .nav-link {
-  @apply transition-colors duration-200;
-  color: var(--ds-light-gray);
-}
-
-.nav-link:hover {
-  color: var(--ds-orange);
+  @apply transition-colors duration-200 text-ds-gray-500 hover:text-ds-orange-500;
 }
 
 /* Section dividers */
 .section-divider {
-  border-color: #e5e7eb;
+  @apply border-gray-200;
 }
 
 /* Footer styles */
 .footer-bg {
-  background-color: #f8fafc;
-}
-
-/* Development Seed accent colors for highlights */
-.accent-orange {
-  color: var(--ds-orange);
-}
-
-.accent-border {
-  border-color: var(--ds-orange);
-}
-
-/* Orange variants for badges and highlights */
-.bg-orange-50 {
-  background-color: #fff7ed;
-}
-
-.text-orange-600 {
-  color: var(--ds-orange);
+  @apply bg-gray-50;
 }

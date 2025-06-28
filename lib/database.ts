@@ -1,11 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Tool } from './types'
-import { env, checkDatabaseEnv } from './env'
+import { checkDatabaseEnv } from './env'
 
-// Validate environment variables on import
-checkDatabaseEnv()
+// Get validated database environment variables
+const { url, key } = checkDatabaseEnv()
 
-export const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+export const supabase = createClient(url, key)
 
 // Database types matching your improved Supabase schema
 export interface DbTool {

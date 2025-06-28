@@ -6,3 +6,4 @@ export { OpennessScore } from './OpennessScore';
 export { AboutSection } from './AboutSection';
 export { StatsSection } from './StatsSection';
 export { Footer } from './Footer';
+export { EnvDebugInfo } from './EnvDebugInfo';
