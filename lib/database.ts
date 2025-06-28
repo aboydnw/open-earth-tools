@@ -278,7 +278,14 @@ export class ToolsDatabase {
     const latestAssessment = dbTool.openness_assessments?.[0]
     
     // Transform assessment dimensions to our format
-    const defaultDimensions: Record<string, { score: "green" | "yellow" | "red"; note: string }> = {
+    const defaultDimensions: {
+      "Software Licensing": { score: "green" | "yellow" | "red"; note: string };
+      "Data Licensing": { score: "green" | "yellow" | "red"; note: string };
+      "Technical Accessibility": { score: "green" | "yellow" | "red"; note: string };
+      "Data Standards": { score: "green" | "yellow" | "red"; note: string };
+      "Infrastructure": { score: "green" | "yellow" | "red"; note: string };
+      "Community Governance": { score: "green" | "yellow" | "red"; note: string };
+    } = {
       "Software Licensing": { score: "red", note: "No assessment available" },
       "Data Licensing": { score: "red", note: "No assessment available" },
       "Technical Accessibility": { score: "red", note: "No assessment available" },
