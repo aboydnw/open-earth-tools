@@ -1,6 +1,5 @@
-import { categories } from '../lib/constants';
-
 interface ToolFiltersProps {
+  categories: string[];
   selectedCategory: string;
   selectedOpenness: string;
   onCategoryChange: (category: string) => void;
@@ -9,13 +8,14 @@ interface ToolFiltersProps {
 }
 
 export function ToolFilters({ 
+  categories,
   selectedCategory, 
   selectedOpenness, 
   onCategoryChange, 
   onOpennessChange, 
   toolCount 
 }: ToolFiltersProps) {
-  const opennessFilters = ["All", "Fully Open", "Mostly Open", "Partially Open"];
+  const opennessFilters = ["All", "Fully Open", "Mostly Open", "Partially Open", "Minimally Open"];
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
