@@ -48,7 +48,14 @@ export default function Home() {
         
       } catch (err) {
         console.error('❌ Failed to load data:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load data');
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
+        setError(errorMessage);
+        
+        // Log environment status for debugging
+        console.log('Environment status:', {
+          hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+          hasAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        });
       } finally {
         setLoading(false);
       }
