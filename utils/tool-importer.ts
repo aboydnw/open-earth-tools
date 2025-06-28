@@ -19,7 +19,7 @@ export class ToolImporter {
     this.validator = new ToolValidator();
   }
 
-  async importFromJSON(jsonData: RawToolData[], config: ImportConfig = {}): Promise<Tool[]> {
+  async importFromJSON(jsonData: RawToolData[], config: Partial<ImportConfig> = {}): Promise<Tool[]> {
     const tools: Tool[] = [];
     const errors: string[] = [];
 
@@ -263,7 +263,7 @@ export class ToolImporter {
   // Helper method for batch processing with progress tracking
   async importWithProgress(
     jsonData: RawToolData[], 
-    config: ImportConfig = {},
+    config: Partial<ImportConfig> = {},
     onProgress?: (current: number, total: number, toolName: string) => void
   ): Promise<Tool[]> {
     const tools: Tool[] = [];
