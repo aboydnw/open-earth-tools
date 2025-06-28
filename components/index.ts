@@ -7,3 +7,5 @@ export { AboutSection } from './AboutSection';
 export { StatsSection } from './StatsSection';
 export { Footer } from './Footer';
 export { EnvDebugInfo } from './EnvDebugInfo';
+export { ErrorBoundary } from './ErrorBoundary';
+export { default as ToolGridSkeleton } from './ToolGridSkeleton';
