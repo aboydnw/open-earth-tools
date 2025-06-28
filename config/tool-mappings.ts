@@ -12,7 +12,6 @@ export const CATEGORY_MAPPING: Record<string, string> = {
   "Air Quality": "Environmental Monitoring",
   "Pollution Tracking": "Environmental Monitoring",
   "Sensor Networks": "Environmental Monitoring",
-  "Remote Sensing": "Environmental Monitoring",
   
   // Climate
   "Climate": "Climate",
