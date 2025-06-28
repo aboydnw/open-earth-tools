@@ -239,6 +239,24 @@ export class ToolsDatabase {
     return data?.map(item => item.value) || []
   }
 
+  // Validate openness level string
+  private validateOpennessLevel(level: string | undefined): "Fully Open" | "Mostly Open" | "Partially Open" | "Minimally Open" {
+    const validLevels = ["Fully Open", "Mostly Open", "Partially Open", "Minimally Open"] as const
+    if (level && validLevels.includes(level as any)) {
+      return level as "Fully Open" | "Mostly Open" | "Partially Open" | "Minimally Open"
+    }
+    return "Minimally Open" // Default fallback
+  }
+
+  // Validate dimension score string
+  private validateDimensionScore(score: string | undefined): "green" | "yellow" | "red" {
+    const validScores = ["green", "yellow", "red"] as const
+    if (score && validScores.includes(score as any)) {
+      return score as "green" | "yellow" | "red"
+    }
+    return "red" // Default fallback (most restrictive)
+  }
+
   // Transform database tool to our Tool interface
   private transformDbToolToTool(dbTool: DbToolWithRelations): Tool {
     // Group attributes by type
@@ -260,12 +278,24 @@ export class ToolsDatabase {
     const latestAssessment = dbTool.openness_assessments?.[0]
     
     // Transform assessment dimensions to our format
-    const dimensions: Record<string, { score: string; note: string }> = {}
+    const defaultDimensions = {
+      "Software Licensing": { score: "red" as const, note: "No assessment available" },
+      "Data Licensing": { score: "red" as const, note: "No assessment available" },
+      "Technical Accessibility": { score: "red" as const, note: "No assessment available" },
+      "Data Standards": { score: "red" as const, note: "No assessment available" },
+      "Infrastructure": { score: "red" as const, note: "No assessment available" },
+      "Community Governance": { score: "red" as const, note: "No assessment available" }
+    }
+    
+    const dimensions = { ...defaultDimensions }
     if (latestAssessment?.assessment_dimensions) {
       latestAssessment.assessment_dimensions.forEach((dim) => {
-        dimensions[dim.dimension_name] = {
-          score: dim.score,
-          note: dim.note
+        const dimensionName = dim.dimension_name as keyof typeof dimensions
+        if (dimensionName in dimensions) {
+          dimensions[dimensionName] = {
+            score: this.validateDimensionScore(dim.score),
+            note: dim.note || ''
+          }
         }
       })
     }
@@ -289,7 +319,7 @@ export class ToolsDatabase {
       embedNote: dbTool.embed_code ? 'Embed code available' : (dbTool.embed_supported ? 'Embedding supported' : 'Embedding not supported'),
       openness: {
         score: latestAssessment?.score || 0,
-        level: latestAssessment?.level || 'Minimally Open',
+        level: this.validateOpennessLevel(latestAssessment?.level),
         dimensions: dimensions
       }
     }
