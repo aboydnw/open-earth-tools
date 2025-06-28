@@ -2,7 +2,7 @@ import { Tool, ValidationResult, ToolSchema } from '../schemas/tool.schema';
 import { tools } from '../data/tools';
 
 export class ToolValidator {
-  private existingTools: Tool[] = tools;
+  private existingTools: Tool[] = tools as Tool[];
 
   validateTool(tool: Tool): ValidationResult {
     const errors: string[] = [];
