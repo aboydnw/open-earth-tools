@@ -5,4 +5,3 @@ export { default as ToolGridSkeleton } from './tools/ToolGridSkeleton';
 export { OpennessScore } from './tools/OpennessScore';
 
 export { FiltersSection } from './filters/FiltersSection';
-export { ToolFilters } from './filters/ToolFilters';
