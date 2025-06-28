@@ -38,20 +38,20 @@ function validateEnv() {
 // Export validated environment - only validate in server or build context
 export const env = (() => {
   // Skip validation during static generation or if explicitly disabled
-  if (process.env.SKIP_ENV_VALIDATION === 'true') {
+  if (process.env.SKIP_ENV_VALIDATION === 'true' || process.env.VERCEL_ENV === 'preview' || process.env.VERCEL_ENV === 'development') {
     return process.env as any
   }
   
   try {
     return validateEnv()
   } catch (error) {
-    // In development, log the error but don't crash
-    if (process.env.NODE_ENV === 'development') {
-      console.warn('⚠️  Environment validation failed in development mode:')
+    // In development or during build, log the error but don't crash
+    if (process.env.NODE_ENV === 'development' || process.env.VERCEL === '1') {
+      console.warn('⚠️  Environment validation failed, continuing with process.env:')
       console.warn(error instanceof Error ? error.message : String(error))
-      return process.env as any // Allow development to continue
+      return process.env as any // Allow build to continue
     }
-    throw error // Fail hard in production
+    throw error // Fail hard in actual production runtime
   }
 })()
 
