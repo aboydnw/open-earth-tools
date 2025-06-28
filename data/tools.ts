@@ -2,33 +2,6 @@ import { Tool } from '../lib/types';
 
 export const tools: Tool[] = [
   {
-    id: "kepler-gl-demo",
-    name: "Kepler.gl Geospatial Analysis",
-    organization: "Uber Open Source",
-    description: "High-performance web-based application for visual exploration of large-scale geolocation data sets. Analyze and visualize geospatial data.",
-    url: "https://kepler.gl/demo",
-    embedUrl: "https://kepler.gl/demo",
-    license: "MIT",
-    category: "Data Visualization",
-    features: ["Large dataset support", "3D visualization", "Real-time rendering"],
-    icon: "🗺️",
-    status: "Production",
-    embedSupported: true,
-    embedNote: "Kepler.gl supports embedding with full functionality",
-    openness: {
-      score: 6,
-      level: "Fully Open",
-      dimensions: {
-        "Software Licensing": { score: "green", note: "MIT License, full source available" },
-        "Data Licensing": { score: "green", note: "Supports any open data formats" },
-        "Technical Accessibility": { score: "green", note: "Full embedding, iframe support" },
-        "Data Standards": { score: "green", note: "Multiple formats (GeoJSON, CSV, etc.)" },
-        "Infrastructure": { score: "green", note: "Self-hostable, Docker support" },
-        "Community Governance": { score: "green", note: "Open source community-driven" }
-      }
-    }
-  },
-  {
     id: "global-food-twin",
     name: "Global Food Twin",
     organization: "The Plotline / CU Boulder",
@@ -79,32 +52,6 @@ export const tools: Tool[] = [
         "Data Standards": { score: "green", note: "Uses standard geospatial and agricultural data formats" },
         "Infrastructure": { score: "yellow", note: "Self-hostable but requires data processing setup" },
         "Community Governance": { score: "yellow", note: "Collaborative project with limited community input" }
-      }
-    }
-  },
-  {
-    id: "observable-earth",
-    name: "Observable Earth",
-    organization: "Observable",
-    description: "Interactive Earth science data visualizations and explorations. Demonstrates modern web-based data storytelling techniques.",
-    url: "https://observablehq.com/@observablehq/plot-earthquakes",
-    embedUrl: "https://observablehq.com/embed/@observablehq/plot-earthquakes?cells=chart",
-    license: "MIT",
-    category: "Data Visualization",
-    features: ["Interactive charts", "Real-time data", "Embeddable widgets"],
-    icon: "📊",
-    status: "Production",
-    embedSupported: true,
-    openness: {
-      score: 5,
-      level: "Mostly Open",
-      dimensions: {
-        "Software Licensing": { score: "green", note: "MIT License, source available" },
-        "Data Licensing": { score: "green", note: "Public data (USGS earthquakes)" },
-        "Technical Accessibility": { score: "green", note: "Full embedding support, CORS enabled" },
-        "Data Standards": { score: "yellow", note: "GeoJSON standard but limited formats" },
-        "Infrastructure": { score: "green", note: "Self-hostable platform" },
-        "Community Governance": { score: "yellow", note: "Observable-led but open contributions" }
       }
     }
   },
@@ -294,6 +241,655 @@ export const tools: Tool[] = [
         "Data Standards": { score: "green", note: "Climate data standards" },
         "Infrastructure": { score: "red", note: "NOAA hosting only" },
         "Community Governance": { score: "red", note: "NOAA institutional control" }
+      }
+    }
+  }
+,
+  {
+    id: "vacs",
+    name: "VACS",
+    organization: "The Plotline",
+    description: "VACS overlays climate hazard and community vulnerability data in an interactive map. It balances clarity and nuance, uses color effectively, and supports insight-building for non-experts.",
+    url: "https://vacs.theplotline.org/",
+    embedUrl: "https://vacs.theplotline.org/",
+    license: "Open Source",
+    category: "Environmental Justice",
+    features: ["Exploration", "Storytelling"],
+    icon: "⚖️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Research platform supports embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "Plotline project, likely open source but not confirmed" },
+        "Data Licensing": { score: "green", note: "Uses public climate and vulnerability data" },
+        "Technical Accessibility": { score: "green", note: "Web-based with embedding support indicated" },
+        "Data Standards": { score: "green", note: "Standard environmental justice data formats" },
+        "Infrastructure": { score: "yellow", note: "Self-hostable web application" },
+        "Community Governance": { score: "green", note: "Part of collaborative Plotline project" }
+      }
+    }
+  },
+  {
+    id: "cafo-explorer-map",
+    name: "CAFO Explorer Map",
+    organization: "The Plotline",
+    description: "Static-feeling UI with clear points but minimal filtering or dynamic interaction. Designed for issue visibility rather than in-depth analysis.",
+    url: "https://stories.theplotline.org/cafo-explorer/map/",
+    embedUrl: "https://stories.theplotline.org/cafo-explorer/map/",
+    license: "Open Source",
+    category: "Environmental Monitoring",
+    features: ["Exploration", "Awareness Raising"],
+    icon: "🌡️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Research platform supports embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "Plotline project, likely open source" },
+        "Data Licensing": { score: "green", note: "Uses public agricultural and environmental data" },
+        "Technical Accessibility": { score: "green", note: "Web-based map interface" },
+        "Data Standards": { score: "green", note: "Standard geospatial formats" },
+        "Infrastructure": { score: "yellow", note: "Hosted web application" },
+        "Community Governance": { score: "green", note: "Environmental justice community focus" }
+      }
+    }
+  },
+  {
+    id: "nasa-giovanni",
+    name: "NASA Giovanni",
+    organization: "NASA Giovanni",
+    description: "Powerful tool for generating plots from gridded datasets. Assumes domain knowledge and has limited onboarding.",
+    url: "https://giovanni.gsfc.nasa.gov/giovanni/",
+    embedUrl: "https://giovanni.gsfc.nasa.gov/giovanni/",
+    license: "Public Domain",
+    category: "Atmospheric Science",
+    features: ["Custom Data Queries", "Visualization", "Download"],
+    icon: "🌫️",
+    status: "Production",
+    embedSupported: false,
+    embedNote: "Government domain restrictions may prevent embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "NASA platform, some open source components" },
+        "Data Licensing": { score: "green", note: "NASA public domain data" },
+        "Technical Accessibility": { score: "green", note: "Web interface with data download capabilities" },
+        "Data Standards": { score: "green", note: "Standard atmospheric and oceanic data formats" },
+        "Infrastructure": { score: "red", note: "NASA hosting only" },
+        "Community Governance": { score: "yellow", note: "NASA-led with scientific community input" }
+      }
+    }
+  },
+  {
+    id: "fluid-earth",
+    name: "Fluid Earth",
+    organization: "Ohio State University",
+    description: "Browser-based Earth system visualizations with animations and overlays. Designed for conceptual understanding rather than precise analysis.",
+    url: "https://fluid-earth.byrd.osu.edu/",
+    embedUrl: "https://fluid-earth.byrd.osu.edu/",
+    license: "Academic",
+    category: "Ocean & Climate",
+    features: ["Visualization", "Education", "Simulation"],
+    icon: "🌊",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 3,
+      level: "Partially Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "Academic project, licensing unclear" },
+        "Data Licensing": { score: "green", note: "Uses public climate and ocean data" },
+        "Technical Accessibility": { score: "green", note: "Browser-based visualization" },
+        "Data Standards": { score: "green", note: "Standard Earth system data" },
+        "Infrastructure": { score: "red", note: "University hosting only" },
+        "Community Governance": { score: "red", note: "Academic institution control" }
+      }
+    }
+  },
+  {
+    id: "nasa-earthdata-dashboard",
+    name: "NASA Earthdata Dashboard",
+    organization: "NASA",
+    description: "Narrative format with curated global indicators showing pandemic impacts. Visuals are clean and comparable over time.",
+    url: "https://www.earthdata.nasa.gov/dashboard/exploration",
+    embedUrl: "https://www.earthdata.nasa.gov/dashboard/exploration",
+    license: "Public Domain",
+    category: "Environmental Monitoring",
+    features: ["Storytelling", "Visual Summary"],
+    icon: "🌡️",
+    status: "Production",
+    embedSupported: false,
+    embedNote: "Government domain restrictions may prevent embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "NASA platform with some open components" },
+        "Data Licensing": { score: "green", note: "NASA public domain data" },
+        "Technical Accessibility": { score: "green", note: "Web dashboard interface" },
+        "Data Standards": { score: "green", note: "Earth science data standards" },
+        "Infrastructure": { score: "red", note: "NASA hosting only" },
+        "Community Governance": { score: "yellow", note: "NASA-led with community engagement" }
+      }
+    }
+  },
+  {
+    id: "covid-19-earth-observing-dashboard",
+    name: "COVID-19 Earth Observing Dashboard",
+    organization: "ESA/NASA/JAXA",
+    description: "Joint initiative (ESA, NASA, JAXA) tracking COVID-era environmental and economic shifts. Visually polished with toggles for temporal and geographic comparisons.",
+    url: "https://eodashboard.org/explore/",
+    embedUrl: "https://eodashboard.org/explore/",
+    license: "Open Source",
+    category: "Environmental Monitoring",
+    features: ["Time Series Comparison", "Awareness"],
+    icon: "🌡️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 5,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source collaborative project" },
+        "Data Licensing": { score: "green", note: "Public domain satellite data" },
+        "Technical Accessibility": { score: "green", note: "Web-based dashboard" },
+        "Data Standards": { score: "green", note: "Standard Earth observation formats" },
+        "Infrastructure": { score: "yellow", note: "Multi-agency hosting" },
+        "Community Governance": { score: "green", note: "International collaboration (ESA, NASA, JAXA)" }
+      }
+    }
+  },
+  {
+    id: "robin-hawkes-renewables-map",
+    name: "Robin Hawkes Renewables Map",
+    organization: "Robin Hawkes",
+    description: "A hobby project showing UK renewable energy facilities. Simple filters and fly-to interactions.",
+    url: "https://renewables-map.robinhawkes.com/",
+    embedUrl: "https://renewables-map.robinhawkes.com/",
+    license: "Open Source",
+    category: "Energy",
+    features: ["Exploration", "Education"],
+    icon: "⚡",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 5,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Individual project, likely open source" },
+        "Data Licensing": { score: "green", note: "UK public energy infrastructure data" },
+        "Technical Accessibility": { score: "green", note: "Web map interface" },
+        "Data Standards": { score: "green", note: "Standard energy data formats" },
+        "Infrastructure": { score: "green", note: "Self-hosted personal project" },
+        "Community Governance": { score: "yellow", note: "Individual maintained" }
+      }
+    }
+  },
+  {
+    id: "iqair-air-quality-map",
+    name: "IQAir Air Quality Map",
+    organization: "IQAir",
+    description: "Dynamic global map of PM2.5 and AQI readings from ground sensors. High refresh rate and strong visual design.",
+    url: "https://www.iqair.com/air-quality-map",
+    embedUrl: "https://www.iqair.com/air-quality-map",
+    license: "Freemium",
+    category: "Environmental Monitoring",
+    features: ["Monitoring", "Exploration"],
+    icon: "🌬️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Commercial platform with embed widgets available",
+    openness: {
+      score: 2,
+      level: "Partially Open",
+      dimensions: {
+        "Software Licensing": { score: "red", note: "Commercial platform" },
+        "Data Licensing": { score: "yellow", note: "Mix of public and proprietary sensor data" },
+        "Technical Accessibility": { score: "green", note: "Web interface with embed options" },
+        "Data Standards": { score: "green", note: "Standard air quality formats" },
+        "Infrastructure": { score: "red", note: "Commercial hosting only" },
+        "Community Governance": { score: "red", note: "Commercial company control" }
+      }
+    }
+  },
+  {
+    id: "iqair-earth",
+    name: "IQAir Earth",
+    organization: "IQAir",
+    description: "Globe-based particle animation showing wind and pollution. Visually striking and accessible, but lacks clarity on data sources.",
+    url: "https://www.iqair.com/earth?nav=",
+    embedUrl: "https://www.iqair.com/earth?nav=",
+    license: "Freemium",
+    category: "Environmental Monitoring",
+    features: ["Visualization", "Awareness"],
+    icon: "🌬️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Commercial platform with embed widgets available",
+    openness: {
+      score: 2,
+      level: "Partially Open",
+      dimensions: {
+        "Software Licensing": { score: "red", note: "Commercial platform" },
+        "Data Licensing": { score: "yellow", note: "Mix of public and proprietary data" },
+        "Technical Accessibility": { score: "green", note: "Globe visualization interface" },
+        "Data Standards": { score: "yellow", note: "Limited data access" },
+        "Infrastructure": { score: "red", note: "Commercial hosting only" },
+        "Community Governance": { score: "red", note: "Commercial company control" }
+      }
+    }
+  },
+  {
+    id: "weatherlayers-particle-globe",
+    name: "WeatherLayers Particle Globe",
+    organization: "WeatherLayers",
+    description: "Open-source prototype visualizing wind fields on a globe with particle animations. Primarily aesthetic, with little direct interactivity.",
+    url: "https://weatherlayers.github.io/deck.gl-particle/globe.html",
+    embedUrl: "https://weatherlayers.github.io/deck.gl-particle/globe.html",
+    license: "Open Source",
+    category: "Weather",
+    features: ["Visualization", "Prototype"],
+    icon: "💨",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 6,
+      level: "Fully Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source prototype on GitHub" },
+        "Data Licensing": { score: "green", note: "Uses public weather model data" },
+        "Technical Accessibility": { score: "green", note: "Web-based with source code available" },
+        "Data Standards": { score: "green", note: "Standard meteorological data formats" },
+        "Infrastructure": { score: "green", note: "Self-hostable open source code" },
+        "Community Governance": { score: "green", note: "Open source community project" }
+      }
+    }
+  },
+  {
+    id: "zoom-earth",
+    name: "Zoom Earth",
+    organization: "Zoom Earth",
+    description: "Public-facing tool for viewing satellite imagery, live weather, and tropical storm tracking. Performance is good, map is responsive.",
+    url: "https://zoom.earth/",
+    embedUrl: "https://zoom.earth/",
+    license: "Freemium",
+    category: "Satellite Imagery",
+    features: ["Monitoring", "Exploration", "Real-Time Updates"],
+    icon: "🛰️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 2,
+      level: "Partially Open",
+      dimensions: {
+        "Software Licensing": { score: "red", note: "Commercial platform" },
+        "Data Licensing": { score: "green", note: "Uses public satellite data" },
+        "Technical Accessibility": { score: "green", note: "Web interface with good performance" },
+        "Data Standards": { score: "yellow", note: "Standard formats but limited API access" },
+        "Infrastructure": { score: "red", note: "Commercial hosting only" },
+        "Community Governance": { score: "red", note: "Commercial company control" }
+      }
+    }
+  },
+  {
+    id: "earth-nullschool",
+    name: "Earth Nullschool",
+    organization: "Cameron Beccario",
+    description: "Animated globe showing weather patterns. Offers multiple layers and altitudes, with fast transitions.",
+    url: "https://earth.nullschool.net/",
+    embedUrl: "https://earth.nullschool.net/",
+    license: "Open Source",
+    category: "Weather",
+    features: ["Visualization", "Exploration"],
+    icon: "💨",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 5,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source project on GitHub" },
+        "Data Licensing": { score: "green", note: "Uses public weather and climate data" },
+        "Technical Accessibility": { score: "green", note: "Web-based globe visualization" },
+        "Data Standards": { score: "green", note: "Standard meteorological formats" },
+        "Infrastructure": { score: "yellow", note: "Self-hostable but complex setup" },
+        "Community Governance": { score: "yellow", note: "Individual maintainer with community contributions" }
+      }
+    }
+  },
+  {
+    id: "carbonplan-dor-efficiency",
+    name: "CarbonPlan DOR Efficiency",
+    organization: "CarbonPlan",
+    description: "Static visuals and interactive plots to communicate effectiveness of carbon removal offsets. Prioritizes clarity and transparency in methodology.",
+    url: "https://carbonplan.org/research/dor-efficiency",
+    embedUrl: "https://carbonplan.org/research/dor-efficiency",
+    license: "MIT",
+    category: "Carbon",
+    features: ["Explanation", "Visualization", "Research Summary"],
+    icon: "🌿",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Open source tool supports embedding",
+    openness: {
+      score: 6,
+      level: "Fully Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source project with MIT license" },
+        "Data Licensing": { score: "green", note: "Open climate and carbon removal data" },
+        "Technical Accessibility": { score: "green", note: "Web-based research tool" },
+        "Data Standards": { score: "green", note: "Standard climate data formats" },
+        "Infrastructure": { score: "green", note: "Self-hostable research platform" },
+        "Community Governance": { score: "green", note: "Open science community governance" }
+      }
+    }
+  },
+  {
+    id: "carbonplan-forest-offsets-fires",
+    name: "CarbonPlan Forest Offsets & Fires",
+    organization: "CarbonPlan",
+    description: "Explains fire risk to forest carbon projects through mapped overlays and offset scoring. Strong integration of narrative and visuals.",
+    url: "https://carbonplan.org/research/forest-offsets-fires",
+    embedUrl: "https://carbonplan.org/research/forest-offsets-fires",
+    license: "MIT",
+    category: "Carbon",
+    features: ["Analysis", "Visual Explanation", "Policy Insight"],
+    icon: "🔥",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Open source tool supports embedding",
+    openness: {
+      score: 6,
+      level: "Fully Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source project with MIT license" },
+        "Data Licensing": { score: "green", note: "Open forest and climate data" },
+        "Technical Accessibility": { score: "green", note: "Web-based analysis tool" },
+        "Data Standards": { score: "green", note: "Standard geospatial and climate formats" },
+        "Infrastructure": { score: "green", note: "Self-hostable research platform" },
+        "Community Governance": { score: "green", note: "Open science community governance" }
+      }
+    }
+  },
+  {
+    id: "era-explorer",
+    name: "ERA Explorer",
+    organization: "Copernicus",
+    description: "Tool for plotting ERA5 and ERA20C reanalysis data by point location. Functional but not polished.",
+    url: "https://era-explorer.climate.copernicus.eu/?lat=50.86&lng=4.35&plot=0",
+    embedUrl: "https://era-explorer.climate.copernicus.eu/?lat=50.86&lng=4.35&plot=0",
+    license: "Open Data",
+    category: "Climate",
+    features: ["Time Series Plotting", "Data Comparison"],
+    icon: "🌡️",
+    status: "Production",
+    embedSupported: false,
+    embedNote: "EU platform may have embedding restrictions",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "EU platform, some open components" },
+        "Data Licensing": { score: "green", note: "Public climate reanalysis data" },
+        "Technical Accessibility": { score: "green", note: "Web interface for data plotting" },
+        "Data Standards": { score: "green", note: "Standard climate data formats" },
+        "Infrastructure": { score: "red", note: "EU agency hosting only" },
+        "Community Governance": { score: "yellow", note: "EU-led with scientific community input" }
+      }
+    }
+  },
+  {
+    id: "climate-trace",
+    name: "Climate TRACE",
+    organization: "Climate TRACE",
+    description: "Tracks emissions at a fine spatial and sectoral scale. Map is performant, with filters for year, sector, and region.",
+    url: "https://climatetrace.org/explore/",
+    embedUrl: "https://climatetrace.org/explore/",
+    license: "Open Source",
+    category: "Emissions",
+    features: ["Monitoring", "Accountability", "Exploration"],
+    icon: "💨",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 5,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "Coalition project, mixed licensing" },
+        "Data Licensing": { score: "green", note: "Open emissions data" },
+        "Technical Accessibility": { score: "green", note: "Web platform with robust filtering" },
+        "Data Standards": { score: "green", note: "Standard emissions data formats" },
+        "Infrastructure": { score: "yellow", note: "Coalition hosting with data access" },
+        "Community Governance": { score: "green", note: "Multi-stakeholder governance" }
+      }
+    }
+  },
+  {
+    id: "ocean-wealth-mapping-tool",
+    name: "Ocean Wealth Mapping Tool",
+    organization: "Ocean Wealth",
+    description: "Presents spatial data on coral reefs, mangroves, fisheries, etc. Map layers are accessible but interface is dated.",
+    url: "https://maps.oceanwealth.org/#/data",
+    embedUrl: "https://maps.oceanwealth.org/#/data",
+    license: "Open Source",
+    category: "Marine Ecosystems",
+    features: ["Exploration", "Map Visualization"],
+    icon: "🐠",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 3,
+      level: "Partially Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "WRI platform, licensing unclear" },
+        "Data Licensing": { score: "green", note: "Marine ecosystem data" },
+        "Technical Accessibility": { score: "green", note: "Web mapping interface" },
+        "Data Standards": { score: "green", note: "Standard marine data formats" },
+        "Infrastructure": { score: "red", note: "WRI hosting only" },
+        "Community Governance": { score: "red", note: "Institutional control" }
+      }
+    }
+  },
+  {
+    id: "global-forest-watch",
+    name: "Global Forest Watch",
+    organization: "Global Forest Watch",
+    description: "Sophisticated web mapping platform with up-to-date forest monitoring data. Includes alerts, time sliders, and download tools.",
+    url: "https://www.globalforestwatch.org/map/",
+    embedUrl: "https://www.globalforestwatch.org/map/",
+    license: "Open Source",
+    category: "Forests",
+    features: ["Monitoring", "Alerts", "Analysis", "Export"],
+    icon: "🌲",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 5,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source platform" },
+        "Data Licensing": { score: "green", note: "Open forest monitoring data" },
+        "Technical Accessibility": { score: "green", note: "Web platform with extensive features" },
+        "Data Standards": { score: "green", note: "Standard geospatial formats" },
+        "Infrastructure": { score: "yellow", note: "WRI hosting but open source" },
+        "Community Governance": { score: "green", note: "Multi-stakeholder governance" }
+      }
+    }
+  },
+  {
+    id: "global-fishing-watch",
+    name: "Global Fishing Watch",
+    organization: "Global Fishing Watch",
+    description: "Tracks fishing vessel movements using AIS and machine learning. Features time filtering, EEZ overlays, and behavior classification.",
+    url: "https://globalfishingwatch.org/map",
+    embedUrl: "https://globalfishingwatch.org/map",
+    license: "Open Source",
+    category: "Marine Monitoring",
+    features: ["Monitoring", "Analysis", "Investigation"],
+    icon: "🐟",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 5,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "green", note: "Open source platform" },
+        "Data Licensing": { score: "green", note: "Open vessel tracking data" },
+        "Technical Accessibility": { score: "green", note: "Web platform with analysis tools" },
+        "Data Standards": { score: "green", note: "Standard maritime data formats" },
+        "Infrastructure": { score: "yellow", note: "Organization hosting but open platform" },
+        "Community Governance": { score: "green", note: "Multi-stakeholder governance" }
+      }
+    }
+  },
+  {
+    id: "aqueduct-water-risk-atlas",
+    name: "Aqueduct Water Risk Atlas",
+    organization: "World Resources Institute",
+    description: "Used to assess and benchmark water-related risks by sector and region. Allows dynamic scenario testing and data downloads.",
+    url: "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
+    embedUrl: "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
+    license: "Open Source",
+    category: "Water Resources",
+    features: ["Risk Analysis", "Download", "Scenario Exploration"],
+    icon: "⚠️",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 3,
+      level: "Partially Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "WRI platform, licensing unclear" },
+        "Data Licensing": { score: "green", note: "Water risk data available" },
+        "Technical Accessibility": { score: "green", note: "Web platform with scenario analysis" },
+        "Data Standards": { score: "green", note: "Standard water data formats" },
+        "Infrastructure": { score: "red", note: "WRI hosting only" },
+        "Community Governance": { score: "red", note: "Institutional control" }
+      }
+    }
+  },
+  {
+    id: "kelpwatch",
+    name: "KelpWatch",
+    organization: "KelpWatch",
+    description: "Time-series viewer for kelp canopy area based on Landsat. Provides context and scientific citations.",
+    url: "https://kelpwatch.org/map",
+    embedUrl: "https://kelpwatch.org/map",
+    license: "Open Source",
+    category: "Marine Ecosystems",
+    features: ["Monitoring", "Time Series Visualization"],
+    icon: "🐠",
+    status: "Production",
+    embedSupported: true,
+    embedNote: "Web-based platform supports embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "Academic project, licensing unclear" },
+        "Data Licensing": { score: "green", note: "Satellite-derived kelp data" },
+        "Technical Accessibility": { score: "green", note: "Web interface for time series" },
+        "Data Standards": { score: "green", note: "Standard satellite data formats" },
+        "Infrastructure": { score: "yellow", note: "Academic hosting" },
+        "Community Governance": { score: "green", note: "Marine science community focus" }
+      }
+    }
+  },
+  {
+    id: "goes-plume-viewer",
+    name: "GOES Plume Viewer",
+    organization: "NASA",
+    description: "Shows methane plumes detected by GOES satellites. Focused and technical, with fixed imagery and time sliders.",
+    url: "https://earth.gov/ghgcenter/custom-interfaces/goes-plume-viewer/",
+    embedUrl: "https://earth.gov/ghgcenter/custom-interfaces/goes-plume-viewer/",
+    license: "Public Domain",
+    category: "Atmospheric Science",
+    features: ["Event Review", "Visual Analysis"],
+    icon: "📊",
+    status: "Production",
+    embedSupported: false,
+    embedNote: "Government domain restrictions may prevent embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "NASA platform, some open components" },
+        "Data Licensing": { score: "green", note: "NASA public domain data" },
+        "Technical Accessibility": { score: "green", note: "Web interface for plume analysis" },
+        "Data Standards": { score: "green", note: "Standard remote sensing formats" },
+        "Infrastructure": { score: "red", note: "NASA hosting only" },
+        "Community Governance": { score: "yellow", note: "NASA-led scientific tool" }
+      }
+    }
+  },
+  {
+    id: "emit-ch4-plume-viewer",
+    name: "EMIT CH₄ Plume Viewer",
+    organization: "NASA",
+    description: "Similar to the GOES tool but using EMIT data. Static overlays with minimal UI. Designed for verification and expert review.",
+    url: "https://earth.gov/ghgcenter/custom-interfaces/emit-ch4plume-v1",
+    embedUrl: "https://earth.gov/ghgcenter/custom-interfaces/emit-ch4plume-v1",
+    license: "Public Domain",
+    category: "Atmospheric Science",
+    features: ["Event Detection", "Remote Sensing QA"],
+    icon: "📊",
+    status: "Production",
+    embedSupported: false,
+    embedNote: "Government domain restrictions may prevent embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "NASA platform, some open components" },
+        "Data Licensing": { score: "green", note: "NASA public domain data" },
+        "Technical Accessibility": { score: "green", note: "Web interface for hyperspectral analysis" },
+        "Data Standards": { score: "green", note: "Standard remote sensing formats" },
+        "Infrastructure": { score: "red", note: "NASA hosting only" },
+        "Community Governance": { score: "yellow", note: "NASA-led scientific tool" }
+      }
+    }
+  },
+  {
+    id: "mobile-climate-mapper",
+    name: "Mobile Climate Mapper",
+    organization: "NASA",
+    description: "Mobile-first tool for viewing localized climate trends in US cities. Clear graphs and clean design.",
+    url: "https://earth.gov/mobile-climate-mapper/",
+    embedUrl: "https://earth.gov/mobile-climate-mapper/",
+    license: "Public Domain",
+    category: "Climate",
+    features: ["Education", "Mobile Exploration"],
+    icon: "🌡️",
+    status: "Production",
+    embedSupported: false,
+    embedNote: "Government domain restrictions may prevent embedding",
+    openness: {
+      score: 4,
+      level: "Mostly Open",
+      dimensions: {
+        "Software Licensing": { score: "yellow", note: "NASA platform, some open components" },
+        "Data Licensing": { score: "green", note: "Public climate data" },
+        "Technical Accessibility": { score: "green", note: "Mobile-first web interface" },
+        "Data Standards": { score: "green", note: "Standard climate data formats" },
+        "Infrastructure": { score: "red", note: "NASA hosting only" },
+        "Community Governance": { score: "yellow", note: "NASA educational tool" }
       }
     }
   }
