@@ -211,7 +211,7 @@ export class SupabaseMigration {
           embed_url: tool.embedUrl,
           embed_supported: tool.embedSupported,
           icon: tool.icon,
-          embed_code: tool.embedUrl !== tool.url ? `<iframe src="${tool.embedUrl}" width="100%" height="500" frameborder="0"></iframe>` : null,
+          embed_code: tool.embedUrl !== tool.url ? `<iframe src="${tool.embedUrl}" width="100%" height="500" frameborder="0"></iframe>` : undefined,
           data_link: tool.url,
           submitted_by: 'Migration Script'
         }
