@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { toolsDb } from '@/lib/database'
 
-interface RouteParams {
-  params: {
-    id: string
-  }
-}
-
 // GET /api/tools/[id] - Get a specific tool
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const tool = await toolsDb.getTool(params.id)
+    const { id } = await params
+    const tool = await toolsDb.getTool(id)
     
     if (!tool) {
       return NextResponse.json(
@@ -27,7 +22,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       data: tool 
     })
   } catch (error) {
-    console.error(`GET /api/tools/${params.id} error:`, error)
+    console.error('GET /api/tools/[id] error:', error)
     return NextResponse.json(
       { 
         success: false, 
@@ -39,12 +34,13 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 }
 
 // PUT /api/tools/[id] - Update a specific tool
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const body = await request.json()
     
     // Check if tool exists
-    const existingTool = await toolsDb.getTool(params.id)
+    const existingTool = await toolsDb.getTool(id)
     if (!existingTool) {
       return NextResponse.json(
         { 
@@ -55,14 +51,14 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       )
     }
     
-    const updatedTool = await toolsDb.updateTool(params.id, body)
+    const updatedTool = await toolsDb.updateTool(id, body)
     
     return NextResponse.json({ 
       success: true, 
       data: updatedTool 
     })
   } catch (error) {
-    console.error(`PUT /api/tools/${params.id} error:`, error)
+    console.error('PUT /api/tools/[id] error:', error)
     return NextResponse.json(
       { 
         success: false, 
@@ -74,10 +70,12 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 // DELETE /api/tools/[id] - Delete a specific tool
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
+    
     // Check if tool exists
-    const existingTool = await toolsDb.getTool(params.id)
+    const existingTool = await toolsDb.getTool(id)
     if (!existingTool) {
       return NextResponse.json(
         { 
@@ -88,14 +86,14 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
       )
     }
     
-    await toolsDb.deleteTool(params.id)
+    await toolsDb.deleteTool(id)
     
     return NextResponse.json({ 
       success: true, 
       message: 'Tool deleted successfully' 
     })
   } catch (error) {
-    console.error(`DELETE /api/tools/${params.id} error:`, error)
+    console.error('DELETE /api/tools/[id] error:', error)
     return NextResponse.json(
       { 
         success: false, 
