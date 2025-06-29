@@ -1,167 +1,117 @@
 # Open Earth Tools Directory
 
-A curated collection of open source Earth science visualization tools ready for safe embedding and storytelling. Quality-vetted tools from NASA, USGS, NOAA and the community.
+A curated directory of production-ready Earth science visualization tools with secure embedding practices and comprehensive metadata.
 
-## 🚀 Quick Start
+## Features
+
+- 🌍 **Curated Earth Science Tools**: High-quality, vetted tools for Earth science communication
+- 🔒 **Secure Embedding**: Comprehensive security guidance for safe iframe embedding  
+- 📊 **Openness Assessment**: 6-dimension evaluation of tool openness and accessibility
+- 🔄 **Full CRUD API**: Complete programmatic tool management
+- 🏗️ **Modern Architecture**: Next.js 15, TypeScript, Supabase
+
+## Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
-- npm/yarn/pnpm
-- Supabase account and project
+- Node.js 18+
+- Supabase account
 
 ### Setup
-
-1. **Clone and install dependencies:**
 ```bash
-git clone [your-repo-url]
+git clone <repository>
 cd open-earth-tools
 npm install
-```
-
-2. **Environment Configuration:**
-```bash
 cp .env.example .env.local
+# Configure Supabase credentials in .env.local
 ```
 
-Edit `.env.local` with your Supabase credentials:
-```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
-```
-
-3. **Database Setup:**
-```bash
-# Run SQL schema in your Supabase SQL editor first (see sql/add_tool_columns.sql)
-npm run migrate
-```
-
-4. **Development:**
+### Development
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
-
-## 🏗️ Architecture
-
-### Tech Stack
-- **Frontend**: Next.js 15.3.4, React 19, TypeScript
-- **Styling**: Tailwind CSS v4
-- **Database**: Supabase (PostgreSQL)
-- **Deployment**: Vercel-ready
-
-### Project Structure
-```
-├── app/                 # Next.js app router
-├── components/          # React components
-├── lib/                 # Core utilities and types
-├── utils/               # Helper functions and services
-├── data/                # Static data (migration source)
-├── schemas/             # Validation schemas
-├── sql/                 # Database migrations
-└── config/              # Configuration files
-```
-
-## 🔧 Commands
-
+### Testing
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run migrate      # Migrate tools to database
-npm run migrate:cleanup  # Clean up migration data
-npm run migrate:verify   # Verify migration results
+# Test CRUD functionality
+npm run test:simple
 ```
 
-## 📊 Database Schema
+## Documentation
 
-The application uses a flexible attribute-based system:
+- **[CRUD API Documentation](docs/CRUD_API.md)**: Complete API reference
+- **[Development Guide](docs/DEVELOPMENT.md)**: Setup and workflow guide
 
-- `tools` - Core tool information
-- `attribute_types` - Categories, Organizations, etc.
-- `attribute_values` - Specific values for each type
-- `tool_attribute_links` - Many-to-many relationships
-- `openness_assessments` - Tool openness scoring
-- `assessment_dimensions` - Detailed dimension scores
+## Architecture
 
-## 🌍 Contributing
+### Database Schema
+- **Tools**: Main tool records with metadata
+- **Attributes**: Flexible attribute system (organization, license, features)
+- **Assessments**: 6-dimension openness scoring system
 
-### Adding New Tools
+### API Endpoints
+- `GET /api/tools` - List tools with filtering
+- `POST /api/tools` - Create new tools
+- `GET /api/tools/[id]` - Get specific tool
+- `PUT /api/tools/[id]` - Update tools
+- `DELETE /api/tools/[id]` - Delete tools
 
-1. Use the database interface or API
-2. Follow the tool assessment framework
-3. Ensure proper openness evaluation
-4. Test embedding capabilities
-
-### Assessment Framework
+## Openness Assessment
 
 Tools are evaluated across 6 dimensions:
-- **Software Licensing** (open source vs proprietary)
-- **Data Licensing** (open data vs restricted)
-- **Technical Accessibility** (embedding support)
-- **Data Standards** (standard formats vs proprietary)
-- **Infrastructure** (self-hostable vs SaaS-only)
-- **Community Governance** (open vs institutional control)
 
-## 🔒 Security
+1. **Software Licensing** - Open source vs. proprietary
+2. **Data Licensing** - Open data vs. restricted access
+3. **Technical Accessibility** - Embedding and API access
+4. **Data Standards** - Standard formats vs. proprietary
+5. **Infrastructure** - Self-hosting vs. SaaS-only
+6. **Community Governance** - Community-driven vs. institutional control
 
-- Content Security Policy (CSP) headers configured
-- Iframe sandboxing for embedded tools
-- Environment variable validation
-- Secure Supabase integration
+## Development
 
-## 📱 Deployment
+### Tech Stack
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Backend**: Next.js API Routes, Supabase
+- **Database**: PostgreSQL with Row Level Security
+- **Styling**: Tailwind CSS
 
-### Vercel (Recommended)
+### Key Commands
+```bash
+npm run dev          # Development server
+npm run build        # Production build
+npm run test:simple  # Test CRUD operations
+npm run test:api     # Test API endpoints
+```
 
-1. Connect your GitHub repository to Vercel
-2. Add environment variables in Vercel dashboard:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-3. Deploy!
+## Contributing
 
-### Other Platforms
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test with `npm run test:simple`
+5. Submit a pull request
 
-The application is a standard Next.js app and can be deployed on:
-- Netlify
-- AWS Amplify
-- DigitalOcean App Platform
-- Self-hosted with Docker
+See [DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed guidelines.
 
-## 🤝 Development Workflow
+## Security
 
-1. **Local Development**: Use `npm run dev` with `.env.local`
-2. **Database Changes**: Update SQL files and run migrations
-3. **New Components**: Follow existing patterns in `/components`
-4. **Testing**: Test embedding functionality with real tools
-5. **Deployment**: Ensure all environment variables are set
+### Current (Development)
+- Permissive RLS policies for testing
+- No authentication required
+- Basic input validation
 
-## 📚 Resources
+### Production Ready
+- Restrict RLS policies to authenticated users
+- Implement proper authentication
+- Add comprehensive input validation
+- Rate limiting and monitoring
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [Supabase Documentation](https://supabase.com/docs)
-- [Tool Assessment Guide](./tool-evaluation-guide.md)
-
-## 📄 License
+## License
 
 [Add your license here]
 
-## 🆘 Troubleshooting
+## Support
 
-### Build Errors
-- Ensure `tailwind.config.ts` exists
-- Check environment variables are set
-- Verify Node.js version (18+)
-
-### Database Issues
-- Run `npm run migrate:verify` to check data
-- Ensure Supabase URL and keys are correct
-- Check RLS policies in Supabase dashboard
-
-### Embedding Problems
-- Verify CSP headers in middleware.ts
-- Check tool iframe restrictions
-- Test embedding in development first
+For questions or issues:
+1. Check the [documentation](docs/)
+2. Review existing issues
+3. Create a new issue with detailed information

@@ -11,7 +11,10 @@
     "lint": "next lint",
     "migrate": "npx tsx scripts/migrate.ts migrate",
     "migrate:cleanup": "npx tsx scripts/migrate.ts cleanup",
-    "migrate:verify": "npx tsx scripts/migrate.ts verify"
+    "migrate:verify": "npx tsx scripts/migrate.ts verify",
+    "test:crud": "npx tsx scripts/test-crud.ts",
+    "test:api": "npx tsx scripts/test-api.ts",
+    "test:simple": "node scripts/test-simple.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2",
