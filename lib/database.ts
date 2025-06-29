@@ -593,7 +593,7 @@ export class ToolsDatabase {
       .from('openness_assessments')
       .insert({
         tool_id: toolId,
-        score: openness.score,
+        score: Math.round(openness.score), // Round to nearest integer for database
         level: openness.level,
         assessment_date: new Date().toISOString()
       })

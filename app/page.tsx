@@ -13,6 +13,8 @@ import { ToolModal } from '@/components/ui/modals/ToolModal';
 import { ErrorBoundary } from '@/components/state/ErrorBoundary';
 import { SearchBar } from '@/components/ui/forms/SearchBar';
 import { EmbedCodeGenerator } from '@/components/ui/modals/EmbedCodeGenerator';
+import { AddToolModal } from '@/components/ui/modals/AddToolModal';
+import { DeleteConfirmationModal } from '@/components/ui/modals/DeleteConfirmationModal';
 
 // Simple filters interface
 interface SimpleFilters {
@@ -41,6 +43,10 @@ export default function Home() {
   const [showEmbedGenerator, setShowEmbedGenerator] = useState(false);
   const [selectedToolForEmbed, setSelectedToolForEmbed] = useState<Tool | null>(null);
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [showAddToolModal, setShowAddToolModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [toolToDelete, setToolToDelete] = useState<Tool | null>(null);
 
   // Load data on component mount
   useEffect(() => {
@@ -166,6 +172,55 @@ export default function Home() {
       opennessLevel: 'All',
       embedSupported: 'All'
     });
+  }, []);
+
+  const handleToolAdded = useCallback((newTool: Tool) => {
+    // Add the new tool to the state
+    setTools(prev => [...prev, newTool]);
+    
+    // Update categories if it's a new category
+    if (!categories.includes(newTool.category)) {
+      setCategories(prev => [...prev, newTool.category].sort());
+    }
+    
+    // Clear any filters to show the new tool
+    clearAllFilters();
+  }, [categories, clearAllFilters]);
+
+  const handleDeleteTool = useCallback((tool: Tool) => {
+    setToolToDelete(tool);
+    setShowDeleteModal(true);
+  }, []);
+
+  const handleConfirmDelete = useCallback(async () => {
+    if (!toolToDelete) return;
+
+    try {
+      const response = await fetch(`/api/tools/${toolToDelete.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete tool');
+      }
+
+      // Remove the tool from state
+      setTools(prev => prev.filter(tool => tool.id !== toolToDelete.id));
+      
+      // Close modal and reset state
+      setShowDeleteModal(false);
+      setToolToDelete(null);
+      
+    } catch (error) {
+      console.error('Failed to delete tool:', error);
+      throw error; // Re-throw to let modal handle the error display
+    }
+  }, [toolToDelete]);
+
+  const handleCloseDeleteModal = useCallback(() => {
+    setShowDeleteModal(false);
+    setToolToDelete(null);
   }, []);
 
   // Loading state
@@ -303,6 +358,44 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Edit Mode Toggle */}
+            <div className="flex justify-start gap-3">
+              <button
+                onClick={() => setEditMode(!editMode)}
+                className={`inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  editMode
+                    ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {editMode ? (
+                  <>
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    Exit Edit Mode
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit Mode
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => setShowAddToolModal(true)}
+                className="inline-flex items-center px-4 py-2 bg-ds-orange-500 text-white rounded-md text-sm font-medium hover:bg-ds-orange-600 transition-colors"
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Add Tool
+              </button>
+            </div>
+
             {/* Results Count */}
             <div className="flex items-center justify-between text-sm text-gray-600">
               <span>
@@ -351,6 +444,8 @@ export default function Home() {
                     tool={tool}
                     onOpenModal={handleOpenModal}
                     onGenerateEmbed={handleGenerateEmbed}
+                    editMode={editMode}
+                    onDelete={handleDeleteTool}
                   />
                 </ErrorBoundary>
               ))}
@@ -407,6 +502,59 @@ export default function Home() {
               isOpen={showEmbedGenerator}
               onClose={handleCloseEmbedGenerator}
             />
+          )}
+
+          {/* Add Tool Modal */}
+          {showAddToolModal && (
+            <ErrorBoundary
+              fallback={
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+                  <div className="bg-white rounded-lg p-6 max-w-md">
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading add tool form</h3>
+                    <p className="text-gray-600 mb-4">Unable to display the add tool modal.</p>
+                    <button 
+                      onClick={() => setShowAddToolModal(false)}
+                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              }
+            >
+              <AddToolModal
+                isOpen={showAddToolModal}
+                onClose={() => setShowAddToolModal(false)}
+                onToolAdded={handleToolAdded}
+              />
+            </ErrorBoundary>
+          )}
+
+          {/* Delete Confirmation Modal */}
+          {showDeleteModal && toolToDelete && (
+            <ErrorBoundary
+              fallback={
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+                  <div className="bg-white rounded-lg p-6 max-w-md">
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading delete confirmation</h3>
+                    <p className="text-gray-600 mb-4">Unable to display the delete confirmation modal.</p>
+                    <button 
+                      onClick={handleCloseDeleteModal}
+                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              }
+            >
+              <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={handleCloseDeleteModal}
+                onConfirm={handleConfirmDelete}
+                tool={toolToDelete}
+              />
+            </ErrorBoundary>
           )}
         </div>
         
