@@ -8,9 +8,10 @@ interface ToolCardProps {
   onGenerateEmbed?: (tool: Tool) => void;
   editMode?: boolean;
   onDelete?: (tool: Tool) => void;
+  onEdit?: (tool: Tool) => void;
 }
 
-export function ToolCard({ tool, onOpenModal, onGenerateEmbed, editMode = false, onDelete }: ToolCardProps) {
+export function ToolCard({ tool, onOpenModal, onGenerateEmbed, editMode = false, onDelete, onEdit }: ToolCardProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 hover:shadow-lg">
       <div className="p-6">
@@ -60,7 +61,7 @@ export function ToolCard({ tool, onOpenModal, onGenerateEmbed, editMode = false,
         {editMode ? (
           <div className="flex gap-2">
             <button
-              onClick={() => {/* TODO: Add edit functionality */}}
+              onClick={() => onEdit && onEdit(tool)}
               className="flex-1 px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

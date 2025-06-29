@@ -15,6 +15,7 @@ import { SearchBar } from '@/components/ui/forms/SearchBar';
 import { EmbedCodeGenerator } from '@/components/ui/modals/EmbedCodeGenerator';
 import { AddToolModal } from '@/components/ui/modals/AddToolModal';
 import { DeleteConfirmationModal } from '@/components/ui/modals/DeleteConfirmationModal';
+import { EditToolModal } from '@/components/ui/modals/EditToolModal';
 
 // Simple filters interface
 interface SimpleFilters {
@@ -47,6 +48,8 @@ export default function Home() {
   const [showAddToolModal, setShowAddToolModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [toolToDelete, setToolToDelete] = useState<Tool | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [toolToEdit, setToolToEdit] = useState<Tool | null>(null);
 
   // Load data on component mount
   useEffect(() => {
@@ -221,6 +224,32 @@ export default function Home() {
   const handleCloseDeleteModal = useCallback(() => {
     setShowDeleteModal(false);
     setToolToDelete(null);
+  }, []);
+
+  const handleEditTool = useCallback((tool: Tool) => {
+    setToolToEdit(tool);
+    setShowEditModal(true);
+  }, []);
+
+  const handleToolUpdated = useCallback((updatedTool: Tool) => {
+    // Update the tool in state
+    setTools(prev => prev.map(tool => 
+      tool.id === updatedTool.id ? updatedTool : tool
+    ));
+    
+    // Update categories if it's a new category
+    if (!categories.includes(updatedTool.category)) {
+      setCategories(prev => [...prev, updatedTool.category].sort());
+    }
+    
+    // Close modal and reset state
+    setShowEditModal(false);
+    setToolToEdit(null);
+  }, [categories]);
+
+  const handleCloseEditModal = useCallback(() => {
+    setShowEditModal(false);
+    setToolToEdit(null);
   }, []);
 
   // Loading state
@@ -446,6 +475,7 @@ export default function Home() {
                     onGenerateEmbed={handleGenerateEmbed}
                     editMode={editMode}
                     onDelete={handleDeleteTool}
+                    onEdit={handleEditTool}
                   />
                 </ErrorBoundary>
               ))}
@@ -526,6 +556,33 @@ export default function Home() {
                 isOpen={showAddToolModal}
                 onClose={() => setShowAddToolModal(false)}
                 onToolAdded={handleToolAdded}
+              />
+            </ErrorBoundary>
+          )}
+
+          {/* Edit Tool Modal */}
+          {showEditModal && toolToEdit && (
+            <ErrorBoundary
+              fallback={
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+                  <div className="bg-white rounded-lg p-6 max-w-md">
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading edit form</h3>
+                    <p className="text-gray-600 mb-4">Unable to display the edit tool modal.</p>
+                    <button 
+                      onClick={handleCloseEditModal}
+                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              }
+            >
+              <EditToolModal
+                isOpen={showEditModal}
+                onClose={handleCloseEditModal}
+                onToolUpdated={handleToolUpdated}
+                tool={toolToEdit}
               />
             </ErrorBoundary>
           )}
