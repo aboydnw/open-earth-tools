@@ -14,7 +14,9 @@
     "migrate:verify": "npx tsx scripts/migrate.ts verify",
     "test:crud": "npx tsx scripts/test-crud.ts",
     "test:api": "npx tsx scripts/test-api.ts",
-    "test:simple": "node scripts/test-simple.js"
+    "test:simple": "node scripts/test-simple.js",
+    "reassess:embedding": "npx tsx scripts/reassess-embedding.ts",
+    "test:live-embedding": "npx tsx scripts/live-embed-test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2",
@@ -32,6 +34,7 @@
     "tsx": "^4.7.0",
     "dotenv": "^16.3.1",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.0"
+    "postcss": "^8.4.0",
+    "puppeteer": "^23.0.0"
   }
 }

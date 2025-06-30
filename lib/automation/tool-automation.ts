@@ -58,8 +58,11 @@ const LICENSE_MAPPING: Record<string, string> = {
 
 const EMBEDDING_RULES = [
   { pattern: /nasa\.gov|usgs\.gov|noaa\.gov|epa\.gov/, canEmbed: false, reason: 'Government domain restrictions' },
-  { pattern: /\.edu/, canEmbed: true, reason: 'Academic tools typically support embedding' },
-  { pattern: /\.org/, canEmbed: true, reason: 'Open source tools support embedding' },
+  { pattern: /github\.io|netlify\.app|vercel\.app/, canEmbed: true, reason: 'Static hosting platforms typically allow embedding' },
+  { pattern: /observable\.com/, canEmbed: true, reason: 'Observable notebooks designed for embedding' },
+  { pattern: /codesandbox\.io|codepen\.io/, canEmbed: true, reason: 'Code sharing platforms support embedding' },
+  { pattern: /tableau\.com/, canEmbed: true, reason: 'Tableau provides official embed functionality' },
+  // Conservative approach: most sites don't allow embedding
 ];
 
 interface RawToolData {
@@ -161,7 +164,8 @@ export class ToolAutomation {
         return canEmbed;
       }
     }
-    return true; // Default to supporting embedding
+    // Conservative default: assume NOT embeddable unless explicitly known
+    return false;
   }
 
   private generateEmbedNote(url: string, embedSupported: boolean): string {
@@ -170,7 +174,9 @@ export class ToolAutomation {
         return reason;
       }
     }
-    return embedSupported ? 'Standard iframe embedding supported' : 'Embedding may be restricted';
+    return embedSupported 
+      ? 'Embedding capabilities need verification' 
+      : 'Most modern sites block iframe embedding for security';
   }
 
   private generateFeatures(functionality: string[], dataTypes: string[]): string[] {
