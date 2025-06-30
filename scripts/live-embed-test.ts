@@ -198,7 +198,8 @@ async function testEmbedding(url: string, toolName: string): Promise<EmbedTestRe
     
   } catch (error) {
     const loadTime = Date.now() - startTime;
-    console.log(`     ❌ Test failed: ${error.message}`);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.log(`     ❌ Test failed: ${errorMessage}`);
     
     return {
       toolId: '',
@@ -206,7 +207,7 @@ async function testEmbedding(url: string, toolName: string): Promise<EmbedTestRe
       url,
       canEmbed: false,
       errorType: 'UNKNOWN',
-      errorMessage: `Test execution failed: ${error.message}`,
+      errorMessage: `Test execution failed: ${errorMessage}`,
       loadTime
     };
   } finally {
@@ -286,7 +287,8 @@ async function liveEmbedAssessment(): Promise<void> {
           });
           console.log(`  ✅ Updated successfully`);
         } catch (error) {
-          console.error(`  ❌ Failed to update: ${error}`);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          console.error(`  ❌ Failed to update: ${errorMessage}`);
         }
       } else {
         console.log(`  ✓ No changes needed (${testResult.canEmbed ? 'embeddable' : 'not embeddable'})`);
@@ -361,7 +363,8 @@ async function liveEmbedAssessment(): Promise<void> {
     console.log('• Database reflects actual embedding compatibility');
     
   } catch (error) {
-    console.error('❌ Error during live assessment:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('❌ Error during live assessment:', errorMessage);
     throw error;
   }
 }
@@ -377,7 +380,8 @@ if (require.main === module) {
       process.exit(0);
     })
     .catch((error) => {
-      console.error('\n❌ Live embedding assessment failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error('\n❌ Live embedding assessment failed:', errorMessage);
       process.exit(1);
     });
 }
