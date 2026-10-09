@@ -4,7 +4,6 @@
   "description": "Marine ecosystem and climate indicators showing ocean color and temperature data from satellite observations.",
   "url": "https://oceancolor.gsfc.nasa.gov/",
   "embedUrl": "https://oceancolor.gsfc.nasa.gov/cgi/browse.pl",
-  "dataLink": "https://oceancolor.gsfc.nasa.gov/",
   "category": "Ocean & Climate",
   "license": "Open Source",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌊",
   "embedSupported": true,
   "embedNote": "NASA Ocean Color may require specific embedding parameters",
+  "dataLink": "https://oceancolor.gsfc.nasa.gov/",
   "embedCode": "<iframe src=\"https://oceancolor.gsfc.nasa.gov/cgi/browse.pl\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe>",
   "openness": {
     "score": 3,

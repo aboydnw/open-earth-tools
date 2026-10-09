@@ -4,7 +4,6 @@
   "description": "Narrative format with curated global indicators showing pandemic impacts. Visuals are clean and comparable over time.",
   "url": "https://www.earthdata.nasa.gov/dashboard/exploration",
   "embedUrl": "https://www.earthdata.nasa.gov/dashboard/exploration",
-  "dataLink": "https://www.earthdata.nasa.gov/dashboard/exploration",
   "category": "Environmental Monitoring",
   "license": "Public Domain",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "🌡️",
   "embedSupported": false,
   "embedNote": "Government domain restrictions may prevent embedding",
+  "dataLink": "https://www.earthdata.nasa.gov/dashboard/exploration",
   "openness": {
     "score": 4,
     "level": "Mostly Open",

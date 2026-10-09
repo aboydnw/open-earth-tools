@@ -2,18 +2,21 @@
 
 import React, { useState } from 'react';
 import { Tool } from '@/types';
+import { TurnstileWidget } from '@/components/ui/forms/TurnstileWidget';
+import { useSubmission } from '@/components/ui/forms/useSubmission';
+import { SubmissionReceived } from './SubmissionReceived';
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
   tool: Tool;
+  siteKey: string;
 }
 
-export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: DeleteConfirmationModalProps) {
+export function DeleteConfirmationModal({ isOpen, onClose, tool, siteKey }: DeleteConfirmationModalProps) {
   const [confirmText, setConfirmText] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [reason, setReason] = useState('');
+  const { loading, error, submitted, prUrl, setToken, setError, resetKey, submit } = useSubmission();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,20 +26,7 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
       return;
     }
 
-    setLoading(true);
-    setError(null);
-
-    try {
-      await onConfirm();
-      // Reset form and close modal
-      setConfirmText('');
-      onClose();
-    } catch (err) {
-      console.error('Failed to delete tool:', err);
-      setError(err instanceof Error ? err.message : 'Failed to delete tool');
-    } finally {
-      setLoading(false);
-    }
+    await submit(`/api/tools/${tool.id}`, 'DELETE', { reason: reason.trim() || undefined });
   };
 
   const handleClose = () => {
@@ -54,10 +44,17 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-md w-full">
+        {submitted ? (
+          <SubmissionReceived
+            message="Thanks. The tool will be removed from the directory once the request has been reviewed."
+            prUrl={prUrl}
+            onClose={onClose}
+          />
+        ) : (
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-red-600">Delete Tool</h2>
+              <h2 className="text-xl font-semibold text-red-600">Request Removal</h2>
               <button
                 type="button"
                 onClick={handleClose}
@@ -75,9 +72,9 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
               <div className="flex">
                 <div className="text-red-400 mr-3 mt-0.5">⚠️</div>
                 <div>
-                  <h4 className="text-red-800 font-medium text-sm">Permanent Deletion</h4>
+                  <h4 className="text-red-800 font-medium text-sm">Removal Request</h4>
                   <p className="text-red-700 text-sm mt-1">
-                    This action cannot be undone. This will permanently delete the tool and all associated data.
+                    This asks the maintainers to remove the tool from the directory. Nothing is removed until the request has been reviewed.
                   </p>
                 </div>
               </div>
@@ -85,7 +82,7 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
 
             {/* Tool Info */}
             <div className="bg-gray-50 rounded-md p-4 mb-6">
-              <h4 className="font-medium text-gray-900 mb-2">Tool to delete:</h4>
+              <h4 className="font-medium text-gray-900 mb-2">Tool to remove:</h4>
               <div className="flex items-center">
                 <span className="text-lg mr-2">{tool.icon}</span>
                 <div>
@@ -103,6 +100,23 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
                 </div>
               </div>
             )}
+
+            {/* Reason */}
+            <div className="mb-6">
+              <label htmlFor="reason" className="block text-sm font-medium text-gray-700 mb-2">
+                Why should this tool be removed?
+              </label>
+              <textarea
+                id="reason"
+                rows={2}
+                maxLength={500}
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                placeholder="e.g., the tool is no longer online"
+                disabled={loading}
+              />
+            </div>
 
             {/* Confirmation Input */}
             <div className="mb-6">
@@ -139,6 +153,8 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
                 </p>
               )}
             </div>
+
+            <TurnstileWidget siteKey={siteKey} onToken={setToken} resetKey={resetKey} />
           </div>
 
           <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
@@ -161,10 +177,11 @@ export function DeleteConfirmationModal({ isOpen, onClose, onConfirm, tool }: De
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               )}
-              {loading ? 'Deleting...' : 'Delete Tool'}
+              {loading ? 'Submitting...' : 'Request Removal'}
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

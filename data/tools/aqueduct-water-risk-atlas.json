@@ -4,7 +4,6 @@
   "description": "Used to assess and benchmark water-related risks by sector and region. Allows dynamic scenario testing and data downloads. This is an edit",
   "url": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
   "embedUrl": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
-  "dataLink": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
   "category": "Water Resources",
   "license": "Open Source",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "⚠️",
   "embedSupported": true,
   "embedNote": "Embedding supported",
+  "dataLink": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
   "openness": {
     "score": 3,
     "level": "Partially Open",

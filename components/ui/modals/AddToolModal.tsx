@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Tool } from '@/types';
+import { DATA_TYPE_OPTIONS, FUNCTIONALITY_OPTIONS } from '@/lib/constants';
+import { TurnstileWidget } from '@/components/ui/forms/TurnstileWidget';
+import { useSubmission } from '@/components/ui/forms/useSubmission';
+import { SubmissionReceived } from './SubmissionReceived';
 
 interface AddToolModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onToolAdded: (tool: Tool) => void;
+  siteKey: string;
 }
 
 interface FormData {
@@ -17,21 +20,7 @@ interface FormData {
   functionality: string[];
 }
 
-const DATA_TYPE_OPTIONS = [
-  'climate', 'temperature', 'precipitation', 'weather',
-  'air quality', 'emissions', 'carbon', 'water quality',
-  'ocean', 'marine', 'satellite imagery', 'earthquakes',
-  'disasters', 'wildfire', 'floods', 'agriculture',
-  'food security', 'biodiversity', 'pollution'
-];
-
-const FUNCTIONALITY_OPTIONS = [
-  'visualization', 'analysis', 'monitoring', 'tracking',
-  'forecasting', 'mapping', 'reporting', 'comparison',
-  'exploration', 'discovery', 'assessment', 'modeling'
-];
-
-export function AddToolModal({ isOpen, onClose, onToolAdded }: AddToolModalProps) {
+export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     url: '',
@@ -39,13 +28,10 @@ export function AddToolModal({ isOpen, onClose, onToolAdded }: AddToolModalProps
     dataTypes: [],
     functionality: []
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { loading, error, submitted, prUrl, setToken, setError, resetKey, submit } = useSubmission();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
       // Basic validation
@@ -72,49 +58,15 @@ export function AddToolModal({ isOpen, onClose, onToolAdded }: AddToolModalProps
         throw new Error('Please enter a valid URL');
       }
 
-      // Submit to API for automated assessment and creation
-      const response = await fetch('/api/tools', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          url: formData.url.trim(),
-          description: formData.description.trim(),
-          dataTypes: formData.dataTypes,
-          functionality: formData.functionality,
-          // Flag to indicate this needs automated assessment
-          needsAutomatedAssessment: true
-        }),
+      await submit('/api/tools', 'POST', {
+        name: formData.name.trim(),
+        url: formData.url.trim(),
+        description: formData.description.trim(),
+        dataTypes: formData.dataTypes,
+        functionality: formData.functionality,
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create tool');
-      }
-
-      const result = await response.json();
-      const newTool = result.data;
-
-      // Reset form
-      setFormData({
-        name: '',
-        url: '',
-        description: '',
-        dataTypes: [],
-        functionality: []
-      });
-
-      // Notify parent component
-      onToolAdded(newTool);
-      onClose();
-
     } catch (err) {
-      console.error('Failed to create tool:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -141,6 +93,13 @@ export function AddToolModal({ isOpen, onClose, onToolAdded }: AddToolModalProps
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {submitted ? (
+          <SubmissionReceived
+            message="Thanks for the suggestion. The tool will appear in the directory once it has been reviewed."
+            prUrl={prUrl}
+            onClose={onClose}
+          />
+        ) : (
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -274,15 +233,18 @@ export function AddToolModal({ isOpen, onClose, onToolAdded }: AddToolModalProps
                   <div>
                     <h4 className="text-blue-800 font-medium text-sm">Automated Assessment</h4>
                     <p className="text-blue-700 text-sm mt-1">
-                      The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections.
+                      The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections. Every submission is reviewed before it appears in the directory.
                     </p>
                   </div>
                 </div>
               </div>
+
+              <TurnstileWidget siteKey={siteKey} onToken={setToken} resetKey={resetKey} />
             </div>
           </div>
 
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
+          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
+            {error && <p className="text-red-600 text-sm mr-auto">{error}</p>}
             <button
               type="button"
               onClick={onClose}
@@ -302,10 +264,11 @@ export function AddToolModal({ isOpen, onClose, onToolAdded }: AddToolModalProps
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               )}
-              {loading ? 'Creating Tool...' : 'Submit Tool'}
+              {loading ? 'Submitting...' : 'Submit for Review'}
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

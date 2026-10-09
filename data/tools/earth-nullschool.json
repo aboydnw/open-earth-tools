@@ -4,7 +4,6 @@
   "description": "Animated globe showing weather patterns. Offers multiple layers and altitudes, with fast transitions.",
   "url": "https://earth.nullschool.net/",
   "embedUrl": "https://earth.nullschool.net/",
-  "dataLink": "https://earth.nullschool.net/",
   "category": "Weather",
   "license": "Open Source",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "💨",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://earth.nullschool.net/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

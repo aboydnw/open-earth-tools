@@ -4,7 +4,6 @@
   "description": "Browser-based Earth system visualizations with animations and overlays. Designed for conceptual understanding rather than precise analysis.",
   "url": "https://fluid-earth.byrd.osu.edu/",
   "embedUrl": "https://fluid-earth.byrd.osu.edu/",
-  "dataLink": "https://fluid-earth.byrd.osu.edu/",
   "category": "Ocean & Climate",
   "license": "Academic",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌊",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://fluid-earth.byrd.osu.edu/",
   "openness": {
     "score": 3,
     "level": "Partially Open",

@@ -4,7 +4,6 @@
   "description": "Global earthquake monitoring with magnitude and location data updated in real-time from seismic monitoring stations worldwide.",
   "url": "https://earthquake.usgs.gov/earthquakes/map/",
   "embedUrl": "https://earthquake.usgs.gov/earthquakes/map/?extent=-85.60929,-358.59375&extent=85.60929,358.59375&range=search&timeZone=utc&search=%7B%22name%22:%22Search%20Results%22,%22params%22:%7B%22starttime%22:%222024-01-01%2000:00:00%22,%22endtime%22:%222024-12-31%2023:59:59%22,%22maxlatitude%22:90,%22minlatitude%22:-90,%22maxlongitude%22:180,%22minlongitude%22:-180,%22minmagnitude%22:2.5,%22orderby%22:%22time%22%7D%7D",
-  "dataLink": "https://earthquake.usgs.gov/earthquakes/map/",
   "category": "Disasters",
   "license": "Public Domain",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌍",
   "embedSupported": false,
   "embedNote": "USGS allows embedding but may have iframe restrictions",
+  "dataLink": "https://earthquake.usgs.gov/earthquakes/map/",
   "embedCode": "<iframe src=\"https://earthquake.usgs.gov/earthquakes/map/?extent=-85.60929,-358.59375&extent=85.60929,358.59375&range=search&timeZone=utc&search=%7B%22name%22:%22Search%20Results%22,%22params%22:%7B%22starttime%22:%222024-01-01%2000:00:00%22,%22endtime%22:%222024-12-31%2023:59:59%22,%22maxlatitude%22:90,%22minlatitude%22:-90,%22maxlongitude%22:180,%22minlongitude%22:-180,%22minmagnitude%22:2.5,%22orderby%22:%22time%22%7D%7D\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe>",
   "openness": {
     "score": 2,

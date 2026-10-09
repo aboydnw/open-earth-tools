@@ -1,11 +1,8 @@
 import { Tool } from './types';
 
-// Note: Most filtering functions moved to client-side components
-// Keeping this file minimal with only actively used utilities
-
 export function getToolsByOpennessLevel(tools: Tool[]): Record<string, Tool[]> {
   const grouped: Record<string, Tool[]> = {};
-  
+
   tools.forEach(tool => {
     const level = tool.openness.level;
     if (!grouped[level]) {
@@ -13,7 +10,7 @@ export function getToolsByOpennessLevel(tools: Tool[]): Record<string, Tool[]> {
     }
     grouped[level].push(tool);
   });
-  
+
   return grouped;
 }
 
@@ -25,4 +22,10 @@ export function generateIdFromName(name: string): string {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
+}
+
+/** Reduce a URL to a comparable key: no scheme, no `www.`, no trailing slash, no fragment. */
+export function normalizeUrl(url: string): string {
+  const { hostname, pathname, search } = new URL(url);
+  return `${hostname.toLowerCase().replace(/^www\./, '')}${pathname.replace(/\/+$/, '')}${search}`;
 }

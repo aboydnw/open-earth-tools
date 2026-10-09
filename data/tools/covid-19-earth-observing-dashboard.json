@@ -4,7 +4,6 @@
   "description": "Joint initiative (ESA, NASA, JAXA) tracking COVID-era environmental and economic shifts. Visually polished with toggles for temporal and geographic comparisons.",
   "url": "https://eodashboard.org/explore/",
   "embedUrl": "https://eodashboard.org/explore/",
-  "dataLink": "https://eodashboard.org/explore/",
   "category": "Environmental Monitoring",
   "license": "Open Source",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "🌡️",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://eodashboard.org/explore/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

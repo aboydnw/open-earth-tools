@@ -4,7 +4,6 @@
   "description": "Static visuals and interactive plots to communicate effectiveness of carbon removal offsets. Prioritizes clarity and transparency in methodology.",
   "url": "https://carbonplan.org/research/dor-efficiency",
   "embedUrl": "https://carbonplan.org/research/dor-efficiency",
-  "dataLink": "https://carbonplan.org/research/dor-efficiency",
   "category": "Carbon",
   "license": "MIT",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌿",
   "embedSupported": true,
   "embedNote": "Open source tool supports embedding",
+  "dataLink": "https://carbonplan.org/research/dor-efficiency",
   "openness": {
     "score": 6,
     "level": "Fully Open",

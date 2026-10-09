@@ -4,7 +4,6 @@
   "description": "Presents spatial data on coral reefs, mangroves, fisheries, etc. Map layers are accessible but interface is dated.",
   "url": "https://maps.oceanwealth.org/#/data",
   "embedUrl": "https://maps.oceanwealth.org/#/data",
-  "dataLink": "https://maps.oceanwealth.org/#/data",
   "category": "Marine Ecosystems",
   "license": "Open Source",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "🐠",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://maps.oceanwealth.org/#/data",
   "openness": {
     "score": 3,
     "level": "Partially Open",

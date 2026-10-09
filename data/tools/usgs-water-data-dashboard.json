@@ -4,7 +4,6 @@
   "description": "Real-time water monitoring including stream flow and groundwater levels across the United States from USGS monitoring stations.",
   "url": "https://dashboard.waterdata.usgs.gov/",
   "embedUrl": "https://dashboard.waterdata.usgs.gov/app/nwd/?region=lower48&aoi=default",
-  "dataLink": "https://dashboard.waterdata.usgs.gov/",
   "category": "Water Resources",
   "license": "Public Domain",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌊",
   "embedSupported": true,
   "embedNote": "USGS Water Data supports embedding with some restrictions",
+  "dataLink": "https://dashboard.waterdata.usgs.gov/",
   "embedCode": "<iframe src=\"https://dashboard.waterdata.usgs.gov/app/nwd/?region=lower48&aoi=default\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe>",
   "openness": {
     "score": 3,

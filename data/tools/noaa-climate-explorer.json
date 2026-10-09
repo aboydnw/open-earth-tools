@@ -4,7 +4,6 @@
   "description": "Local climate projections and trend analysis showing historical trends and future projections for temperature and precipitation.",
   "url": "https://toolkit.climate.gov/climate-explorer2/",
   "embedUrl": "https://toolkit.climate.gov/climate-explorer2/",
-  "dataLink": "https://toolkit.climate.gov/climate-explorer2/",
   "category": "Climate",
   "license": "Public Domain",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌡️",
   "embedSupported": false,
   "embedNote": "NOAA tools may have government domain restrictions",
+  "dataLink": "https://toolkit.climate.gov/climate-explorer2/",
   "openness": {
     "score": 2,
     "level": "Partially Open",

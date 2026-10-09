@@ -4,7 +4,6 @@
   "description": "Globe-based particle animation showing wind and pollution. Visually striking and accessible, but lacks clarity on data sources.",
   "url": "https://www.iqair.com/earth?nav=",
   "embedUrl": "https://www.iqair.com/earth?nav=",
-  "dataLink": "https://www.iqair.com/earth?nav=",
   "category": "Environmental Monitoring",
   "license": "Freemium",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "🌬️",
   "embedSupported": true,
   "embedNote": "Commercial platform with embed widgets available",
+  "dataLink": "https://www.iqair.com/earth?nav=",
   "openness": {
     "score": 2,
     "level": "Partially Open",

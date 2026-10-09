@@ -2,12 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tool, OpennessAssessment } from '@/types';
+import { TurnstileWidget } from '@/components/ui/forms/TurnstileWidget';
+import { useSubmission } from '@/components/ui/forms/useSubmission';
+import { SubmissionReceived } from './SubmissionReceived';
 
 interface EditToolModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onToolUpdated: (tool: Tool) => void;
   tool: Tool;
+  categories: string[];
+  siteKey: string;
 }
 
 interface EditFormData {
@@ -25,18 +29,6 @@ interface EditFormData {
   embedNote: string;
   openness: OpennessAssessment;
 }
-
-const CATEGORIES = [
-  'Data Visualization',
-  'Disasters',
-  'Climate',
-  'Water Resources',
-  'Ocean & Climate',
-  'Satellite Imagery',
-  'Weather',
-  'Food Systems',
-  'Environmental Monitoring'
-];
 
 const LICENSES = [
   'MIT',
@@ -70,7 +62,11 @@ const OPENNESS_LEVELS: OpennessAssessment['level'][] = [
 
 const DIMENSION_SCORES: Array<'green' | 'yellow' | 'red'> = ['green', 'yellow', 'red'];
 
-export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditToolModalProps) {
+function withCurrent(options: string[], current: string): string[] {
+  return current && !options.includes(current) ? [...options, current] : options;
+}
+
+export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: EditToolModalProps) {
   const [formData, setFormData] = useState<EditFormData>({
     name: '',
     url: '',
@@ -98,8 +94,7 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
     }
   });
   
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { loading, error, submitted, prUrl, setToken, setError, resetKey, submit } = useSubmission();
   const [showAssessmentDetails, setShowAssessmentDetails] = useState(false);
   const [newFeature, setNewFeature] = useState('');
 
@@ -119,15 +114,17 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
         status: tool.status,
         embedSupported: tool.embedSupported,
         embedNote: tool.embedNote || '',
-        openness: JSON.parse(JSON.stringify(tool.openness)) // Deep copy
+        openness: {
+          score: tool.openness.score,
+          level: tool.openness.level,
+          dimensions: JSON.parse(JSON.stringify(tool.openness.dimensions))
+        }
       });
     }
   }, [tool]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
       // Basic validation
@@ -149,32 +146,9 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
         throw new Error('Please enter valid URLs');
       }
 
-      // Submit to API
-      const response = await fetch(`/api/tools/${tool.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to update tool');
-      }
-
-      const result = await response.json();
-      const updatedTool = result.data;
-
-      // Notify parent component
-      onToolUpdated(updatedTool);
-      onClose();
-
+      await submit(`/api/tools/${tool.id}`, 'PUT', formData);
     } catch (err) {
-      console.error('Failed to update tool:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -220,6 +194,13 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        {submitted ? (
+          <SubmissionReceived
+            message="Thanks for the correction. The change will appear in the directory once it has been reviewed."
+            prUrl={prUrl}
+            onClose={onClose}
+          />
+        ) : (
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -322,7 +303,7 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
                     onChange={(e) => setFormData(prev => ({ ...prev, license: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
                   >
-                    {LICENSES.map(license => (
+                    {withCurrent(LICENSES, formData.license).map(license => (
                       <option key={license} value={license}>{license}</option>
                     ))}
                   </select>
@@ -339,7 +320,7 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
                     onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
                   >
-                    {CATEGORIES.map(category => (
+                    {withCurrent(categories, formData.category).map(category => (
                       <option key={category} value={category}>{category}</option>
                     ))}
                   </select>
@@ -398,7 +379,7 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
                     onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
                   >
-                    {STATUS_OPTIONS.map(status => (
+                    {withCurrent(STATUS_OPTIONS, formData.status).map(status => (
                       <option key={status} value={status}>{status}</option>
                     ))}
                   </select>
@@ -579,9 +560,14 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
                 </div>
               )}
             </div>
+
+            <div className="mt-6">
+              <TurnstileWidget siteKey={siteKey} onToken={setToken} resetKey={resetKey} />
+            </div>
           </div>
 
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
+          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
+            {error && <p className="text-red-600 text-sm mr-auto">{error}</p>}
             <button
               type="button"
               onClick={onClose}
@@ -601,10 +587,11 @@ export function EditToolModal({ isOpen, onClose, onToolUpdated, tool }: EditTool
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               )}
-              {loading ? 'Saving...' : 'Save Changes'}
+              {loading ? 'Submitting...' : 'Submit for Review'}
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

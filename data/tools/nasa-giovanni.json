@@ -4,7 +4,6 @@
   "description": "Powerful tool for generating plots from gridded datasets. Assumes domain knowledge and has limited onboarding.",
   "url": "https://giovanni.gsfc.nasa.gov/giovanni/",
   "embedUrl": "https://giovanni.gsfc.nasa.gov/giovanni/",
-  "dataLink": "https://giovanni.gsfc.nasa.gov/giovanni/",
   "category": "Atmospheric Science",
   "license": "Public Domain",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌫️",
   "embedSupported": false,
   "embedNote": "Government domain restrictions may prevent embedding",
+  "dataLink": "https://giovanni.gsfc.nasa.gov/giovanni/",
   "openness": {
     "score": 4,
     "level": "Mostly Open",

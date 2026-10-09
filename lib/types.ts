@@ -1,37 +1,10 @@
-export interface OpennessScore {
-  score: "green" | "yellow" | "red";
-  note: string;
-}
+import type { ToolFile } from './tool-schema';
 
-export interface OpennessAssessment {
-  score: number;
-  level: "Fully Open" | "Mostly Open" | "Partially Open" | "Minimally Open";
-  dimensions: {
-    "Software Licensing": OpennessScore;
-    "Data Licensing": OpennessScore;
-    "Technical Accessibility": OpennessScore;
-    "Data Standards": OpennessScore;
-    "Infrastructure": OpennessScore;
-    "Community Governance": OpennessScore;
-  };
-}
+export type OpennessAssessment = ToolFile['openness'];
+export type OpennessScore = OpennessAssessment['dimensions'][keyof OpennessAssessment['dimensions']];
 
-export interface Tool {
-  id: string;
-  name: string;
-  organization: string;
-  description: string;
-  url: string;
-  embedUrl: string;
-  license: string;
-  category: string;
-  features: string[];
-  icon: string;
-  status: string;
-  embedSupported: boolean;
-  embedNote?: string;
-  openness: OpennessAssessment;
-}
+/** A tool as stored in `data/tools/<id>.json`, plus the id taken from its filename. */
+export type Tool = ToolFile & { id: string };
 
 export interface OpennessLevelConfig {
   color: string;

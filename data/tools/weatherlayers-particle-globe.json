@@ -4,7 +4,6 @@
   "description": "Open-source prototype visualizing wind fields on a globe with particle animations. Primarily aesthetic, with little direct interactivity.",
   "url": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
   "embedUrl": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
-  "dataLink": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
   "category": "Weather",
   "license": "Open Source",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "💨",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
   "openness": {
     "score": 6,
     "level": "Fully Open",

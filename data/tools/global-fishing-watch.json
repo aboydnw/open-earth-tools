@@ -4,7 +4,6 @@
   "description": "Tracks fishing vessel movements using AIS and machine learning. Features time filtering, EEZ overlays, and behavior classification.",
   "url": "https://globalfishingwatch.org/map",
   "embedUrl": "https://globalfishingwatch.org/map",
-  "dataLink": "https://globalfishingwatch.org/map",
   "category": "Marine Monitoring",
   "license": "Open Source",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🐟",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://globalfishingwatch.org/map",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

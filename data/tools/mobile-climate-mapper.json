@@ -4,7 +4,6 @@
   "description": "Mobile-first tool for viewing localized climate trends in US cities. Clear graphs and clean design.",
   "url": "https://earth.gov/mobile-climate-mapper/",
   "embedUrl": "https://earth.gov/mobile-climate-mapper/",
-  "dataLink": "https://earth.gov/mobile-climate-mapper/",
   "category": "Climate",
   "license": "Public Domain",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "🌡️",
   "embedSupported": false,
   "embedNote": "Government domain restrictions may prevent embedding",
+  "dataLink": "https://earth.gov/mobile-climate-mapper/",
   "openness": {
     "score": 4,
     "level": "Mostly Open",

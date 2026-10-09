@@ -4,7 +4,6 @@
   "description": "Real-time weather visualization showing wind patterns, temperature, precipitation and other meteorological data with beautiful animations.",
   "url": "https://www.windy.com/",
   "embedUrl": "https://embed.windy.com/embed2.html?lat=40.724&lon=-73.996&detailLat=40.724&detailLon=-73.996&width=650&height=450&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1",
-  "dataLink": "https://www.windy.com/",
   "category": "Weather",
   "license": "Freemium",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌬️",
   "embedSupported": true,
   "embedNote": "Windy provides official embed widgets",
+  "dataLink": "https://www.windy.com/",
   "embedCode": "<iframe src=\"https://embed.windy.com/embed2.html?lat=40.724&lon=-73.996&detailLat=40.724&detailLon=-73.996&width=650&height=450&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe>",
   "openness": {
     "score": 2,

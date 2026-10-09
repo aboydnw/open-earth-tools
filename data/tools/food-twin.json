@@ -4,7 +4,6 @@
   "description": "Digital twin of the US food system showing how food moves from production to consumption. Visualizes supply chain resilience and climate impacts on food security.",
   "url": "https://food.theplotline.org/",
   "embedUrl": "https://food.theplotline.org/",
-  "dataLink": "https://food.theplotline.org/",
   "category": "Food Systems",
   "license": "Open Source",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌾",
   "embedSupported": true,
   "embedNote": "Food Twin supports embedding with modern web architecture",
+  "dataLink": "https://food.theplotline.org/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

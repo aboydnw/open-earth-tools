@@ -4,7 +4,6 @@
   "description": "Tracks emissions at a fine spatial and sectoral scale. Map is performant, with filters for year, sector, and region.",
   "url": "https://climatetrace.org/explore/",
   "embedUrl": "https://climatetrace.org/explore/",
-  "dataLink": "https://climatetrace.org/explore/",
   "category": "Emissions",
   "license": "Open Source",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "💨",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://climatetrace.org/explore/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

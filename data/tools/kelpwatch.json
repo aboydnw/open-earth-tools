@@ -4,7 +4,6 @@
   "description": "Time-series viewer for kelp canopy area based on Landsat. Provides context and scientific citations.",
   "url": "https://kelpwatch.org/map",
   "embedUrl": "https://kelpwatch.org/map",
-  "dataLink": "https://kelpwatch.org/map",
   "category": "Marine Ecosystems",
   "license": "Open Source",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "🐠",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://kelpwatch.org/map",
   "openness": {
     "score": 4,
     "level": "Mostly Open",

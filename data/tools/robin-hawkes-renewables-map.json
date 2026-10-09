@@ -4,7 +4,6 @@
   "description": "A hobby project showing UK renewable energy facilities. Simple filters and fly-to interactions.",
   "url": "https://renewables-map.robinhawkes.com/",
   "embedUrl": "https://renewables-map.robinhawkes.com/",
-  "dataLink": "https://renewables-map.robinhawkes.com/",
   "category": "Energy",
   "license": "Open Source",
   "status": "Production",
@@ -15,6 +14,7 @@
   "icon": "⚡",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://renewables-map.robinhawkes.com/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

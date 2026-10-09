@@ -64,8 +64,7 @@ export function useToolFiltering(tools: Tool[]) {
         case 'openness-asc':
           return a.openness.score - b.openness.score;
         case 'recent':
-          // For now, sort by name as we don't have creation dates
-          return a.name.localeCompare(b.name);
+          return (b.addedAt ?? '').localeCompare(a.addedAt ?? '') || a.name.localeCompare(b.name);
         default:
           return a.name.localeCompare(b.name);
       }

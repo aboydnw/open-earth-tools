@@ -1,228 +1,94 @@
 # Development Guide
 
-## Quick Start
+## Setup
 
-### Prerequisites
-- Node.js 18+
-- Supabase account and project
-- Environment variables configured
-
-### Setup
 ```bash
-git clone <repository>
-cd open-earth-tools
 npm install
-cp .env.example .env.local
-# Configure your Supabase credentials in .env.local
-```
-
-### Development Server
-```bash
 npm run dev
 ```
 
-### Testing
+Visit `http://localhost:3000`. The directory reads its data from `data/tools`, so there is nothing else to set up for browsing.
+
+## Project structure
+
+```
+app/
+├── page.tsx                  # Server component: loads tools at build time
+└── api/tools/                # Submission endpoints (POST, PUT, DELETE)
+components/
+├── Directory.tsx             # Client UI: search, filters, modals
+└── ui/
+    ├── forms/                # Search bar, Turnstile widget, submission hook
+    └── modals/               # Add, edit, delete, preview, embed
+data/
+├── tools/                    # One JSON file per tool
+└── archive/                  # Raw export of the old Supabase database
+lib/
+├── tool-schema.ts            # Zod schemas for tool files and submissions
+├── tools-data.ts             # Reads and validates data/tools
+├── automation/               # Rule-based scoring for new tools
+└── submissions/              # Turnstile, URL check, GitHub, submit flow
+tests/                        # Vitest unit tests
+```
+
+## Tool data
+
+Each tool is `data/tools/<slug>.json`. The slug is the tool's id and should not change once the tool is published, even if the tool is renamed.
+
+`lib/tool-schema.ts` is the single definition of what a tool file may contain. Unknown fields are rejected. If you add a field, add it to the schema first.
+
+`npm test` loads every file, so it doubles as a data check. CI runs it on every pull request.
+
+## Submissions
+
+The forms post to `app/api/tools`. The flow for all three actions lives in `lib/submissions/submit.ts`:
+
+1. Check that submissions are configured
+2. Validate the request body
+3. Verify the Turnstile token with Cloudflare
+4. Check for duplicates in the directory
+5. Check that the tool URL is public and reachable
+6. Check open submission pull requests for duplicates and for the cap
+7. Create a branch named `submission/<action>/<slug>/<timestamp>`, commit the file change, and open a pull request
+
+The response includes a link to the pull request only when the repository is public.
+
+### Environment variables
+
+Copy `.env.example` to `.env.local`.
+
+| Variable | Purpose |
+|---|---|
+| `GITHUB_TOKEN` | Fine-grained personal access token for this repository only, with read/write access to **Contents** and **Pull requests** |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key, used by the forms |
+| `TURNSTILE_SECRET_KEY` | Turnstile secret key, used by the server |
+| `GITHUB_REPO` | Optional. Defaults to `aboydnw/open-earth-tools` |
+| `GITHUB_BASE_BRANCH` | Optional. Defaults to `main` |
+
+If any of the first three is missing, the forms are hidden and the API answers `503`.
+
+`NEXT_PUBLIC_TURNSTILE_SITE_KEY` is read when the site builds, so changing it needs a redeploy.
+
+For local work, Cloudflare publishes test keys that always pass. They are listed in `.env.example`. Point `GITHUB_REPO` at a scratch repository if you want to try the full flow without opening pull requests here.
+
+### Embedding and the Content Security Policy
+
+`middleware.ts` sets the site's Content Security Policy. A tool preview only loads if the tool's domain is listed under `frame-src`. When you merge a new embeddable tool, add its domain there.
+
+## Checks
+
 ```bash
-# Test CRUD functionality
-npm run test:simple
-
-# Test API endpoints (requires dev server running)
-npm run test:api
-
-# TypeScript test (full test suite)
-npm run test:crud
+npm run type-check
+npm test
+npm run build
 ```
-
-## Project Structure
-
-```
-open-earth-tools/
-├── app/                    # Next.js app directory
-│   ├── api/               # API routes
-│   │   └── tools/         # CRUD endpoints
-│   ├── page.tsx           # Main page
-│   └── layout.tsx         # App layout
-├── lib/                   # Core libraries
-│   ├── database.ts        # Database operations
-│   ├── types.ts          # TypeScript interfaces
-│   └── utils.ts          # Utility functions
-├── components/            # React components
-├── docs/                  # Documentation
-│   └── CRUD_API.md       # API documentation
-├── scripts/              # Utility scripts
-│   ├── test-crud.ts      # Database tests
-│   ├── test-api.ts       # API tests
-│   └── reset-rls.sql     # RLS policy reset
-└── types/                # Global type definitions
-```
-
-## Key Technologies
-
-- **Next.js 15**: React framework with App Router
-- **TypeScript**: Type safety and developer experience
-- **Supabase**: PostgreSQL database with real-time features
-- **Tailwind CSS**: Utility-first CSS framework
-- **Row Level Security**: Database-level access control
-
-## Development Workflow
-
-### 1. Database Changes
-1. Update schema in Supabase dashboard
-2. Update TypeScript interfaces in `lib/types.ts`
-3. Update database operations in `lib/database.ts`
-4. Test with `npm run test:simple`
-
-### 2. API Changes
-1. Modify routes in `app/api/tools/`
-2. Test with `npm run test:api`
-3. Update documentation in `docs/CRUD_API.md`
-
-### 3. Frontend Changes
-1. Create/modify components in `components/`
-2. Update pages in `app/`
-3. Test in browser with `npm run dev`
-
-## Database Schema
-
-### Core Tables
-- `tools`: Main tool records
-- `attribute_types`: Categories (Organization, License, etc.)
-- `attribute_values`: Specific values (MIT, NASA, etc.)
-- `tool_attribute_links`: Many-to-many relationships
-- `openness_assessments`: Tool openness scores
-- `assessment_dimensions`: 6-dimension breakdowns
-
-### Relationships
-```
-tools (1) → (∞) tool_attribute_links (∞) → (1) attribute_values
-attribute_values (∞) → (1) attribute_types
-tools (1) → (∞) openness_assessments (1) → (∞) assessment_dimensions
-```
-
-## Environment Variables
-
-Required in `.env.local`:
-```bash
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-```
-
-## Debugging
-
-### Database Issues
-```bash
-# Check database connection
-npm run test:simple
-
-# Verbose database logging
-# Add to lib/database.ts:
-console.error('Database error:', error)
-```
-
-### API Issues
-```bash
-# Test specific endpoint
-curl http://localhost:3000/api/tools
-
-# Check Next.js logs
-npm run dev
-```
-
-### RLS Policy Issues
-Run SQL in Supabase dashboard:
-```sql
--- Check current policies
-SELECT * FROM pg_policies WHERE tablename = 'tools';
-
--- Reset policies if needed
-\i scripts/reset-rls.sql
-```
-
-## Contributing
-
-### Code Style
-- Use TypeScript for all new code
-- Follow existing naming conventions
-- Add JSDoc comments for public functions
-- Use meaningful variable names
-
-### Testing
-- Test database changes with `npm run test:simple`
-- Test API changes with `npm run test:api`
-- Ensure all tests pass before committing
-
-### Documentation
-- Update `docs/CRUD_API.md` for API changes
-- Add inline comments for complex logic
-- Update this guide for workflow changes
 
 ## Deployment
 
-### Production Considerations
-1. **Environment Variables**: Use production Supabase credentials
-2. **RLS Policies**: Restrict to authenticated users only
-3. **Rate Limiting**: Add rate limiting to API routes
-4. **Input Validation**: Enhance validation in API routes
-5. **Error Handling**: Add proper error boundaries
-6. **Monitoring**: Add logging and error tracking
+The site deploys on Vercel from `main`.
 
-### Security Checklist
-- [ ] RLS policies restrict access appropriately
-- [ ] Input validation on all API endpoints
-- [ ] Authentication required for write operations
-- [ ] No sensitive data in client-side code
-- [ ] HTTPS enforced in production
-- [ ] Rate limiting implemented
+1. Add `GITHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, and `TURNSTILE_SECRET_KEY` in the Vercel project settings
+2. In the Turnstile widget settings, add the site's domain
+3. Redeploy
 
-## Common Tasks
-
-### Add New Tool Category
-1. Create tools with new category via API
-2. Category automatically appears in filters
-3. No code changes needed
-
-### Add New Attribute Type
-1. Modify `createToolAttributes()` in `lib/database.ts`
-2. Update TypeScript interfaces if needed
-3. Test with `npm run test:simple`
-
-### Update Openness Dimensions
-1. Modify interfaces in `lib/types.ts`
-2. Update `createOpennessAssessment()` in `lib/database.ts`
-3. Update existing assessments if needed
-
-### Add Authentication
-1. Set up Supabase Auth
-2. Update RLS policies to require authentication
-3. Add auth checks to API routes
-4. Update frontend with auth components
-
-## Performance Tips
-
-- Use database indexes for frequently queried fields
-- Implement pagination for large result sets
-- Consider caching for static data
-- Optimize complex queries with proper joins
-- Monitor query performance in Supabase dashboard
-
-## Troubleshooting
-
-### "Module not found" Errors
-- Check import paths are correct
-- Ensure files exist and are properly exported
-- Verify TypeScript configuration
-
-### RLS Policy Violations
-- Check policies allow the operation
-- Verify user authentication status
-- Review policy conditions in Supabase dashboard
-
-### Database Connection Issues
-- Verify environment variables are correct
-- Check Supabase project status
-- Ensure network connectivity
-
-### Type Errors
-- Update TypeScript interfaces when changing data structures
-- Check for missing imports
-- Run `npm run type-check` to identify issues
+Merging a submission pull request triggers a new deployment, which is how approved changes reach the live site.

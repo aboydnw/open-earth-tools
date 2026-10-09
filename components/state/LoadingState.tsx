@@ -15,7 +15,7 @@ export function LoadingState() {
             <div>
               <h3 className="text-blue-800 font-medium">Loading Tools</h3>
               <p className="text-blue-700 text-sm mt-1">
-                Connecting to database and loading Earth science tools...
+                Loading Earth science tools...
               </p>
             </div>
           </div>

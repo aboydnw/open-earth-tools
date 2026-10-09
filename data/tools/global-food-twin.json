@@ -4,7 +4,6 @@
   "description": "Global digital twin of the world's food system showing international food production, consumption, and supply chain flows. Expanded version covering food security and climate impacts worldwide.",
   "url": "https://foodtwin.theplotline.org/",
   "embedUrl": "https://foodtwin.theplotline.org/",
-  "dataLink": "https://foodtwin.theplotline.org/",
   "category": "Food Systems",
   "license": "Open Source",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🌍",
   "embedSupported": true,
   "embedNote": "Global Food Twin supports embedding with interactive global mapping",
+  "dataLink": "https://foodtwin.theplotline.org/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

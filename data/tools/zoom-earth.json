@@ -4,7 +4,6 @@
   "description": "Public-facing tool for viewing satellite imagery, live weather, and tropical storm tracking. Performance is good, map is responsive.",
   "url": "https://zoom.earth/",
   "embedUrl": "https://zoom.earth/",
-  "dataLink": "https://zoom.earth/",
   "category": "Satellite Imagery",
   "license": "Freemium",
   "status": "Production",
@@ -16,6 +15,7 @@
   "icon": "🛰️",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
+  "dataLink": "https://zoom.earth/",
   "openness": {
     "score": 2,
     "level": "Partially Open",
