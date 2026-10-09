@@ -1,0 +1,51 @@
+{
+  "name": "NASA Giovanni",
+  "organization": "NASA Giovanni",
+  "description": "Powerful tool for generating plots from gridded datasets. Assumes domain knowledge and has limited onboarding.",
+  "url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+  "embedUrl": "https://giovanni.gsfc.nasa.gov/giovanni/",
+  "dataLink": "https://giovanni.gsfc.nasa.gov/giovanni/",
+  "category": "Atmospheric Science",
+  "license": "Public Domain",
+  "status": "Production",
+  "features": [
+    "Custom Data Queries",
+    "Visualization",
+    "Download"
+  ],
+  "icon": "🌫️",
+  "embedSupported": false,
+  "embedNote": "Government domain restrictions may prevent embedding",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "NASA platform, some open source components"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "NASA public domain data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web interface with data download capabilities"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard atmospheric and oceanic data formats"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "NASA hosting only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "NASA-led with scientific community input"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

@@ -1,0 +1,51 @@
+{
+  "name": "NOAA Climate Explorer",
+  "organization": "NOAA",
+  "description": "Local climate projections and trend analysis showing historical trends and future projections for temperature and precipitation.",
+  "url": "https://toolkit.climate.gov/climate-explorer2/",
+  "embedUrl": "https://toolkit.climate.gov/climate-explorer2/",
+  "dataLink": "https://toolkit.climate.gov/climate-explorer2/",
+  "category": "Climate",
+  "license": "Public Domain",
+  "status": "Production",
+  "features": [
+    "Climate projections",
+    "Historical trends",
+    "Local data"
+  ],
+  "icon": "🌡️",
+  "embedSupported": false,
+  "embedNote": "NOAA tools may have government domain restrictions",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Government platform, limited source"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Public domain climate data"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "Government domain restrictions"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Climate data standards"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "NOAA hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "NOAA institutional control"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

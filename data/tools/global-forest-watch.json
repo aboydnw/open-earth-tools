@@ -1,0 +1,52 @@
+{
+  "name": "Global Forest Watch",
+  "organization": "Global Forest Watch",
+  "description": "Sophisticated web mapping platform with up-to-date forest monitoring data. Includes alerts, time sliders, and download tools.",
+  "url": "https://www.globalforestwatch.org/map/",
+  "embedUrl": "https://www.globalforestwatch.org/map/",
+  "dataLink": "https://www.globalforestwatch.org/map/",
+  "category": "Forests",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Alerts",
+    "Analysis",
+    "Export"
+  ],
+  "icon": "🌲",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source platform"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Open forest monitoring data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web platform with extensive features"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard geospatial formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "WRI hosting but open source"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Multi-stakeholder governance"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

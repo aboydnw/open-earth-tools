@@ -1,0 +1,51 @@
+{
+  "name": "Global Food Twin",
+  "organization": "The Plotline / CU Boulder",
+  "description": "Global digital twin of the world's food system showing international food production, consumption, and supply chain flows. Expanded version covering food security and climate impacts worldwide.",
+  "url": "https://foodtwin.theplotline.org/",
+  "embedUrl": "https://foodtwin.theplotline.org/",
+  "dataLink": "https://foodtwin.theplotline.org/",
+  "category": "Food Systems",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Global food flows",
+    "International trade tracking",
+    "Climate resilience modeling"
+  ],
+  "icon": "🌍",
+  "embedSupported": true,
+  "embedNote": "Global Food Twin supports embedding with interactive global mapping",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source codebase, part of Plotline project"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses global agricultural and trade data from public sources"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based platform with embedding support"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "International food and agriculture data standards"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Scalable but requires significant data infrastructure"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Research collaboration with limited community governance"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

@@ -1,0 +1,51 @@
+{
+  "name": "CarbonPlan Forest Offsets & Fires",
+  "organization": "CarbonPlan",
+  "description": "Explains fire risk to forest carbon projects through mapped overlays and offset scoring. Strong integration of narrative and visuals.",
+  "url": "https://carbonplan.org/research/forest-offsets-fires",
+  "embedUrl": "https://carbonplan.org/research/forest-offsets-fires",
+  "dataLink": "https://carbonplan.org/research/forest-offsets-fires",
+  "category": "Carbon",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Analysis",
+    "Visual Explanation",
+    "Policy Insight"
+  ],
+  "icon": "🔥",
+  "embedSupported": true,
+  "embedNote": "Open source tool supports embedding",
+  "openness": {
+    "score": 6,
+    "level": "Fully Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source project with MIT license"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Open forest and climate data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based analysis tool"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard geospatial and climate formats"
+      },
+      "Infrastructure": {
+        "score": "green",
+        "note": "Self-hostable research platform"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Open science community governance"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

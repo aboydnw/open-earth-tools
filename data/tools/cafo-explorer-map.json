@@ -1,0 +1,50 @@
+{
+  "name": "CAFO Explorer Map",
+  "organization": "The Plotline",
+  "description": "Static-feeling UI with clear points but minimal filtering or dynamic interaction. Designed for issue visibility rather than in-depth analysis.",
+  "url": "https://stories.theplotline.org/cafo-explorer/map/",
+  "embedUrl": "https://stories.theplotline.org/cafo-explorer/map/",
+  "dataLink": "https://stories.theplotline.org/cafo-explorer/map/",
+  "category": "Environmental Monitoring",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Exploration",
+    "Awareness Raising"
+  ],
+  "icon": "🌡️",
+  "embedSupported": true,
+  "embedNote": "Research platform supports embedding",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Plotline project, likely open source"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses public agricultural and environmental data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based map interface"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard geospatial formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Hosted web application"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Environmental justice community focus"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

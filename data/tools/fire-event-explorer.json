@@ -1,0 +1,51 @@
+{
+  "name": "Fire Event Explorer",
+  "organization": "Development Seed",
+  "description": "Explore wildfire perimeters, track fire progression over time, and analyze burn severity. Perfect for emergency management and fire risk communication.",
+  "url": "https://www.earthdata.nasa.gov/dashboard/tools/fire-event-explorer",
+  "embedUrl": "https://www.earthdata.nasa.gov/dashboard/tools/fire-event-explorer",
+  "dataLink": "https://www.earthdata.nasa.gov/dashboard/tools/fire-event-explorer",
+  "category": "Disasters",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Real-time fire tracking",
+    "Burn severity analysis",
+    "Interactive timelines"
+  ],
+  "icon": "🔥",
+  "embedSupported": true,
+  "embedNote": "Requires domain whitelisting for iframe embedding",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT License, open source"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "NASA public domain data"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Embeddable but requires whitelisting"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "STAC/COG compliant"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Can self-host but complex setup"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Development Seed led, limited community"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

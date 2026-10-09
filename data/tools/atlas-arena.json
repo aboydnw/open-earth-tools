@@ -1,0 +1,50 @@
+{
+  "name": "Atlas Arena",
+  "organization": "Non-profit Organization",
+  "description": "Explore the risk of Arenaviruses in Latin America",
+  "url": "https://atlas-arena.org/explore",
+  "embedUrl": "https://atlas-arena.org/explore",
+  "category": "Satellite Imagery",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Data analysis",
+    "Interactive visualization",
+    "Satellite imagery support"
+  ],
+  "icon": "🛰️",
+  "embedSupported": false,
+  "embedNote": "Most modern sites block iframe embedding for security",
+  "openness": {
+    "score": 4,
+    "level": "Partially Open",
+    "assessedAt": "2026-03-11",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT license provides full openness"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Data licensing needs verification"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "Limited embedding due to security policies"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Uses standard scientific data formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "May be self-hostable but requires setup"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Organization-led but may accept contributions"
+      }
+    }
+  },
+  "addedAt": "2026-03-11"
+}

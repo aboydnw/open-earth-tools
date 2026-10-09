@@ -1,0 +1,52 @@
+{
+  "name": "NASA Worldview",
+  "organization": "NASA GIBS",
+  "description": "Browse 1,200+ global satellite imagery layers with near real-time data from NASA's Global Imagery Browse Services.",
+  "url": "https://worldview.earthdata.nasa.gov/",
+  "embedUrl": "https://worldview.earthdata.nasa.gov/?v=-0.1,35.7,51.9,71.5&t=2024-01-15-T00%3A00%3A00Z&l=Reference_Labels_15m,Reference_Features_15m,Coastlines_15m,VIIRS_SNPP_DayNightBand_ENCC,MODIS_Aqua_CorrectedReflectance_TrueColor&lg=true&s=-12,-20,-12,-20",
+  "dataLink": "https://worldview.earthdata.nasa.gov/",
+  "category": "Satellite Imagery",
+  "license": "Apache 2.0",
+  "status": "Production",
+  "features": [
+    "1,200+ data layers",
+    "Near real-time data",
+    "Animation tools"
+  ],
+  "icon": "🌍",
+  "embedSupported": false,
+  "embedNote": "Requires whitelisted domains in CSP frame-ancestors",
+  "embedCode": "<iframe src=\"https://worldview.earthdata.nasa.gov/?v=-0.1,35.7,51.9,71.5&t=2024-01-15-T00%3A00%3A00Z&l=Reference_Labels_15m,Reference_Features_15m,Coastlines_15m,VIIRS_SNPP_DayNightBand_ENCC,MODIS_Aqua_CorrectedReflectance_TrueColor&lg=true&s=-12,-20,-12,-20\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe>",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Apache 2.0, full source available"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "NASA public domain"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "CSP restrictions prevent embedding"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "OGC standards, GIBS services"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Self-hostable but very complex"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "NASA-led, limited external input"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

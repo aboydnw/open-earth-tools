@@ -1,0 +1,51 @@
+{
+  "name": "CarbonPlan DOR Efficiency",
+  "organization": "CarbonPlan",
+  "description": "Static visuals and interactive plots to communicate effectiveness of carbon removal offsets. Prioritizes clarity and transparency in methodology.",
+  "url": "https://carbonplan.org/research/dor-efficiency",
+  "embedUrl": "https://carbonplan.org/research/dor-efficiency",
+  "dataLink": "https://carbonplan.org/research/dor-efficiency",
+  "category": "Carbon",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Explanation",
+    "Visualization",
+    "Research Summary"
+  ],
+  "icon": "🌿",
+  "embedSupported": true,
+  "embedNote": "Open source tool supports embedding",
+  "openness": {
+    "score": 6,
+    "level": "Fully Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source project with MIT license"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Open climate and carbon removal data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based research tool"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard climate data formats"
+      },
+      "Infrastructure": {
+        "score": "green",
+        "note": "Self-hostable research platform"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Open science community governance"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

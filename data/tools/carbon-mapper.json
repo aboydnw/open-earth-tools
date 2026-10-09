@@ -1,0 +1,51 @@
+{
+  "name": "Carbon Mapper",
+  "organization": "Non-profit Organization",
+  "description": "Visualize methane and GHG data",
+  "url": "https://data.carbonmapper.org/#1.37/30.8/50.5",
+  "embedUrl": "https://data.carbonmapper.org/#1.37/30.8/50.5",
+  "category": "Climate",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Interactive visualization",
+    "Progress tracking",
+    "Real-time monitoring",
+    "Climate data integration"
+  ],
+  "icon": "🌡️",
+  "embedSupported": false,
+  "embedNote": "Most modern sites block iframe embedding for security",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-07-02",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT license provides full openness"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Environmental data typically in public domain"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "Limited embedding due to security policies"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Uses standard scientific data formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "May be self-hostable but requires setup"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Organization-led but may accept contributions"
+      }
+    }
+  },
+  "addedAt": "2025-07-02"
+}

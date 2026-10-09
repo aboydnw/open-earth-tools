@@ -1,0 +1,51 @@
+{
+  "name": "Fluid Earth",
+  "organization": "Ohio State University",
+  "description": "Browser-based Earth system visualizations with animations and overlays. Designed for conceptual understanding rather than precise analysis.",
+  "url": "https://fluid-earth.byrd.osu.edu/",
+  "embedUrl": "https://fluid-earth.byrd.osu.edu/",
+  "dataLink": "https://fluid-earth.byrd.osu.edu/",
+  "category": "Ocean & Climate",
+  "license": "Academic",
+  "status": "Production",
+  "features": [
+    "Visualization",
+    "Education",
+    "Simulation"
+  ],
+  "icon": "🌊",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Academic project, licensing unclear"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses public climate and ocean data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Browser-based visualization"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard Earth system data"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "University hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Academic institution control"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

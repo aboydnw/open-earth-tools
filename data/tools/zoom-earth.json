@@ -1,0 +1,51 @@
+{
+  "name": "Zoom Earth",
+  "organization": "Zoom Earth",
+  "description": "Public-facing tool for viewing satellite imagery, live weather, and tropical storm tracking. Performance is good, map is responsive.",
+  "url": "https://zoom.earth/",
+  "embedUrl": "https://zoom.earth/",
+  "dataLink": "https://zoom.earth/",
+  "category": "Satellite Imagery",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Exploration",
+    "Real-Time Updates"
+  ],
+  "icon": "🛰️",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Commercial platform"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses public satellite data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web interface with good performance"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Standard formats but limited API access"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Commercial hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Commercial company control"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

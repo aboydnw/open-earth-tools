@@ -1,0 +1,49 @@
+{
+  "name": "iwfgara",
+  "organization": "Unknown Organization",
+  "description": "NOAA GFS data explorer",
+  "url": "https://www.iwfgara.com/",
+  "embedUrl": "https://www.iwfgara.com/",
+  "category": "Climate",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Interactive visualization",
+    "Climate data integration"
+  ],
+  "icon": "🌡️",
+  "embedSupported": false,
+  "embedNote": "Most modern sites block iframe embedding for security",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2026-03-03",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT license provides full openness"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Environmental data typically in public domain"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "Limited embedding due to security policies"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Uses standard scientific data formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Self-hosting capabilities need assessment"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Governance structure needs evaluation"
+      }
+    }
+  },
+  "addedAt": "2026-03-03"
+}

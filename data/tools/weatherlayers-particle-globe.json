@@ -1,0 +1,50 @@
+{
+  "name": "WeatherLayers Particle Globe",
+  "organization": "WeatherLayers",
+  "description": "Open-source prototype visualizing wind fields on a globe with particle animations. Primarily aesthetic, with little direct interactivity.",
+  "url": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
+  "embedUrl": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
+  "dataLink": "https://weatherlayers.github.io/deck.gl-particle/globe.html",
+  "category": "Weather",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Visualization",
+    "Prototype"
+  ],
+  "icon": "💨",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 6,
+    "level": "Fully Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source prototype on GitHub"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses public weather model data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based with source code available"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard meteorological data formats"
+      },
+      "Infrastructure": {
+        "score": "green",
+        "note": "Self-hostable open source code"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Open source community project"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Climate TRACE",
+  "organization": "Climate TRACE",
+  "description": "Tracks emissions at a fine spatial and sectoral scale. Map is performant, with filters for year, sector, and region.",
+  "url": "https://climatetrace.org/explore/",
+  "embedUrl": "https://climatetrace.org/explore/",
+  "dataLink": "https://climatetrace.org/explore/",
+  "category": "Emissions",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Accountability",
+    "Exploration"
+  ],
+  "icon": "💨",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Coalition project, mixed licensing"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Open emissions data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web platform with robust filtering"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard emissions data formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Coalition hosting with data access"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Multi-stakeholder governance"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

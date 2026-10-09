@@ -1,0 +1,50 @@
+{
+  "name": "VACS",
+  "organization": "The Plotline",
+  "description": "VACS overlays climate hazard and community vulnerability data in an interactive map. It balances clarity and nuance, uses color effectively, and supports insight-building for non-experts.",
+  "url": "https://vacs.theplotline.org/",
+  "embedUrl": "https://vacs.theplotline.org/",
+  "dataLink": "https://vacs.theplotline.org/",
+  "category": "Environmental Justice",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Exploration",
+    "Storytelling"
+  ],
+  "icon": "⚖️",
+  "embedSupported": true,
+  "embedNote": "Research platform supports embedding",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Plotline project, likely open source but not confirmed"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses public climate and vulnerability data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based with embedding support indicated"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard environmental justice data formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Self-hostable web application"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Part of collaborative Plotline project"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

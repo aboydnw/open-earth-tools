@@ -1,0 +1,50 @@
+{
+  "name": "Robin Hawkes Renewables Map",
+  "organization": "Robin Hawkes",
+  "description": "A hobby project showing UK renewable energy facilities. Simple filters and fly-to interactions.",
+  "url": "https://renewables-map.robinhawkes.com/",
+  "embedUrl": "https://renewables-map.robinhawkes.com/",
+  "dataLink": "https://renewables-map.robinhawkes.com/",
+  "category": "Energy",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Exploration",
+    "Education"
+  ],
+  "icon": "⚡",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Individual project, likely open source"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "UK public energy infrastructure data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web map interface"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard energy data formats"
+      },
+      "Infrastructure": {
+        "score": "green",
+        "note": "Self-hosted personal project"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Individual maintained"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

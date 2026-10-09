@@ -1,0 +1,50 @@
+{
+  "name": "NASA Earthdata Dashboard",
+  "organization": "NASA",
+  "description": "Narrative format with curated global indicators showing pandemic impacts. Visuals are clean and comparable over time.",
+  "url": "https://www.earthdata.nasa.gov/dashboard/exploration",
+  "embedUrl": "https://www.earthdata.nasa.gov/dashboard/exploration",
+  "dataLink": "https://www.earthdata.nasa.gov/dashboard/exploration",
+  "category": "Environmental Monitoring",
+  "license": "Public Domain",
+  "status": "Production",
+  "features": [
+    "Storytelling",
+    "Visual Summary"
+  ],
+  "icon": "🌡️",
+  "embedSupported": false,
+  "embedNote": "Government domain restrictions may prevent embedding",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "NASA platform with some open components"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "NASA public domain data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web dashboard interface"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Earth science data standards"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "NASA hosting only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "NASA-led with community engagement"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

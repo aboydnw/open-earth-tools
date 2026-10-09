@@ -1,0 +1,50 @@
+{
+  "name": "IQAir Air Quality Map",
+  "organization": "IQAir",
+  "description": "Dynamic global map of PM2.5 and AQI readings from ground sensors. High refresh rate and strong visual design.",
+  "url": "https://www.iqair.com/air-quality-map",
+  "embedUrl": "https://www.iqair.com/air-quality-map",
+  "dataLink": "https://www.iqair.com/air-quality-map",
+  "category": "Environmental Monitoring",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Exploration"
+  ],
+  "icon": "🌬️",
+  "embedSupported": true,
+  "embedNote": "Commercial platform with embed widgets available",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Commercial platform"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Mix of public and proprietary sensor data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web interface with embed options"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard air quality formats"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Commercial hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Commercial company control"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

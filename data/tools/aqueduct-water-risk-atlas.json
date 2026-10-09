@@ -1,0 +1,51 @@
+{
+  "name": "Aqueduct Water Risk Atlas",
+  "organization": "World Resources Institute",
+  "description": "Used to assess and benchmark water-related risks by sector and region. Allows dynamic scenario testing and data downloads. This is an edit",
+  "url": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
+  "embedUrl": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
+  "dataLink": "https://www.wri.org/applications/aqueduct/water-risk-atlas/",
+  "category": "Water Resources",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Scenario Exploration",
+    "Risk Analysis",
+    "Download"
+  ],
+  "icon": "⚠️",
+  "embedSupported": true,
+  "embedNote": "Embedding supported",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2025-06-29",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "WRI platform, licensing unclear"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Water risk data available"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web platform with scenario analysis"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard water data formats"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "WRI hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Institutional control"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

@@ -1,0 +1,49 @@
+{
+  "name": "WasteMAP",
+  "organization": "Unknown Organization",
+  "description": "Views Methane emissions around the world, collaboration with RMI, Clean Air Task Force, Global Methane Hub, and Earth Genome",
+  "url": "https://wastemap.earth/map",
+  "embedUrl": "https://wastemap.earth/map",
+  "category": "Climate",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Interactive visualization",
+    "Progress tracking"
+  ],
+  "icon": "🌡️",
+  "embedSupported": false,
+  "embedNote": "Most modern sites block iframe embedding for security",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2025-07-17",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT license provides full openness"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Data licensing needs verification"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "Limited embedding due to security policies"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Standard format compliance needs verification"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Self-hosting capabilities need assessment"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Governance structure needs evaluation"
+      }
+    }
+  },
+  "addedAt": "2025-07-17"
+}

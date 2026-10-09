@@ -1,0 +1,50 @@
+{
+  "name": "Earth Nullschool",
+  "organization": "Cameron Beccario",
+  "description": "Animated globe showing weather patterns. Offers multiple layers and altitudes, with fast transitions.",
+  "url": "https://earth.nullschool.net/",
+  "embedUrl": "https://earth.nullschool.net/",
+  "dataLink": "https://earth.nullschool.net/",
+  "category": "Weather",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Visualization",
+    "Exploration"
+  ],
+  "icon": "💨",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source project on GitHub"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses public weather and climate data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based globe visualization"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard meteorological formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Self-hostable but complex setup"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Individual maintainer with community contributions"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

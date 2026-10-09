@@ -1,0 +1,50 @@
+{
+  "name": "IQAir Earth",
+  "organization": "IQAir",
+  "description": "Globe-based particle animation showing wind and pollution. Visually striking and accessible, but lacks clarity on data sources.",
+  "url": "https://www.iqair.com/earth?nav=",
+  "embedUrl": "https://www.iqair.com/earth?nav=",
+  "dataLink": "https://www.iqair.com/earth?nav=",
+  "category": "Environmental Monitoring",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Visualization",
+    "Awareness"
+  ],
+  "icon": "🌬️",
+  "embedSupported": true,
+  "embedNote": "Commercial platform with embed widgets available",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Commercial platform"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Mix of public and proprietary data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Globe visualization interface"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Limited data access"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Commercial hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Commercial company control"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

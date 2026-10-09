@@ -1,0 +1,51 @@
+{
+  "name": "Food Twin",
+  "organization": "The Plotline / Development Seed",
+  "description": "Digital twin of the US food system showing how food moves from production to consumption. Visualizes supply chain resilience and climate impacts on food security.",
+  "url": "https://food.theplotline.org/",
+  "embedUrl": "https://food.theplotline.org/",
+  "dataLink": "https://food.theplotline.org/",
+  "category": "Food Systems",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Food supply chains",
+    "Climate impact modeling",
+    "Interactive food flows"
+  ],
+  "icon": "🌾",
+  "embedSupported": true,
+  "embedNote": "Food Twin supports embedding with modern web architecture",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source codebase available on GitHub"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Uses satellite data and public survey statistics"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Modern web app with embedding capabilities"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Uses standard geospatial and agricultural data formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Self-hostable but requires data processing setup"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Collaborative project with limited community input"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

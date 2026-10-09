@@ -1,0 +1,50 @@
+{
+  "name": "COVID-19 Earth Observing Dashboard",
+  "organization": "ESA/NASA/JAXA",
+  "description": "Joint initiative (ESA, NASA, JAXA) tracking COVID-era environmental and economic shifts. Visually polished with toggles for temporal and geographic comparisons.",
+  "url": "https://eodashboard.org/explore/",
+  "embedUrl": "https://eodashboard.org/explore/",
+  "dataLink": "https://eodashboard.org/explore/",
+  "category": "Environmental Monitoring",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Time Series Comparison",
+    "Awareness"
+  ],
+  "icon": "🌡️",
+  "embedSupported": true,
+  "embedNote": "Web-based platform supports embedding",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2025-06-28",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source collaborative project"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Public domain satellite data"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web-based dashboard"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard Earth observation formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Multi-agency hosting"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "International collaboration (ESA, NASA, JAXA)"
+      }
+    }
+  },
+  "addedAt": "2025-06-28"
+}

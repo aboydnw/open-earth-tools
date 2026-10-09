@@ -1,0 +1,49 @@
+{
+  "name": "Tree Equity Map",
+  "organization": "Non-profit Organization",
+  "description": "Shows tree equity scores for your neighborhood across cities in the United States, to promote urban forestry and shade as a tool to combat urban heat island effect.",
+  "url": "https://www.treeequityscore.org/map",
+  "embedUrl": "https://www.treeequityscore.org/map",
+  "category": "Climate",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Report generation",
+    "Climate data integration"
+  ],
+  "icon": "🌡️",
+  "embedSupported": false,
+  "embedNote": "Most modern sites block iframe embedding for security",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2025-07-01",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT license provides full openness"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Data licensing needs verification"
+      },
+      "Technical Accessibility": {
+        "score": "red",
+        "note": "Limited embedding due to security policies"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Standard format compliance needs verification"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "May be self-hostable but requires setup"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Organization-led but may accept contributions"
+      }
+    }
+  },
+  "addedAt": "2025-07-01"
+}
