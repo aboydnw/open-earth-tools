@@ -1,16 +1,18 @@
 import { Directory } from '@/components/Directory';
-import { getSubmissionConfig } from '@/lib/submissions/config';
-import { listCategories, loadTools } from '@/lib/tools-data';
+import { workerEnv } from '@/lib/cloudflare';
+import { listTools } from '@/lib/tools-repo';
+import { listCategories } from '@/lib/utils';
 
-export default function Home() {
-  const tools = loadTools();
-  const turnstileSiteKey = getSubmissionConfig()?.turnstileSiteKey ?? null;
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const tools = await listTools(workerEnv.DB);
 
   return (
     <Directory
       tools={tools}
       categories={['All', ...listCategories(tools)]}
-      turnstileSiteKey={turnstileSiteKey}
+      isAdmin={false}
     />
   );
 }

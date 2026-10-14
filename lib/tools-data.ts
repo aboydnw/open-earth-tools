@@ -34,8 +34,3 @@ export function loadTools(): Tool[] {
     })
   return tools.sort((a, b) => a.name.localeCompare(b.name))
 }
-
-/** Unique categories across the given tools, sorted. */
-export function listCategories(tools: Tool[]): string[] {
-  return [...new Set(tools.map((tool) => tool.category))].sort()
-}

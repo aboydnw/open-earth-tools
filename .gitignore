@@ -1,6 +1,12 @@
-# Next.js Build Output
+# Build Output
 /.next/
 /out/
+/dist/
+.vinext/
+
+# Cloudflare
+.wrangler/
+.dev.vars
 
 # Dependencies
 /node_modules

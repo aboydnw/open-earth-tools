@@ -2,16 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tool, OpennessAssessment } from '@/types';
-import { TurnstileWidget } from '@/components/ui/forms/TurnstileWidget';
-import { useSubmission } from '@/components/ui/forms/useSubmission';
-import { SubmissionReceived } from './SubmissionReceived';
+import { useAdminRequest } from '@/components/ui/forms/useAdminRequest';
 
 interface EditToolModalProps {
   isOpen: boolean;
   onClose: () => void;
   tool: Tool;
   categories: string[];
-  siteKey: string;
 }
 
 interface EditFormData {
@@ -66,7 +63,7 @@ function withCurrent(options: string[], current: string): string[] {
   return current && !options.includes(current) ? [...options, current] : options;
 }
 
-export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: EditToolModalProps) {
+export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolModalProps) {
   const [formData, setFormData] = useState<EditFormData>({
     name: '',
     url: '',
@@ -94,7 +91,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: Ed
     }
   });
   
-  const { loading, error, submitted, prUrl, setToken, setError, resetKey, submit } = useSubmission();
+  const { loading, error, setError, send } = useAdminRequest(onClose);
   const [showAssessmentDetails, setShowAssessmentDetails] = useState(false);
   const [newFeature, setNewFeature] = useState('');
 
@@ -146,7 +143,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: Ed
         throw new Error('Please enter valid URLs');
       }
 
-      await submit(`/api/tools/${tool.id}`, 'PUT', formData);
+      await send(`/api/admin/tools/${tool.id}`, 'PUT', formData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     }
@@ -194,13 +191,6 @@ export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: Ed
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        {submitted ? (
-          <SubmissionReceived
-            message="Thanks for the correction. The change will appear in the directory once it has been reviewed."
-            prUrl={prUrl}
-            onClose={onClose}
-          />
-        ) : (
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -560,10 +550,6 @@ export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: Ed
                 </div>
               )}
             </div>
-
-            <div className="mt-6">
-              <TurnstileWidget siteKey={siteKey} onToken={setToken} resetKey={resetKey} />
-            </div>
           </div>
 
           <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
@@ -587,11 +573,10 @@ export function EditToolModal({ isOpen, onClose, tool, categories, siteKey }: Ed
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               )}
-              {loading ? 'Submitting...' : 'Submit for Review'}
+              {loading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
         </form>
-        )}
       </div>
     </div>
   );

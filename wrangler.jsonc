@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "open-earth-tools",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "vinext/server/app-router-entry",
+  "assets": {
+    "not_found_handling": "none"
+  },
+  "routes": [
+    { "pattern": "openearthtools.anthonynboyd.com", "custom_domain": true }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "open-earth-tools",
+      // Replace with the id printed by `wrangler d1 create open-earth-tools`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    // Cloudflare Access settings for /admin. Both are required in production;
+    // admin requests are refused while either is empty.
+    // Team domain, e.g. "your-team.cloudflareaccess.com".
+    "ACCESS_TEAM_DOMAIN": "",
+    // The Access application's "Application Audience (AUD) Tag".
+    "ACCESS_AUD": ""
+  }
+}

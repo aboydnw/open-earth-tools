@@ -9,12 +9,12 @@ export function middleware(request: NextRequest) {
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+      "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
       "font-src 'self' data:",
       "connect-src 'self'",
-      "frame-src 'self' https://challenges.cloudflare.com https://kepler.gl https://observablehq.com https://food.theplotline.org https://foodtwin.theplotline.org https://www.earthdata.nasa.gov https://worldview.earthdata.nasa.gov https://dashboard.waterdata.usgs.gov https://oceancolor.gsfc.nasa.gov https://embed.windy.com https://earthquake.usgs.gov https://toolkit.climate.gov",
+      "frame-src 'self' https://kepler.gl https://observablehq.com https://food.theplotline.org https://foodtwin.theplotline.org https://www.earthdata.nasa.gov https://worldview.earthdata.nasa.gov https://dashboard.waterdata.usgs.gov https://oceancolor.gsfc.nasa.gov https://embed.windy.com https://earthquake.usgs.gov https://toolkit.climate.gov",
       "frame-ancestors 'self'",
     ].join('; ')
   )

@@ -2,57 +2,29 @@
 
 A curated directory of production-ready Earth science visualization tools, with guidance on embedding them safely and an openness assessment for each one.
 
+Live at [openearthtools.anthonynboyd.com](https://openearthtools.anthonynboyd.com).
+
 ## Features
 
 - 🌍 **Curated Earth Science Tools**: Vetted tools for Earth science communication
 - 🔒 **Secure Embedding**: Security guidance for iframe embedding
 - 📊 **Openness Assessment**: Each tool is scored on six dimensions of openness
-- 📝 **Reviewed Submissions**: Anyone can suggest a tool or a correction; every change is a pull request
-- 🏗️ **No database**: Tool data lives in this repository as JSON files
-
-## Quick Start
-
-### Prerequisites
-- Node.js 22+
-
-### Setup
-```bash
-git clone git@github.com:aboydnw/open-earth-tools.git
-cd open-earth-tools
-npm install
-npm run dev
-```
-
-The directory works with no configuration. The add, edit, and delete forms only appear once the submission settings in `.env.example` are filled in. See the [Development Guide](docs/DEVELOPMENT.md).
+- ✏️ **Admin editing**: Add, edit, and delete tools at `/admin`; changes are live immediately
+- 💾 **Nightly backup**: The database is copied to `data/tools/*.json` in this repository every night
 
 ## How it works
 
+The site runs on Cloudflare Workers using [vinext](https://github.com/cloudflare/vinext), Cloudflare's Vite-based implementation of the Next.js API.
+
 ### Data
-Each tool is one file: `data/tools/<slug>.json`. The filename is the tool's id. The file holds the tool's details, its attributes, and its openness assessment. Every file is checked against the schema in `lib/tool-schema.ts` when the site builds, so a malformed file fails the build instead of breaking the live site.
+Tools live in a Cloudflare D1 database, one row per tool. Each row holds the tool as a JSON document, checked against the schema in `lib/tool-schema.ts` on every read and write.
 
-To change a tool by hand, edit its file and open a pull request.
+`data/tools/<slug>.json` holds the nightly backup of that database, one file per tool. The same files seed a new database.
 
-### Submissions
-The forms on the site do not write data directly. Each one opens a pull request against this repository:
+### Editing
+`/admin` shows the directory with Edit Mode, Add Tool, Edit, and Delete controls. It and the `/api/admin` endpoints sit behind Cloudflare Access, and the server also checks the Access sign-in token on every request.
 
-| Form | Endpoint | Pull request |
-|---|---|---|
-| Add Tool | `POST /api/tools` | Adds a new file, with automated scoring applied |
-| Edit | `PUT /api/tools/[id]` | Updates the tool's file |
-| Delete | `DELETE /api/tools/[id]` | Removes the tool's file |
-
-A change goes live when its pull request is merged and the site redeploys.
-
-Because the forms are public, submissions pass through several checks before a pull request is opened:
-
-1. A Cloudflare Turnstile bot check
-2. Strict validation of every field
-3. A check that the tool's URL resolves to a public address and responds
-4. A duplicate check against the directory and against open submissions
-5. A cap of 10 open submission pull requests
-
-### Automated scoring
-New tools are scored by rules in `lib/automation/tool-automation.ts`, based on the tool's URL and the submitter's selections. The scores are a starting point. Check them in the pull request before merging.
+Adding a tool fills in organization, category, license, embed support, and the openness assessment with rules in `lib/automation/tool-automation.ts`. Check them with Edit afterwards.
 
 ## Openness Assessment
 
@@ -67,10 +39,22 @@ Tools are evaluated across 6 dimensions:
 
 ## Development
 
+### Quick start
+```bash
+npm install
+cp .dev.vars.example .dev.vars
+npm run db:migrate:local
+npm run db:seed:local
+npm run dev
+```
+
+The public directory is at `/` and the editor at `/admin`. `.dev.vars` lets `/admin` work on localhost without Cloudflare Access.
+
 ### Tech Stack
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Data**: JSON files in `data/tools`, validated with Zod
-- **Submissions**: Next.js API routes, GitHub REST API, Cloudflare Turnstile
+- **App**: vinext (Next.js App Router API on Vite), React 19, TypeScript
+- **Hosting**: Cloudflare Workers
+- **Data**: Cloudflare D1, validated with Zod
+- **Auth**: Cloudflare Access
 - **Styling**: Tailwind CSS
 
 ### Key Commands
@@ -78,10 +62,10 @@ Tools are evaluated across 6 dimensions:
 npm run dev          # Development server
 npm run build        # Production build
 npm run type-check   # TypeScript
-npm test             # Validate tool data and run unit tests
+npm test             # Unit tests, including a check of every backup file
 ```
 
-See [DEVELOPMENT.md](docs/DEVELOPMENT.md) for setup and deployment details.
+See [DEVELOPMENT.md](docs/DEVELOPMENT.md) for setup, deployment, and backups.
 
 ## License
 

@@ -25,11 +25,11 @@ interface SimpleFilters {
 interface DirectoryProps {
   tools: Tool[];
   categories: string[];
-  /** Turnstile site key, or null when submissions are switched off. */
-  turnstileSiteKey: string | null;
+  /** Show the add, edit and delete controls. */
+  isAdmin: boolean;
 }
 
-export function Directory({ tools, categories, turnstileSiteKey }: DirectoryProps) {
+export function Directory({ tools, categories, isAdmin }: DirectoryProps) {
   // Simple filtering state
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<SimpleFilters>({
@@ -250,7 +250,7 @@ export function Directory({ tools, categories, turnstileSiteKey }: DirectoryProp
             </div>
 
             {/* Edit Mode Toggle */}
-            {turnstileSiteKey && (
+            {isAdmin && (
             <div className="flex justify-start gap-3">
               <button
                 onClick={() => setEditMode(!editMode)}
@@ -399,7 +399,7 @@ export function Directory({ tools, categories, turnstileSiteKey }: DirectoryProp
           )}
 
           {/* Add Tool Modal */}
-          {showAddToolModal && turnstileSiteKey && (
+          {showAddToolModal && isAdmin && (
             <ErrorBoundary
               fallback={
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -419,13 +419,12 @@ export function Directory({ tools, categories, turnstileSiteKey }: DirectoryProp
               <AddToolModal
                 isOpen={showAddToolModal}
                 onClose={() => setShowAddToolModal(false)}
-                siteKey={turnstileSiteKey}
               />
             </ErrorBoundary>
           )}
 
           {/* Edit Tool Modal */}
-          {showEditModal && toolToEdit && turnstileSiteKey && (
+          {showEditModal && toolToEdit && isAdmin && (
             <ErrorBoundary
               fallback={
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -447,13 +446,12 @@ export function Directory({ tools, categories, turnstileSiteKey }: DirectoryProp
                 onClose={handleCloseEditModal}
                 tool={toolToEdit}
                 categories={categories.filter(category => category !== 'All')}
-                siteKey={turnstileSiteKey}
               />
             </ErrorBoundary>
           )}
 
           {/* Delete Confirmation Modal */}
-          {showDeleteModal && toolToDelete && turnstileSiteKey && (
+          {showDeleteModal && toolToDelete && isAdmin && (
             <ErrorBoundary
               fallback={
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -474,7 +472,6 @@ export function Directory({ tools, categories, turnstileSiteKey }: DirectoryProp
                 isOpen={showDeleteModal}
                 onClose={handleCloseDeleteModal}
                 tool={toolToDelete}
-                siteKey={turnstileSiteKey}
               />
             </ErrorBoundary>
           )}
