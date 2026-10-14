@@ -53,7 +53,7 @@ Cloudflare Access sits in front of `/admin` and `/api/admin`. Behind it, `lib/ad
 - The audience must be the Access application's AUD tag
 - The token must not be expired
 
-If `ACCESS_TEAM_DOMAIN` or `ACCESS_AUD` is empty, every admin request is refused.
+If the `ACCESS_TEAM_DOMAIN` or `ACCESS_AUD` secret is missing, every admin request is refused.
 
 ## First-time Cloudflare setup
 
@@ -73,7 +73,11 @@ If `ACCESS_TEAM_DOMAIN` or `ACCESS_AUD` is empty, every admin request is refused
    - Domain `openearthtools.anthonynboyd.com`, paths `admin` and `api/admin`
    - A policy that allows only your email address
 
-   Copy the team domain (`<team>.cloudflareaccess.com`) and the application's AUD tag into `ACCESS_TEAM_DOMAIN` and `ACCESS_AUD` in `wrangler.jsonc`.
+   Store the team domain (`<team>.cloudflareaccess.com`) and the application's AUD tag as Worker secrets. Secrets survive deploys, unlike vars in `wrangler.jsonc`:
+   ```bash
+   npx wrangler secret put ACCESS_TEAM_DOMAIN
+   npx wrangler secret put ACCESS_AUD
+   ```
 5. **Add GitHub secrets.** Create a Cloudflare API token with **Workers Scripts: Edit**, **D1: Edit**, and **Workers Routes: Edit** for the `anthonynboyd.com` zone. Add it to the repository as `CLOUDFLARE_API_TOKEN`, and add your account id as `CLOUDFLARE_ACCOUNT_ID`.
 6. **Deploy** by merging to `main`, or run `npm run deploy` locally.
 
