@@ -14,6 +14,8 @@ import { EmbedCodeGenerator } from '@/components/ui/modals/EmbedCodeGenerator';
 import { AddToolModal } from '@/components/ui/modals/AddToolModal';
 import { DeleteConfirmationModal } from '@/components/ui/modals/DeleteConfirmationModal';
 import { EditToolModal } from '@/components/ui/modals/EditToolModal';
+import { PendingSuggestions } from '@/components/features/suggestions/PendingSuggestions';
+import type { Suggestion } from '@/lib/suggestions';
 
 // Simple filters interface
 interface SimpleFilters {
@@ -27,9 +29,13 @@ interface DirectoryProps {
   categories: string[];
   /** Show the add, edit and delete controls. */
   isAdmin: boolean;
+  /** Suggestions waiting for review; shown to admins. */
+  suggestions?: Suggestion[];
+  /** Turnstile site key when public suggestions are enabled; shows the Suggest a Tool button. */
+  turnstileSiteKey?: string | null;
 }
 
-export function Directory({ tools, categories, isAdmin }: DirectoryProps) {
+export function Directory({ tools, categories, isAdmin, suggestions = [], turnstileSiteKey = null }: DirectoryProps) {
   // Simple filtering state
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<SimpleFilters>({
@@ -172,9 +178,11 @@ export function Directory({ tools, categories, isAdmin }: DirectoryProps) {
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <PageHeader />
-          
+
+          {isAdmin && <PendingSuggestions suggestions={suggestions} />}
+
           <AboutSection />
-          
+
           <StatsSection tools={tools} />
 
           {/* Search and Filter Interface */}
@@ -289,6 +297,20 @@ export function Directory({ tools, categories, isAdmin }: DirectoryProps) {
             </div>
             )}
 
+            {!isAdmin && turnstileSiteKey && (
+              <div className="flex justify-start">
+                <button
+                  onClick={() => setShowAddToolModal(true)}
+                  className="inline-flex items-center px-4 py-2 bg-ds-orange-500 text-white rounded-md text-sm font-medium hover:bg-ds-orange-600 transition-colors"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Suggest a Tool
+                </button>
+              </div>
+            )}
+
             {/* Results Count */}
             <div className="flex items-center justify-between text-sm text-gray-600">
               <span>
@@ -399,7 +421,7 @@ export function Directory({ tools, categories, isAdmin }: DirectoryProps) {
           )}
 
           {/* Add Tool Modal */}
-          {showAddToolModal && isAdmin && (
+          {showAddToolModal && (isAdmin || turnstileSiteKey) && (
             <ErrorBoundary
               fallback={
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -419,6 +441,7 @@ export function Directory({ tools, categories, isAdmin }: DirectoryProps) {
               <AddToolModal
                 isOpen={showAddToolModal}
                 onClose={() => setShowAddToolModal(false)}
+                turnstileSiteKey={isAdmin ? undefined : turnstileSiteKey ?? undefined}
               />
             </ErrorBoundary>
           )}

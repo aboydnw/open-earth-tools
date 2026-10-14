@@ -1,5 +1,5 @@
 import { Directory } from '@/components/Directory';
-import { workerEnv } from '@/lib/cloudflare';
+import { suggestionsSiteKey, workerEnv } from '@/lib/cloudflare';
 import { listTools } from '@/lib/tools-repo';
 import { listCategories } from '@/lib/utils';
 
@@ -13,6 +13,7 @@ export default async function Home() {
       tools={tools}
       categories={['All', ...listCategories(tools)]}
       isAdmin={false}
+      turnstileSiteKey={suggestionsSiteKey()}
     />
   );
 }

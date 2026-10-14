@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tool, OpennessAssessment } from '@/types';
-import { useAdminRequest } from '@/components/ui/forms/useAdminRequest';
+import { useApiRequest } from '@/components/ui/forms/useApiRequest';
 
 interface EditToolModalProps {
   isOpen: boolean;
@@ -91,7 +91,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
     }
   });
   
-  const { loading, error, setError, send } = useAdminRequest(onClose);
+  const { loading, error, setError, send } = useApiRequest(onClose);
   const [showAssessmentDetails, setShowAssessmentDetails] = useState(false);
   const [newFeature, setNewFeature] = useState('');
 

@@ -2,6 +2,7 @@ import { headers } from 'next/headers';
 import { Directory } from '@/components/Directory';
 import { isAdminRequest } from '@/lib/admin/access';
 import { workerEnv } from '@/lib/cloudflare';
+import { listSuggestions } from '@/lib/suggestions';
 import { listTools } from '@/lib/tools-repo';
 import { listCategories } from '@/lib/utils';
 
@@ -19,13 +20,17 @@ export default async function Admin() {
     );
   }
 
-  const tools = await listTools(workerEnv.DB);
+  const [tools, suggestions] = await Promise.all([
+    listTools(workerEnv.DB),
+    listSuggestions(workerEnv.DB),
+  ]);
 
   return (
     <Directory
       tools={tools}
       categories={['All', ...listCategories(tools)]}
       isAdmin
+      suggestions={suggestions}
     />
   );
 }

@@ -55,6 +55,27 @@ Cloudflare Access sits in front of `/admin` and `/api/admin`. Behind it, `lib/ad
 
 If the `ACCESS_TEAM_DOMAIN` or `ACCESS_AUD` secret is missing, every admin request is refused.
 
+## Public suggestions
+
+Visitors can suggest a tool with the **Suggest a Tool** button. `POST /api/suggestions`:
+
+1. Verifies the Cloudflare Turnstile token
+2. Validates the fields with the same schema as the admin add form
+3. Refuses tools already in the directory or already pending (same URL or name)
+4. Refuses new suggestions while 25 are pending
+5. Stores the suggestion in the `suggestions` table
+
+Suggestions never appear on the public site. `/admin` lists them at the top. **Approve** adds the tool with automated scoring and removes the suggestion; **Reject** removes it. Suggestions are not part of the nightly backup.
+
+The button is hidden and the API answers 503 until both Turnstile secrets are set:
+
+```bash
+npx wrangler secret put TURNSTILE_SITE_KEY
+npx wrangler secret put TURNSTILE_SECRET_KEY
+```
+
+The site key is public, but storing it as a secret means deploys never reset it. For local work, `.dev.vars.example` lists Cloudflare's always-pass test keys.
+
 ## First-time Cloudflare setup
 
 1. **Log in.** On a machine with a browser, run `npx wrangler login`. On a headless machine, create an API token (below) and export `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` instead.
