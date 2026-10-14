@@ -14,17 +14,12 @@
     {
       "binding": "DB",
       "database_name": "open-earth-tools",
-      // Replace with the id printed by `wrangler d1 create open-earth-tools`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "80c86b6d-75d0-4544-b4ac-827322ccad53",
       "migrations_dir": "migrations"
     }
-  ],
-  "vars": {
-    // Cloudflare Access settings for /admin. Both are required in production;
-    // admin requests are refused while either is empty.
-    // Team domain, e.g. "your-team.cloudflareaccess.com".
-    "ACCESS_TEAM_DOMAIN": "",
-    // The Access application's "Application Audience (AUD) Tag".
-    "ACCESS_AUD": ""
-  }
+  ]
+  // Cloudflare Access settings for /admin are Worker secrets, not vars, so deploys never reset them:
+  //   npx wrangler secret put ACCESS_TEAM_DOMAIN   (e.g. your-team.cloudflareaccess.com)
+  //   npx wrangler secret put ACCESS_AUD           (the Access application's AUD tag)
+  // Admin requests are refused while either is missing.
 }
