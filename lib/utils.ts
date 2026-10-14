@@ -29,3 +29,8 @@ export function normalizeUrl(url: string): string {
   const { hostname, pathname, search } = new URL(url);
   return `${hostname.toLowerCase().replace(/^www\./, '')}${pathname.replace(/\/+$/, '')}${search}`;
 }
+
+/** Unique categories across the given tools, sorted. */
+export function listCategories(tools: Tool[]): string[] {
+  return [...new Set(tools.map(tool => tool.category))].sort();
+}

@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local development. Never deploy this file.
+# Lets /admin work on localhost without Cloudflare Access.
+# Ignored for any host other than localhost or 127.0.0.1.
+ADMIN_DEV_BYPASS=true

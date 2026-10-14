@@ -2,14 +2,11 @@
 
 import React, { useState } from 'react';
 import { DATA_TYPE_OPTIONS, FUNCTIONALITY_OPTIONS } from '@/lib/constants';
-import { TurnstileWidget } from '@/components/ui/forms/TurnstileWidget';
-import { useSubmission } from '@/components/ui/forms/useSubmission';
-import { SubmissionReceived } from './SubmissionReceived';
+import { useAdminRequest } from '@/components/ui/forms/useAdminRequest';
 
 interface AddToolModalProps {
   isOpen: boolean;
   onClose: () => void;
-  siteKey: string;
 }
 
 interface FormData {
@@ -20,7 +17,7 @@ interface FormData {
   functionality: string[];
 }
 
-export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
+export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     url: '',
@@ -28,7 +25,7 @@ export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
     dataTypes: [],
     functionality: []
   });
-  const { loading, error, submitted, prUrl, setToken, setError, resetKey, submit } = useSubmission();
+  const { loading, error, setError, send } = useAdminRequest(onClose);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +55,7 @@ export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
         throw new Error('Please enter a valid URL');
       }
 
-      await submit('/api/tools', 'POST', {
+      await send('/api/admin/tools', 'POST', {
         name: formData.name.trim(),
         url: formData.url.trim(),
         description: formData.description.trim(),
@@ -93,13 +90,6 @@ export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        {submitted ? (
-          <SubmissionReceived
-            message="Thanks for the suggestion. The tool will appear in the directory once it has been reviewed."
-            prUrl={prUrl}
-            onClose={onClose}
-          />
-        ) : (
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -233,13 +223,12 @@ export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
                   <div>
                     <h4 className="text-blue-800 font-medium text-sm">Automated Assessment</h4>
                     <p className="text-blue-700 text-sm mt-1">
-                      The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections. Every submission is reviewed before it appears in the directory.
+                      The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections. You can adjust them afterwards with Edit.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <TurnstileWidget siteKey={siteKey} onToken={setToken} resetKey={resetKey} />
             </div>
           </div>
 
@@ -264,11 +253,10 @@ export function AddToolModal({ isOpen, onClose, siteKey }: AddToolModalProps) {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               )}
-              {loading ? 'Submitting...' : 'Submit for Review'}
+              {loading ? 'Adding...' : 'Add Tool'}
             </button>
           </div>
         </form>
-        )}
       </div>
     </div>
   );

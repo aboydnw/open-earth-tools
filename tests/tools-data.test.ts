@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { toolFileSchema } from '@/lib/tool-schema'
-import { listCategories, loadTools } from '@/lib/tools-data'
-import { generateIdFromName, normalizeUrl } from '@/lib/utils'
+import { loadTools } from '@/lib/tools-data'
+import { generateIdFromName, listCategories, normalizeUrl } from '@/lib/utils'
 
 const validTool = () => structuredClone(loadTools()[0])
 

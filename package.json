@@ -3,27 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy",
     "type-check": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:migrate:local": "wrangler d1 migrations apply open-earth-tools --local",
+    "db:seed:local": "node scripts/seed-sql.mjs > .wrangler/seed.sql && wrangler d1 execute open-earth-tools --local --file .wrangler/seed.sql"
   },
   "dependencies": {
-    "next": "^15.3.9",
+    "jose": "^6.2.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "vinext": "^1.2.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.64.0",
     "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitejs/plugin-rsc": "^0.5.37",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.0",
+    "react-server-dom-webpack": "^19.3.1",
     "tailwindcss": "^3.4.0",
     "typescript": "^5",
-    "vitest": "^5.0.3"
-  }
+    "vite": "^8.3.4",
+    "vitest": "^5.0.3",
+    "wrangler": "^4.151.0"
+  },
+  "type": "module"
 }

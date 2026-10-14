@@ -76,33 +76,22 @@ export const toolFileSchema = z
 
 export type ToolFile = z.infer<typeof toolFileSchema>
 
-const turnstileToken = z.string().min(1).max(4096)
-
-/** Body of an "add tool" submission; the remaining fields are filled in by automated scoring. */
-export const addSubmissionSchema = z
+/** Body of an "add tool" request; the remaining fields are filled in by automated scoring. */
+export const addToolSchema = z
   .object({
     name: editableFields.name,
     url: httpUrl,
     description: editableFields.description,
     dataTypes: z.array(z.enum(DATA_TYPE_OPTIONS)).min(1),
     functionality: z.array(z.enum(FUNCTIONALITY_OPTIONS)).min(1),
-    turnstileToken,
   })
   .strict()
 
-/** Body of an "edit tool" submission. */
-export const editSubmissionSchema = z
+/** Body of an "edit tool" request. */
+export const editToolSchema = z
   .object({
     ...editableFields,
     openness: opennessSchema.omit({ assessedAt: true }),
-    turnstileToken,
   })
   .strict()
 
-/** Body of a "delete tool" submission. */
-export const deleteSubmissionSchema = z
-  .object({
-    reason: z.string().trim().max(500).optional(),
-    turnstileToken,
-  })
-  .strict()
