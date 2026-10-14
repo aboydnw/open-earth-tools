@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Tool } from '@/types';
-import { useAdminRequest } from '@/components/ui/forms/useAdminRequest';
+import { useApiRequest } from '@/components/ui/forms/useApiRequest';
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ interface DeleteConfirmationModalProps {
 
 export function DeleteConfirmationModal({ isOpen, onClose, tool }: DeleteConfirmationModalProps) {
   const [confirmText, setConfirmText] = useState('');
-  const { loading, error, setError, send } = useAdminRequest(onClose);
+  const { loading, error, setError, send } = useApiRequest(onClose);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

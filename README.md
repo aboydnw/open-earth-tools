@@ -10,6 +10,7 @@ Live at [openearthtools.anthonynboyd.com](https://openearthtools.anthonynboyd.co
 - 🔒 **Secure Embedding**: Security guidance for iframe embedding
 - 📊 **Openness Assessment**: Each tool is scored on six dimensions of openness
 - ✏️ **Admin editing**: Add, edit, and delete tools at `/admin`; changes are live immediately
+- 💡 **Public suggestions**: Anyone can suggest a tool; it goes live once approved in `/admin`
 - 💾 **Nightly backup**: The database is copied to `data/tools/*.json` in this repository every night
 
 ## How it works

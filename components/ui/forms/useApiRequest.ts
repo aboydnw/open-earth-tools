@@ -1,16 +1,16 @@
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export interface AdminRequestState {
+export interface ApiRequestState {
   loading: boolean;
   error: string | null;
   setError: (error: string | null) => void;
-  /** Send the request; on success, reload the page data and run `onDone`. */
-  send: (url: string, method: 'POST' | 'PUT' | 'DELETE', body?: object) => Promise<void>;
+  /** Send the request; on success, reload the page data, run `onDone`, and resolve true. */
+  send: (url: string, method: 'POST' | 'PUT' | 'DELETE', body?: object) => Promise<boolean>;
 }
 
-/** Shared state for the admin forms that add, edit, or delete a tool. */
-export function useAdminRequest(onDone: () => void): AdminRequestState {
+/** Shared state for forms that send a JSON request to the app's API. */
+export function useApiRequest(onDone: () => void): ApiRequestState {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,8 +31,10 @@ export function useAdminRequest(onDone: () => void): AdminRequestState {
         }
         router.refresh();
         onDone();
+        return true;
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
+        return false;
       } finally {
         setLoading(false);
       }

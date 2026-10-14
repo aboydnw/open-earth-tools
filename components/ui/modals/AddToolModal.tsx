@@ -1,12 +1,18 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { DATA_TYPE_OPTIONS, FUNCTIONALITY_OPTIONS } from '@/lib/constants';
-import { useAdminRequest } from '@/components/ui/forms/useAdminRequest';
+import { TurnstileWidget } from '@/components/ui/forms/TurnstileWidget';
+import { useApiRequest } from '@/components/ui/forms/useApiRequest';
 
 interface AddToolModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /**
+   * Turnstile site key. When set, the form is the public "suggest a tool" form,
+   * which sends the tool for review instead of adding it.
+   */
+  turnstileSiteKey?: string;
 }
 
 interface FormData {
@@ -17,7 +23,8 @@ interface FormData {
   functionality: string[];
 }
 
-export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
+export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModalProps) {
+  const isSuggestion = Boolean(turnstileSiteKey);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     url: '',
@@ -25,7 +32,11 @@ export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
     dataTypes: [],
     functionality: []
   });
-  const { loading, error, setError, send } = useAdminRequest(onClose);
+  const [submitted, setSubmitted] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [resetKey, setResetKey] = useState(0);
+  const onDone = useCallback(() => (isSuggestion ? setSubmitted(true) : onClose()), [isSuggestion, onClose]);
+  const { loading, error, setError, send } = useApiRequest(onDone);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,13 +66,24 @@ export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
         throw new Error('Please enter a valid URL');
       }
 
-      await send('/api/admin/tools', 'POST', {
+      const fields = {
         name: formData.name.trim(),
         url: formData.url.trim(),
         description: formData.description.trim(),
         dataTypes: formData.dataTypes,
         functionality: formData.functionality,
-      });
+      };
+      if (!isSuggestion) {
+        await send('/api/admin/tools', 'POST', fields);
+        return;
+      }
+      if (!token) {
+        throw new Error('Please complete the verification check');
+      }
+      if (!(await send('/api/suggestions', 'POST', { ...fields, turnstileToken: token }))) {
+        setToken(null);
+        setResetKey(key => key + 1);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     }
@@ -90,10 +112,26 @@ export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {submitted ? (
+          <div className="p-6 text-center">
+            <div className="text-4xl mb-4">✅</div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Thanks for the suggestion</h2>
+            <p className="text-gray-600 text-sm mb-6">
+              The tool will appear in the directory once it has been reviewed.
+            </p>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-ds-orange-500 text-white rounded-md hover:bg-ds-orange-600 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">Add New Tool</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{isSuggestion ? 'Suggest a Tool' : 'Add New Tool'}</h2>
               <button
                 type="button"
                 onClick={onClose}
@@ -223,12 +261,15 @@ export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
                   <div>
                     <h4 className="text-blue-800 font-medium text-sm">Automated Assessment</h4>
                     <p className="text-blue-700 text-sm mt-1">
-                      The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections. You can adjust them afterwards with Edit.
+                      The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections.{isSuggestion ? ' Every suggestion is reviewed before it appears in the directory.' : ' You can adjust them afterwards with Edit.'}
                     </p>
                   </div>
                 </div>
               </div>
 
+              {turnstileSiteKey && (
+                <TurnstileWidget siteKey={turnstileSiteKey} onToken={setToken} resetKey={resetKey} />
+              )}
             </div>
           </div>
 
@@ -253,10 +294,11 @@ export function AddToolModal({ isOpen, onClose }: AddToolModalProps) {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               )}
-              {loading ? 'Adding...' : 'Add Tool'}
+              {isSuggestion ? (loading ? 'Sending...' : 'Send Suggestion') : (loading ? 'Adding...' : 'Add Tool')}
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

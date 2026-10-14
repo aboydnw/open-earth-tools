@@ -1,0 +1,5 @@
+CREATE TABLE suggestions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  data TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);

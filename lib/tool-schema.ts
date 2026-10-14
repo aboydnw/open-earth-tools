@@ -87,6 +87,11 @@ export const addToolSchema = z
   })
   .strict()
 
+/** Body of a public "suggest a tool" request: the add form plus a Turnstile token. */
+export const suggestToolSchema = addToolSchema.extend({
+  turnstileToken: z.string().min(1).max(4096),
+})
+
 /** Body of an "edit tool" request. */
 export const editToolSchema = z
   .object({
