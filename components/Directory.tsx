@@ -1,28 +1,24 @@
 "use client";
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Tool } from '@/lib/types';
-import { PageHeader } from '@/components/layout/PageHeader';
-import { AboutSection } from '@/components/layout/AboutSection';
-import { StatsSection } from '@/components/layout/StatsSection';
+import { SiteHeader } from '@/components/layout/SiteHeader';
+import { Hero } from '@/components/layout/Hero';
+import { MethodSection } from '@/components/layout/MethodSection';
+import { LibrariesSection } from '@/components/layout/LibrariesSection';
 import { Footer } from '@/components/layout/Footer';
+import { ThemePatterns } from '@/components/survey/Symbology';
+import { DirectoryControls, type SortOption, type ViewOption } from '@/components/features/filters/DirectoryControls';
 import { ToolCard } from '@/components/features/tools/ToolCard';
-import { ToolModal } from '@/components/ui/modals/ToolModal';
+import { ToolTable } from '@/components/features/tools/ToolTable';
+import { ToolDetailPanel } from '@/components/features/tools/ToolDetailPanel';
 import { ErrorBoundary } from '@/components/state/ErrorBoundary';
-import { SearchBar } from '@/components/ui/forms/SearchBar';
-import { EmbedCodeGenerator } from '@/components/ui/modals/EmbedCodeGenerator';
 import { AddToolModal } from '@/components/ui/modals/AddToolModal';
 import { DeleteConfirmationModal } from '@/components/ui/modals/DeleteConfirmationModal';
 import { EditToolModal } from '@/components/ui/modals/EditToolModal';
 import { PendingSuggestions } from '@/components/features/suggestions/PendingSuggestions';
+import { scoreHistogram, THEME_ORDER, themeOf, type ThemeKey } from '@/lib/survey';
 import type { Suggestion } from '@/lib/suggestions';
-
-// Simple filters interface
-interface SimpleFilters {
-  category: string;
-  opennessLevel: string;
-  embedSupported: string;
-}
 
 interface DirectoryProps {
   tools: Tool[];
@@ -35,472 +31,211 @@ interface DirectoryProps {
   turnstileSiteKey?: string | null;
 }
 
+function ModalFallback({ title, onClose }: { title: string; onClose: () => void }) {
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-sheet max-w-md p-6">
+        <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+        <p className="mb-4 text-slate">Something went wrong. Close this and try again.</p>
+        <button type="button" onClick={onClose} className="btn-primary">Close</button>
+      </div>
+    </div>
+  );
+}
+
+function compareTools(sort: SortOption) {
+  const byName = (a: Tool, b: Tool) => a.name.localeCompare(b.name);
+  switch (sort) {
+    case 'open':
+      return (a: Tool, b: Tool) => b.openness.score - a.openness.score || byName(a, b);
+    case 'least':
+      return (a: Tool, b: Tool) => a.openness.score - b.openness.score || byName(a, b);
+    case 'recent':
+      return (a: Tool, b: Tool) => (b.addedAt ?? '').localeCompare(a.addedAt ?? '') || byName(a, b);
+    default:
+      return byName;
+  }
+}
+
 export function Directory({ tools, categories, isAdmin, suggestions = [], turnstileSiteKey = null }: DirectoryProps) {
-  // Simple filtering state
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState<SimpleFilters>({
-    category: 'All',
-    opennessLevel: 'All',
-    embedSupported: 'All'
-  });
-  const [sortOption, setSortOption] = useState('name-asc');
-  
-  // UI state
-  const [showEmbedGenerator, setShowEmbedGenerator] = useState(false);
-  const [selectedToolForEmbed, setSelectedToolForEmbed] = useState<Tool | null>(null);
+  const [query, setQuery] = useState('');
+  const [theme, setTheme] = useState<ThemeKey | 'all'>('all');
+  const [minScore, setMinScore] = useState(1);
+  const [sort, setSort] = useState<SortOption>('name');
+  const [view, setView] = useState<ViewOption>('cards');
+
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [showAddToolModal, setShowAddToolModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [toolToDelete, setToolToDelete] = useState<Tool | null>(null);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [toolToEdit, setToolToEdit] = useState<Tool | null>(null);
 
-  // Simple filtering and sorting logic
-  const filteredAndSortedTools = useMemo(() => {
-    let filtered = tools.filter(tool => {
-      // Search term filter
-      if (searchTerm) {
-        const searchLower = searchTerm.toLowerCase();
-        const matchesSearch = 
-          tool.name.toLowerCase().includes(searchLower) ||
-          tool.description.toLowerCase().includes(searchLower) ||
-          tool.organization.toLowerCase().includes(searchLower) ||
-          tool.features.some(feature => feature.toLowerCase().includes(searchLower));
-        
-        if (!matchesSearch) return false;
-      }
+  const results = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    return tools
+      .filter(tool => {
+        if (theme !== 'all' && themeOf(tool).key !== theme) return false;
+        if (tool.openness.score < minScore) return false;
+        if (!needle) return true;
+        const haystack = [tool.name, tool.organization, tool.description, tool.category, themeOf(tool).label, ...tool.features]
+          .join(' ')
+          .toLowerCase();
+        return haystack.includes(needle);
+      })
+      .sort(compareTools(sort));
+  }, [tools, query, theme, minScore, sort]);
 
-      // Category filter
-      if (filters.category !== 'All' && tool.category !== filters.category) {
-        return false;
-      }
+  const themeCounts = useMemo(() => {
+    const counts = Object.fromEntries(THEME_ORDER.map(key => [key, 0])) as Record<ThemeKey, number>;
+    for (const tool of tools) counts[themeOf(tool).key] += 1;
+    return counts;
+  }, [tools]);
 
-      // Openness level filter
-      if (filters.opennessLevel !== 'All' && tool.openness.level !== filters.opennessLevel) {
-        return false;
-      }
+  const histogram = useMemo(() => scoreHistogram(tools), [tools]);
 
-      // Embed support filter
-      if (filters.embedSupported !== 'All') {
-        const isEmbeddable = filters.embedSupported === 'Embeddable';
-        if (tool.embedSupported !== isEmbeddable) {
-          return false;
-        }
-      }
+  const filtered = query.trim() !== '' || theme !== 'all' || minScore > 1;
 
-      return true;
-    });
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      switch (sortOption) {
-        case 'name-asc':
-          return a.name.localeCompare(b.name);
-        case 'name-desc':
-          return b.name.localeCompare(a.name);
-        case 'openness-desc':
-          return b.openness.score - a.openness.score;
-        case 'openness-asc':
-          return a.openness.score - b.openness.score;
-        case 'recent':
-          return (b.addedAt ?? '').localeCompare(a.addedAt ?? '') || a.name.localeCompare(b.name);
-        default:
-          return a.name.localeCompare(b.name);
-      }
-    });
-
-    return filtered;
-  }, [tools, searchTerm, filters, sortOption]);
-
-  // Handlers
-  const handleSearch = useCallback((term: string) => {
-    setSearchTerm(term);
+  const clearFilters = useCallback(() => {
+    setQuery('');
+    setTheme('all');
+    setMinScore(1);
   }, []);
 
-  const handleFilterChange = useCallback((filterType: keyof SimpleFilters, value: string) => {
-    setFilters(prev => ({ ...prev, [filterType]: value }));
-  }, []);
-
-  const handleSortChange = useCallback((sort: string) => {
-    setSortOption(sort);
-  }, []);
-
-  const handleOpenModal = useCallback((tool: Tool) => {
-    setSelectedTool(tool);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setSelectedTool(null);
-  }, []);
-
-  const handleGenerateEmbed = useCallback((tool: Tool) => {
-    setSelectedToolForEmbed(tool);
-    setShowEmbedGenerator(true);
-  }, []);
-
-  const handleCloseEmbedGenerator = useCallback(() => {
-    setShowEmbedGenerator(false);
-    setSelectedToolForEmbed(null);
-  }, []);
-
-  const clearAllFilters = useCallback(() => {
-    setSearchTerm('');
-    setFilters({
-      category: 'All',
-      opennessLevel: 'All',
-      embedSupported: 'All'
-    });
-  }, []);
-
-  const handleDeleteTool = useCallback((tool: Tool) => {
-    setToolToDelete(tool);
-    setShowDeleteModal(true);
-  }, []);
-
-  const handleCloseDeleteModal = useCallback(() => {
-    setShowDeleteModal(false);
-    setToolToDelete(null);
-  }, []);
-
-  const handleEditTool = useCallback((tool: Tool) => {
-    setToolToEdit(tool);
-    setShowEditModal(true);
-  }, []);
-
-  const handleCloseEditModal = useCallback(() => {
-    setShowEditModal(false);
-    setToolToEdit(null);
-  }, []);
+  const closeDetail = useCallback(() => setSelectedTool(null), []);
+  const openSuggest = useCallback(() => setShowAddToolModal(true), []);
+  const canSuggest = !isAdmin && Boolean(turnstileSiteKey);
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <PageHeader />
+      <div className="min-h-screen bg-paper text-ink">
+        <ThemePatterns />
+        <SiteHeader onSuggest={canSuggest ? openSuggest : undefined} />
+        <main>
+          <Hero total={tools.length} themeCount={THEME_ORDER.length} histogram={histogram} />
 
-          {isAdmin && <PendingSuggestions suggestions={suggestions} />}
-
-          <AboutSection />
-
-          <StatsSection tools={tools} />
-
-          {/* Search and Filter Interface */}
-          <div className="space-y-6 mb-8">
-            {/* Search Bar */}
-            <SearchBar 
-              onSearch={handleSearch}
-              placeholder="Search tools by name, description, organization, or features..."
-              className="w-full"
-            />
-
-            {/* Simple Filter Dropdowns */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Category Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select
-                  value={filters.category}
-                  onChange={(e) => handleFilterChange('category', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
-                >
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Openness Level Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Openness Level</label>
-                <select
-                  value={filters.opennessLevel}
-                  onChange={(e) => handleFilterChange('opennessLevel', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
-                >
-                  <option value="All">All Levels</option>
-                  <option value="Fully Open">Fully Open</option>
-                  <option value="Mostly Open">Mostly Open</option>
-                  <option value="Partially Open">Partially Open</option>
-                  <option value="Minimally Open">Minimally Open</option>
-                </select>
-              </div>
-
-              {/* Embed Support Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Embed Support</label>
-                <select
-                  value={filters.embedSupported}
-                  onChange={(e) => handleFilterChange('embedSupported', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
-                >
-                  <option value="All">All Tools</option>
-                  <option value="Embeddable">Embeddable Only</option>
-                  <option value="Non-Embeddable">Non-Embeddable Only</option>
-                </select>
-              </div>
-
-              {/* Sort Control */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
-                <select
-                  value={sortOption}
-                  onChange={(e) => handleSortChange(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
-                >
-                  <option value="name-asc">Name (A-Z)</option>
-                  <option value="name-desc">Name (Z-A)</option>
-                  <option value="openness-desc">Openness Score (High to Low)</option>
-                  <option value="openness-asc">Openness Score (Low to High)</option>
-                  <option value="recent">Recently Added</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Edit Mode Toggle */}
+          <section id="directory" aria-labelledby="directory-heading" className="mx-auto max-w-[1320px] px-4 pb-6 pt-16 sm:px-8">
             {isAdmin && (
-            <div className="flex justify-start gap-3">
-              <button
-                onClick={() => setEditMode(!editMode)}
-                className={`inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  editMode
-                    ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {editMode ? (
-                  <>
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    Exit Edit Mode
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                    Edit Mode
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={() => setShowAddToolModal(true)}
-                className="inline-flex items-center px-4 py-2 bg-ds-orange-500 text-white rounded-md text-sm font-medium hover:bg-ds-orange-600 transition-colors"
-              >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Add Tool
-              </button>
-            </div>
-            )}
-
-            {!isAdmin && turnstileSiteKey && (
-              <div className="flex justify-start">
-                <button
-                  onClick={() => setShowAddToolModal(true)}
-                  className="inline-flex items-center px-4 py-2 bg-ds-orange-500 text-white rounded-md text-sm font-medium hover:bg-ds-orange-600 transition-colors"
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  Suggest a Tool
-                </button>
+              <div className="mb-10 flex flex-col gap-6">
+                <PendingSuggestions suggestions={suggestions} />
+                <div className="flex flex-wrap gap-3">
+                  <button type="button" onClick={() => setEditMode(!editMode)} className="btn-secondary">
+                    {editMode ? 'Exit edit mode' : 'Edit mode'}
+                  </button>
+                  <button type="button" onClick={() => setShowAddToolModal(true)} className="btn-primary">
+                    Add tool
+                  </button>
+                </div>
               </div>
             )}
 
-            {/* Results Count */}
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>
-                Showing {filteredAndSortedTools.length} of {tools.length} tools
-              </span>
-              {(searchTerm || Object.values(filters).some(value => value !== 'All')) && (
-                <button
-                  onClick={clearAllFilters}
-                  className="text-ds-orange-600 hover:text-ds-orange-700"
-                >
-                  Clear all filters
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Tools Grid */}
-          <ErrorBoundary fallback={
-            <div className="text-center py-12">
-              <div className="text-red-400 text-6xl mb-4">⚠️</div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading tools</h3>
-              <p className="text-gray-600 mb-4">
-                There was an error displaying the tools grid. Please try refreshing.
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 id="directory-heading" className="font-wide text-4xl font-[520] tracking-[-0.02em]">The directory</h2>
+              <p aria-live="polite" className="font-mono text-[13px] text-slate">
+                Showing <strong className="font-medium text-ink">{results.length}</strong> of {tools.length}
               </p>
-              <button 
-                onClick={() => window.location.reload()}
-                className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
-              >
-                Refresh Page
-              </button>
             </div>
-          }>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {filteredAndSortedTools.map((tool) => (
-                <ErrorBoundary
-                  key={tool.id}
-                  fallback={
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                      <div className="text-red-400 text-xl mb-2">⚠️</div>
-                      <h4 className="text-red-800 font-medium mb-1">Error loading tool</h4>
-                      <p className="text-red-600 text-sm">This tool card failed to load.</p>
-                    </div>
-                  }
-                >
-                  <ToolCard
-                    tool={tool}
-                    onOpenModal={handleOpenModal}
-                    onGenerateEmbed={handleGenerateEmbed}
-                    editMode={editMode}
-                    onDelete={handleDeleteTool}
-                    onEdit={handleEditTool}
-                  />
-                </ErrorBoundary>
-              ))}
-            </div>
-          </ErrorBoundary>
 
-          {/* No results state */}
-          {filteredAndSortedTools.length === 0 && tools.length > 0 && (
-            <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">🔍</div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No tools found</h3>
-              <p className="text-gray-600 mb-4">
-                Try adjusting your search terms or filters to see more tools.
-              </p>
-              <button
-                onClick={clearAllFilters}
-                className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
-              >
-                Clear All Filters
-              </button>
-            </div>
-          )}
-
-          {/* Tool Modal */}
-          {selectedTool && (
-            <ErrorBoundary
-              fallback={
-                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                  <div className="bg-white rounded-lg p-6 max-w-md">
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading tool details</h3>
-                    <p className="text-gray-600 mb-4">Unable to display tool information.</p>
-                    <button 
-                      onClick={handleCloseModal}
-                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              }
-            >
-              <ToolModal
-                tool={selectedTool}
-                isOpen={!!selectedTool}
-                onClose={handleCloseModal}
-              />
-            </ErrorBoundary>
-          )}
-
-          {/* Embed Code Generator Modal */}
-          {selectedToolForEmbed && (
-            <EmbedCodeGenerator
-              tool={selectedToolForEmbed}
-              isOpen={showEmbedGenerator}
-              onClose={handleCloseEmbedGenerator}
+            <DirectoryControls
+              query={query}
+              onQuery={setQuery}
+              sort={sort}
+              onSort={setSort}
+              view={view}
+              onView={setView}
+              theme={theme}
+              onTheme={setTheme}
+              minScore={minScore}
+              onMinScore={setMinScore}
+              themeCounts={themeCounts}
+              total={tools.length}
+              filtered={filtered}
+              onClear={clearFilters}
             />
-          )}
+          </section>
 
-          {/* Add Tool Modal */}
-          {showAddToolModal && (isAdmin || turnstileSiteKey) && (
+          <section aria-label="Results" className="mx-auto max-w-[1320px] px-4 pb-24 pt-2 sm:px-8">
             <ErrorBoundary
               fallback={
-                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                  <div className="bg-white rounded-lg p-6 max-w-md">
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading add tool form</h3>
-                    <p className="text-gray-600 mb-4">Unable to display the add tool modal.</p>
-                    <button 
-                      onClick={() => setShowAddToolModal(false)}
-                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
-                    >
-                      Close
-                    </button>
-                  </div>
+                <div className="border border-dashed border-rule-strong px-6 py-14 text-center">
+                  <p className="text-xl font-semibold">The results couldn’t be drawn.</p>
+                  <button type="button" onClick={() => window.location.reload()} className="btn-secondary mt-4">
+                    Refresh the page
+                  </button>
                 </div>
               }
             >
-              <AddToolModal
-                isOpen={showAddToolModal}
-                onClose={() => setShowAddToolModal(false)}
-                turnstileSiteKey={isAdmin ? undefined : turnstileSiteKey ?? undefined}
-              />
+              {results.length > 0 && view === 'cards' && (
+                <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(290px,100%),1fr))] gap-5">
+                  {results.map((tool, i) => (
+                    <ToolCard
+                      key={tool.id}
+                      tool={tool}
+                      index={i}
+                      onOpen={setSelectedTool}
+                      editMode={isAdmin && editMode}
+                      onEdit={setToolToEdit}
+                      onDelete={setToolToDelete}
+                    />
+                  ))}
+                </ul>
+              )}
+              {results.length > 0 && view === 'table' && <ToolTable tools={results} onOpen={setSelectedTool} />}
             </ErrorBoundary>
-          )}
 
-          {/* Edit Tool Modal */}
-          {showEditModal && toolToEdit && isAdmin && (
-            <ErrorBoundary
-              fallback={
-                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                  <div className="bg-white rounded-lg p-6 max-w-md">
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading edit form</h3>
-                    <p className="text-gray-600 mb-4">Unable to display the edit tool modal.</p>
-                    <button 
-                      onClick={handleCloseEditModal}
-                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              }
-            >
-              <EditToolModal
-                isOpen={showEditModal}
-                onClose={handleCloseEditModal}
-                tool={toolToEdit}
-                categories={categories.filter(category => category !== 'All')}
-              />
-            </ErrorBoundary>
-          )}
+            {results.length === 0 && (
+              <div className="flex flex-col items-center gap-3 border border-dashed border-rule-strong px-6 py-14 text-center">
+                <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true">
+                  <circle cx="28" cy="28" r="26" fill="none" stroke="#A9A79E" strokeDasharray="3 4" />
+                  <path d="M28 14v28M14 28h28" stroke="#1E2427" strokeWidth="1.2" />
+                </svg>
+                <p className="text-xl font-semibold">Nothing in this area of the map.</p>
+                <p className="max-w-[420px] text-slate">
+                  No tools match these filters. Try a lower minimum openness or a broader search.
+                </p>
+                <button type="button" onClick={clearFilters} className="btn-secondary mt-2 min-h-[44px]">
+                  Clear filters
+                </button>
+              </div>
+            )}
+          </section>
 
-          {/* Delete Confirmation Modal */}
-          {showDeleteModal && toolToDelete && isAdmin && (
-            <ErrorBoundary
-              fallback={
-                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                  <div className="bg-white rounded-lg p-6 max-w-md">
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading delete confirmation</h3>
-                    <p className="text-gray-600 mb-4">Unable to display the delete confirmation modal.</p>
-                    <button 
-                      onClick={handleCloseDeleteModal}
-                      className="px-4 py-2 bg-ds-orange-500 text-white rounded hover:bg-ds-orange-600 transition-colors"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              }
-            >
-              <DeleteConfirmationModal
-                isOpen={showDeleteModal}
-                onClose={handleCloseDeleteModal}
-                tool={toolToDelete}
-              />
-            </ErrorBoundary>
-          )}
-        </div>
-        
-        <Footer />
+          <MethodSection />
+          <LibrariesSection />
+        </main>
+        <Footer onSuggest={canSuggest ? openSuggest : undefined} />
+
+        {selectedTool && (
+          <ErrorBoundary fallback={<ModalFallback title="Couldn’t show this tool" onClose={closeDetail} />}>
+            <ToolDetailPanel tool={selectedTool} onClose={closeDetail} />
+          </ErrorBoundary>
+        )}
+
+        {showAddToolModal && (isAdmin || turnstileSiteKey) && (
+          <ErrorBoundary fallback={<ModalFallback title="Couldn’t open the form" onClose={() => setShowAddToolModal(false)} />}>
+            <AddToolModal
+              isOpen={showAddToolModal}
+              onClose={() => setShowAddToolModal(false)}
+              turnstileSiteKey={isAdmin ? undefined : turnstileSiteKey ?? undefined}
+            />
+          </ErrorBoundary>
+        )}
+
+        {toolToEdit && isAdmin && (
+          <ErrorBoundary fallback={<ModalFallback title="Couldn’t open the edit form" onClose={() => setToolToEdit(null)} />}>
+            <EditToolModal
+              isOpen
+              onClose={() => setToolToEdit(null)}
+              tool={toolToEdit}
+              categories={categories.filter(category => category !== 'All')}
+            />
+          </ErrorBoundary>
+        )}
+
+        {toolToDelete && isAdmin && (
+          <ErrorBoundary fallback={<ModalFallback title="Couldn’t open the delete check" onClose={() => setToolToDelete(null)} />}>
+            <DeleteConfirmationModal isOpen onClose={() => setToolToDelete(null)} tool={toolToDelete} />
+          </ErrorBoundary>
+        )}
       </div>
     </ErrorBoundary>
   );

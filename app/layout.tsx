@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Open Earth Tools Directory",
-  description: "Curated open source Earth science visualization tools ready for safe embedding and storytelling. Quality-vetted tools from NASA, USGS, NOAA and the community.",
+  title: "Open Earth Tools",
+  description: "Earth-observation tools, mapped by how open they are. A curated directory of web maps and viewers for climate, hazards, oceans and land, each scored on six questions of openness.",
   keywords: [
     "earth science",
     "visualization tools",
@@ -31,15 +33,15 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Development Seed" }],
   openGraph: {
-    title: "Open Earth Tools Directory",
-    description: "Curated open source Earth science visualization tools ready for safe embedding and storytelling.",
+    title: "Open Earth Tools",
+    description: "Earth-observation tools, mapped by how open they are.",
     type: "website",
-    siteName: "Open Earth Tools Directory"
+    siteName: "Open Earth Tools"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Open Earth Tools Directory",
-    description: "Curated open source Earth science visualization tools ready for safe embedding and storytelling."
+    title: "Open Earth Tools",
+    description: "Earth-observation tools, mapped by how open they are."
   },
   robots: {
     index: true,
@@ -55,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${archivo.variable} ${plexMono.variable} antialiased`}
       >
         {children}
       </body>

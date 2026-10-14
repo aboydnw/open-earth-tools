@@ -1,58 +1,42 @@
-import Link from "next/link";
+import { REPO_URL } from './SiteHeader';
 
-export function Footer() {
+interface FooterProps {
+  /** Opens the suggest-a-tool form. The call to action is hidden when not set. */
+  onSuggest?: () => void;
+}
+
+/** Suggest-a-tool call to action and the page footer. */
+export function Footer({ onSuggest }: FooterProps) {
   return (
-    <footer className="bg-gray-900 text-white mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="col-span-2">
-            <h3 className="text-lg font-semibold mb-4">Open Earth Tools Directory</h3>
-            <p className="text-gray-300 mb-4">
-              Curated open source Earth science visualization tools for safe embedding 
-              and storytelling. Maintained by the community for the community.
-            </p>
-            <div className="flex gap-4">
-              <a href="https://github.com/developmentseed" className="text-gray-400 hover:text-white">
-                GitHub
-              </a>
-              <a href="https://developmentseed.org" className="text-gray-400 hover:text-white">
-                Development Seed
-              </a>
+    <>
+      {onSuggest && (
+        <section id="suggest" aria-labelledby="suggest-heading" className="border-b border-rule">
+          <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-between gap-6 px-4 py-[72px] sm:px-8">
+            <div className="flex max-w-[640px] flex-col gap-2">
+              <h2 id="suggest-heading" className="font-wide text-[32px] font-[520] tracking-[-0.02em]">
+                Know a tool that belongs on this map?
+              </h2>
+              <p className="text-[17px] text-slate">
+                Send us the link. We review every suggestion and score it before it’s listed.
+              </p>
             </div>
+            <button type="button" onClick={onSuggest} className="btn-primary">
+              Suggest a tool
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                <path d="M1 7h12M8 2l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            </button>
           </div>
-          
-          <div>
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><a href="#" className="hover:text-white">Embedding Guide</a></li>
-              <li><a href="#" className="hover:text-white">Security Best Practices</a></li>
-              <li><a href="#" className="hover:text-white">Assessment Framework</a></li>
-              <li><a href="#" className="hover:text-white">Submit a Tool</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">Categories</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><a href="#" className="hover:text-white">Disasters</a></li>
-              <li><a href="#" className="hover:text-white">Climate</a></li>
-              <li><a href="#" className="hover:text-white">Water Resources</a></li>
-              <li><a href="#" className="hover:text-white">Satellite Imagery</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
-            © 2025 Open Earth Tools Directory. All tools subject to their respective licenses.
-          </p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-white text-sm">Privacy</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm">Terms</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm">Contact</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+        </section>
+      )}
+      <footer className="mx-auto flex max-w-[1320px] flex-wrap justify-between gap-4 px-4 pb-12 pt-8 font-mono text-xs text-graphite sm:px-8">
+        <span>Open Earth Tools · © {new Date().getFullYear()} · Each tool is subject to its own license</span>
+        <span className="flex gap-5">
+          <a href={REPO_URL} className="text-ink">Source on GitHub</a>
+          <a href="#method" className="text-ink">Method</a>
+          {onSuggest && <a href="#suggest" className="text-ink">Suggest a tool</a>}
+        </span>
+      </footer>
+    </>
   );
 }

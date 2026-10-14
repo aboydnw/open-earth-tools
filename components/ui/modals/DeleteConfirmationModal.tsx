@@ -38,31 +38,30 @@ export function DeleteConfirmationModal({ isOpen, onClose, tool }: DeleteConfirm
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-md w-full">
+    <div className="modal-backdrop">
+      <div className="modal-sheet max-w-md">
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-red-600">Delete Tool</h2>
+              <h2 className="font-wide text-2xl font-[520] tracking-[-0.02em] text-[#9B2C1F]">Delete Tool</h2>
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={loading}
-                className="text-gray-400 hover:text-gray-600 transition-colors disabled:cursor-not-allowed"
+                className="flex h-11 w-11 items-center justify-center border border-ink text-ink transition-colors hover:bg-ink hover:text-sheet disabled:cursor-not-allowed"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
             {/* Warning Message */}
-            <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+            <div className="notice-error mb-6">
               <div className="flex">
-                <div className="text-red-400 mr-3 mt-0.5">⚠️</div>
                 <div>
-                  <h4 className="text-red-800 font-medium text-sm">Permanent Deletion</h4>
-                  <p className="text-red-700 text-sm mt-1">
+                  <h4 className="font-semibold">Permanent Deletion</h4>
+                  <p className="mt-1">
                     The tool disappears from the directory immediately. The nightly backup in the repository still has the last saved copy.
                   </p>
                 </div>
@@ -70,30 +69,28 @@ export function DeleteConfirmationModal({ isOpen, onClose, tool }: DeleteConfirm
             </div>
 
             {/* Tool Info */}
-            <div className="bg-gray-50 rounded-md p-4 mb-6">
-              <h4 className="font-medium text-gray-900 mb-2">Tool to delete:</h4>
+            <div className="notice mb-6">
+              <h4 className="marginalia mb-2">Tool to delete:</h4>
               <div className="flex items-center">
-                <span className="text-lg mr-2">{tool.icon}</span>
                 <div>
-                  <p className="font-medium text-gray-900">{tool.name}</p>
-                  <p className="text-sm text-gray-600">{tool.organization}</p>
+                  <p className="font-semibold">{tool.name}</p>
+                  <p className="font-mono text-xs text-graphite">{tool.organization}</p>
                 </div>
               </div>
             </div>
 
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+              <div className="notice-error mb-4 p-3">
                 <div className="flex items-center">
-                  <div className="text-red-400 mr-2">⚠️</div>
-                  <p className="text-red-600 text-sm">{error}</p>
+                  <p className="text-sm">{error}</p>
                 </div>
               </div>
             )}
 
             {/* Confirmation Input */}
             <div className="mb-6">
-              <label htmlFor="confirmText" className="block text-sm font-medium text-gray-700 mb-2">
-                Type <span className="font-mono bg-gray-100 px-1 rounded">delete</span> to confirm:
+              <label htmlFor="confirmText" className="field-label">
+                Type <span className="bg-paper px-1 font-mono normal-case">delete</span> to confirm:
               </label>
               <input
                 type="text"
@@ -103,44 +100,44 @@ export function DeleteConfirmationModal({ isOpen, onClose, tool }: DeleteConfirm
                   setConfirmText(e.target.value);
                   if (error) setError(null); // Clear error when user starts typing
                 }}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors ${
+                className={`field transition-colors ${
                   error 
-                    ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                    ? 'border-[#9B2C1F]' 
                     : confirmText && isValidInput
-                    ? 'border-green-300 focus:ring-green-500 focus:border-green-500'
-                    : 'border-gray-300 focus:ring-red-500 focus:border-red-500'
+                    ? 'border-deep'
+                    : ''
                 }`}
                 placeholder="Type 'delete' here"
                 disabled={loading}
                 autoComplete="off"
               />
               {confirmText && !isValidInput && !error && (
-                <p className="text-yellow-600 text-sm mt-1">
+                <p className="mt-1 text-sm text-slate">
                   Please type exactly "delete" to confirm
                 </p>
               )}
               {confirmText && isValidInput && (
-                <p className="text-green-600 text-sm mt-1">
-                  ✓ Confirmation text matches
+                <p className="mt-1 text-sm text-deep">
+                  Confirmation text matches
                 </p>
               )}
             </div>
 
           </div>
 
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
+          <div className="modal-footer">
             <button
               type="button"
               onClick={handleClose}
               disabled={loading}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-secondary min-h-[44px] px-[18px]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || !isValidInput}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+              className="btn-danger"
             >
               {loading && (
                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">

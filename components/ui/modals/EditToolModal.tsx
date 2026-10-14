@@ -189,30 +189,29 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="modal-backdrop">
+      <div className="modal-sheet max-w-4xl">
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">Edit Tool</h2>
+              <h2 className="font-wide text-2xl font-[520] tracking-[-0.02em]">Edit Tool</h2>
               <button
                 type="button"
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="flex h-11 w-11 items-center justify-center border border-ink text-ink transition-colors hover:bg-ink hover:text-sheet"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
             {error && (
-              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
+              <div className="notice-error mb-4">
                 <div className="flex">
-                  <div className="text-red-400 mr-3">⚠️</div>
                   <div>
-                    <h4 className="text-red-800 font-medium">Error</h4>
-                    <p className="text-red-600 text-sm mt-1">{error}</p>
+                    <h4 className="font-semibold">Error</h4>
+                    <p className="mt-1 text-sm">{error}</p>
                   </div>
                 </div>
               </div>
@@ -221,11 +220,11 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Left Column - Basic Info */}
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Basic Information</h3>
+                <h3 className="border-b border-ink pb-2 font-mono text-xs font-medium uppercase tracking-[.1em] text-graphite">Basic Information</h3>
                 
                 {/* Tool Name */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="field-label">
                     Tool Name *
                   </label>
                   <input
@@ -233,14 +232,14 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                     required
                   />
                 </div>
 
                 {/* Tool URL */}
                 <div>
-                  <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="url" className="field-label">
                     Tool URL *
                   </label>
                   <input
@@ -248,14 +247,14 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                     id="url"
                     value={formData.url}
                     onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                     required
                   />
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="description" className="field-label">
                     Description *
                   </label>
                   <textarea
@@ -263,14 +262,14 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                     rows={4}
                     value={formData.description}
                     onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                     required
                   />
                 </div>
 
                 {/* Organization */}
                 <div>
-                  <label htmlFor="organization" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="organization" className="field-label">
                     Organization
                   </label>
                   <input
@@ -278,20 +277,20 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                     id="organization"
                     value={formData.organization}
                     onChange={(e) => setFormData(prev => ({ ...prev, organization: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                   />
                 </div>
 
                 {/* License */}
                 <div>
-                  <label htmlFor="license" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="license" className="field-label">
                     License
                   </label>
                   <select
                     id="license"
                     value={formData.license}
                     onChange={(e) => setFormData(prev => ({ ...prev, license: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                   >
                     {withCurrent(LICENSES, formData.license).map(license => (
                       <option key={license} value={license}>{license}</option>
@@ -301,14 +300,14 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
 
                 {/* Category */}
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="category" className="field-label">
                     Category
                   </label>
                   <select
                     id="category"
                     value={formData.category}
                     onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                   >
                     {withCurrent(categories, formData.category).map(category => (
                       <option key={category} value={category}>{category}</option>
@@ -319,11 +318,11 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
 
               {/* Right Column - Additional Details */}
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Additional Details</h3>
+                <h3 className="border-b border-ink pb-2 font-mono text-xs font-medium uppercase tracking-[.1em] text-graphite">Additional Details</h3>
 
                 {/* Embed URL */}
                 <div>
-                  <label htmlFor="embedUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="embedUrl" className="field-label">
                     Embed URL
                   </label>
                   <input
@@ -331,13 +330,13 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                     id="embedUrl"
                     value={formData.embedUrl}
                     onChange={(e) => setFormData(prev => ({ ...prev, embedUrl: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                   />
                 </div>
 
                 {/* Icon */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="field-label">
                     Icon
                   </label>
                   <div className="grid grid-cols-10 gap-2">
@@ -346,10 +345,10 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                         key={icon}
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, icon }))}
-                        className={`p-2 text-lg rounded border-2 transition-colors ${
+                        className={`p-2 text-lg border transition-colors ${
                           formData.icon === icon
-                            ? 'border-ds-orange-500 bg-ds-orange-50'
-                            : 'border-gray-200 hover:border-gray-300'
+                            ? 'border-ink bg-paper'
+                            : 'border-rule hover:border-ink'
                         }`}
                       >
                         {icon}
@@ -360,14 +359,14 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
 
                 {/* Status */}
                 <div>
-                  <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="status" className="field-label">
                     Status
                   </label>
                   <select
                     id="status"
                     value={formData.status}
                     onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                   >
                     {withCurrent(STATUS_OPTIONS, formData.status).map(status => (
                       <option key={status} value={status}>{status}</option>
@@ -382,15 +381,15 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                       type="checkbox"
                       checked={formData.embedSupported}
                       onChange={(e) => setFormData(prev => ({ ...prev, embedSupported: e.target.checked }))}
-                      className="rounded border-gray-300 text-ds-orange-500 focus:ring-ds-orange-500"
+                      className="h-4 w-4 accent-[#B4532A]"
                     />
-                    <span className="ml-2 text-sm text-gray-700">Embedding Supported</span>
+                    <span className="ml-2 text-sm text-slate">Embedding Supported</span>
                   </label>
                 </div>
 
                 {/* Embed Note */}
                 <div>
-                  <label htmlFor="embedNote" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="embedNote" className="field-label">
                     Embed Note
                   </label>
                   <textarea
@@ -398,23 +397,23 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                     rows={2}
                     value={formData.embedNote}
                     onChange={(e) => setFormData(prev => ({ ...prev, embedNote: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                    className="field"
                   />
                 </div>
 
                 {/* Features */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="field-label">
                     Features
                   </label>
                   <div className="space-y-2 mb-3">
                     {formData.features.map((feature, index) => (
-                      <div key={index} className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded">
+                      <div key={index} className="flex items-center justify-between border border-rule bg-paper px-3 py-2">
                         <span className="text-sm">{feature}</span>
                         <button
                           type="button"
                           onClick={() => handleRemoveFeature(index)}
-                          className="text-red-500 hover:text-red-700 text-sm"
+                          className="text-sm text-[#9B2C1F] underline underline-offset-[3px]"
                         >
                           Remove
                         </button>
@@ -427,13 +426,13 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                       value={newFeature}
                       onChange={(e) => setNewFeature(e.target.value)}
                       placeholder="Add new feature"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                      className="field flex-1"
                       onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddFeature())}
                     />
                     <button
                       type="button"
                       onClick={handleAddFeature}
-                      className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                      className="btn-secondary min-h-[44px] px-4"
                     >
                       Add
                     </button>
@@ -443,13 +442,13 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
             </div>
 
             {/* Assessment Details Accordion */}
-            <div className="mt-8 border-t pt-6">
+            <div className="mt-8 border-t border-ink pt-6">
               <button
                 type="button"
                 onClick={() => setShowAssessmentDetails(!showAssessmentDetails)}
                 className="flex items-center justify-between w-full text-left"
               >
-                <h3 className="text-lg font-medium text-gray-900">Assessment Details</h3>
+                <h3 className="font-mono text-xs font-medium uppercase tracking-[.1em] text-graphite">Assessment Details</h3>
                 <svg 
                   className={`w-5 h-5 transition-transform ${showAssessmentDetails ? 'rotate-180' : ''}`}
                   fill="none" 
@@ -465,7 +464,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                   {/* Overall Score and Level */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="score" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="score" className="field-label">
                         Overall Score (0-6)
                       </label>
                       <input
@@ -478,11 +477,11 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                           ...prev,
                           openness: { ...prev.openness, score: parseInt(e.target.value) || 0 }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                        className="field"
                       />
                     </div>
                     <div>
-                      <label htmlFor="level" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="level" className="field-label">
                         Openness Level
                       </label>
                       <select
@@ -492,7 +491,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                           ...prev,
                           openness: { ...prev.openness, level: e.target.value as OpennessAssessment['level'] }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                        className="field"
                       >
                         {OPENNESS_LEVELS.map(level => (
                           <option key={level} value={level}>{level}</option>
@@ -503,13 +502,13 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
 
                   {/* Dimensions */}
                   <div className="space-y-4">
-                    <h4 className="font-medium text-gray-900">Assessment Dimensions</h4>
+                    <h4 className="font-semibold">Assessment Dimensions</h4>
                     {Object.entries(formData.openness.dimensions).map(([dimensionName, dimension]) => (
-                      <div key={dimensionName} className="border rounded-lg p-4">
-                        <h5 className="font-medium text-gray-900 mb-3">{dimensionName}</h5>
+                      <div key={dimensionName} className="border border-rule bg-paper p-4">
+                        <h5 className="mb-3 font-semibold">{dimensionName}</h5>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="field-label">
                               Score
                             </label>
                             <select
@@ -519,7 +518,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                                 'score',
                                 e.target.value
                               )}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                              className="field"
                             >
                               {DIMENSION_SCORES.map(score => (
                                 <option key={score} value={score}>
@@ -529,7 +528,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                             </select>
                           </div>
                           <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="field-label">
                               Note
                             </label>
                             <input
@@ -540,7 +539,7 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
                                 'note',
                                 e.target.value
                               )}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                              className="field"
                             />
                           </div>
                         </div>
@@ -552,20 +551,20 @@ export function EditToolModal({ isOpen, onClose, tool, categories }: EditToolMod
             </div>
           </div>
 
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
-            {error && <p className="text-red-600 text-sm mr-auto">{error}</p>}
+          <div className="modal-footer">
+            {error && <p className="mr-auto text-sm text-[#7A2016]">{error}</p>}
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-secondary min-h-[44px] px-[18px]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-ds-orange-500 text-white rounded-md hover:bg-ds-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+              className="btn-primary min-h-[44px] px-[18px]"
             >
               {loading && (
                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">

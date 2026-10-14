@@ -110,19 +110,18 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="modal-backdrop">
+      <div className="modal-sheet max-w-2xl">
         {submitted ? (
           <div className="p-6 text-center">
-            <div className="text-4xl mb-4">✅</div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Thanks for the suggestion</h2>
-            <p className="text-gray-600 text-sm mb-6">
+            <h2 className="font-wide mb-2 text-2xl font-[520] tracking-[-0.02em]">Thanks for the suggestion</h2>
+            <p className="mb-6 text-sm text-slate">
               The tool will appear in the directory once it has been reviewed.
             </p>
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-ds-orange-500 text-white rounded-md hover:bg-ds-orange-600 transition-colors"
+              className="btn-primary min-h-[44px] px-[18px]"
             >
               Close
             </button>
@@ -131,25 +130,24 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">{isSuggestion ? 'Suggest a Tool' : 'Add New Tool'}</h2>
+              <h2 className="font-wide text-2xl font-[520] tracking-[-0.02em]">{isSuggestion ? 'Suggest a Tool' : 'Add New Tool'}</h2>
               <button
                 type="button"
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="flex h-11 w-11 items-center justify-center border border-ink text-ink transition-colors hover:bg-ink hover:text-sheet"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
             {error && (
-              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
+              <div className="notice-error mb-4">
                 <div className="flex">
-                  <div className="text-red-400 mr-3">⚠️</div>
                   <div>
-                    <h4 className="text-red-800 font-medium">Error</h4>
-                    <p className="text-red-600 text-sm mt-1">{error}</p>
+                    <h4 className="font-semibold">Error</h4>
+                    <p className="mt-1 text-sm">{error}</p>
                   </div>
                 </div>
               </div>
@@ -158,7 +156,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
             <div className="space-y-6">
               {/* Tool Name */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="field-label">
                   Tool Name *
                 </label>
                 <input
@@ -166,7 +164,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                  className="field"
                   placeholder="e.g., Climate Data Explorer"
                   required
                 />
@@ -174,7 +172,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
 
               {/* Tool URL */}
               <div>
-                <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="url" className="field-label">
                   Tool URL *
                 </label>
                 <input
@@ -182,7 +180,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
                   id="url"
                   value={formData.url}
                   onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                  className="field"
                   placeholder="https://example.com/tool"
                   required
                 />
@@ -190,7 +188,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
 
               {/* Description */}
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="description" className="field-label">
                   Description *
                 </label>
                 <textarea
@@ -198,7 +196,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
                   rows={3}
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-ds-orange-500 focus:border-ds-orange-500"
+                  className="field"
                   placeholder="Brief description of what this tool does and who it's for..."
                   required
                 />
@@ -206,24 +204,24 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
 
               {/* Data Types */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="field-label">
                   Data Types * (select all that apply)
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-40 overflow-y-auto border border-gray-200 rounded-md p-3">
+                <div className="grid max-h-40 grid-cols-2 gap-2 overflow-y-auto border border-rule bg-paper p-3 sm:grid-cols-3">
                   {DATA_TYPE_OPTIONS.map((dataType) => (
                     <label key={dataType} className="flex items-center space-x-2 text-sm">
                       <input
                         type="checkbox"
                         checked={formData.dataTypes.includes(dataType)}
                         onChange={() => handleDataTypeToggle(dataType)}
-                        className="rounded border-gray-300 text-ds-orange-500 focus:ring-ds-orange-500"
+                        className="h-4 w-4 accent-[#B4532A]"
                       />
                       <span className="capitalize">{dataType}</span>
                     </label>
                   ))}
                 </div>
                 {formData.dataTypes.length > 0 && (
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="mt-2 text-sm text-slate">
                     Selected: {formData.dataTypes.join(', ')}
                   </p>
                 )}
@@ -231,36 +229,35 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
 
               {/* Functionality */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="field-label">
                   Functionality * (select all that apply)
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto border border-gray-200 rounded-md p-3">
+                <div className="grid max-h-32 grid-cols-2 gap-2 overflow-y-auto border border-rule bg-paper p-3 sm:grid-cols-3">
                   {FUNCTIONALITY_OPTIONS.map((func) => (
                     <label key={func} className="flex items-center space-x-2 text-sm">
                       <input
                         type="checkbox"
                         checked={formData.functionality.includes(func)}
                         onChange={() => handleFunctionalityToggle(func)}
-                        className="rounded border-gray-300 text-ds-orange-500 focus:ring-ds-orange-500"
+                        className="h-4 w-4 accent-[#B4532A]"
                       />
                       <span className="capitalize">{func}</span>
                     </label>
                   ))}
                 </div>
                 {formData.functionality.length > 0 && (
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="mt-2 text-sm text-slate">
                     Selected: {formData.functionality.join(', ')}
                   </p>
                 )}
               </div>
 
               {/* Info box about automation */}
-              <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+              <div className="notice">
                 <div className="flex items-start">
-                  <div className="text-blue-400 mr-3 mt-0.5">ℹ️</div>
                   <div>
-                    <h4 className="text-blue-800 font-medium text-sm">Automated Assessment</h4>
-                    <p className="text-blue-700 text-sm mt-1">
+                    <h4 className="font-semibold text-ink">Automated Assessment</h4>
+                    <p className="mt-1">
                       The remaining fields (organization, category, license, openness score, etc.) will be automatically determined based on the tool URL and your selections.{isSuggestion ? ' Every suggestion is reviewed before it appears in the directory.' : ' You can adjust them afterwards with Edit.'}
                     </p>
                   </div>
@@ -273,12 +270,12 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
             </div>
           </div>
 
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
-            {error && <p className="text-red-600 text-sm mr-auto">{error}</p>}
+          <div className="modal-footer">
+            {error && <p className="mr-auto text-sm text-[#7A2016]">{error}</p>}
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors"
+              className="btn-secondary min-h-[44px] px-[18px]"
               disabled={loading}
             >
               Cancel
@@ -286,7 +283,7 @@ export function AddToolModal({ isOpen, onClose, turnstileSiteKey }: AddToolModal
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-ds-orange-500 text-white rounded-md hover:bg-ds-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+              className="btn-primary min-h-[44px] px-[18px]"
             >
               {loading && (
                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
