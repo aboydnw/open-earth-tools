@@ -1,0 +1,52 @@
+{
+  "name": "EJScreen (restored)",
+  "organization": "Public Environmental Data Partners",
+  "description": "Unofficial restored copy of the EPA's environmental justice screening tool, taken offline by the agency in 2025. Maps pollution burden and demographic indicators by census block group across the US, rebuilt from public data.",
+  "url": "https://screening-tools.com/epa-ejscreen",
+  "embedUrl": "https://screening-tools.com/epa-ejscreen",
+  "category": "Environmental Justice",
+  "license": "AGPL 3.0",
+  "status": "Production",
+  "features": [
+    "Screening",
+    "Environmental justice",
+    "Demographics",
+    "Export"
+  ],
+  "icon": "⚖️",
+  "embedSupported": false,
+  "embedNote": "Site sends a frame-blocking header, so the preview opens in a new tab",
+  "dataLink": "https://github.com/Public-Environmental-Data-Partners/EJSCREEN-Data-Processing",
+  "openness": {
+    "score": 5,
+    "level": "Mostly Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "AGPL-3.0 data pipeline on GitHub"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Rebuilt from EPA public domain data"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web map with downloads; same-origin framing only"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard GIS downloads"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Volunteer coalition hosting; reproducible from the pipeline"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Open volunteer coalition"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

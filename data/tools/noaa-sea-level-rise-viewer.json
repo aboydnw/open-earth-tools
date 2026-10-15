@@ -1,0 +1,52 @@
+{
+  "name": "NOAA Sea Level Rise Viewer",
+  "organization": "NOAA",
+  "description": "Screening-level maps of sea level rise, coastal flooding, marsh migration, and high-tide flooding frequency for the US coast. Simple slider interface with downloadable data layers.",
+  "url": "https://coast.noaa.gov/slr/",
+  "embedUrl": "https://coast.noaa.gov/slr/",
+  "category": "Water Resources",
+  "license": "Public Domain",
+  "status": "Production",
+  "features": [
+    "Sea level rise",
+    "Flood risk",
+    "Scenario comparison",
+    "Export"
+  ],
+  "icon": "🌊",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://coast.noaa.gov/slrdata/",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Government application; source not published"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "US government public domain data with downloads"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web map with data downloads; no API"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "GIS layers in standard formats"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Government hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Federal agency control"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

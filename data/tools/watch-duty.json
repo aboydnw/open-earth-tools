@@ -1,0 +1,52 @@
+{
+  "name": "Watch Duty",
+  "organization": "Watch Duty",
+  "description": "Real-time wildfire and evacuation maps and alerts, curated by volunteer reporters from public feeds. The most public-facing wildfire tool, with a web app alongside the mobile apps. Proprietary, so it scores low on openness.",
+  "url": "https://app.watchduty.org/",
+  "embedUrl": "https://app.watchduty.org/",
+  "category": "Disasters",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Real-time",
+    "Alerts",
+    "Wildfire",
+    "Evacuation zones"
+  ],
+  "icon": "🔥",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://www.watchduty.org/",
+  "openness": {
+    "score": 2,
+    "level": "Minimally Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Proprietary application"
+      },
+      "Data Licensing": {
+        "score": "red",
+        "note": "Curated incident data is not available for download"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web and mobile apps; no public API"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Formats not documented"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Hosted by Watch Duty only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Nonprofit led with volunteer reporters"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

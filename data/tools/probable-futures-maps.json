@@ -1,0 +1,52 @@
+{
+  "name": "Probable Futures Maps",
+  "organization": "Probable Futures",
+  "description": "Plain-language maps of heat, drought, precipitation, and flood hazards at warming levels from 0.5 to 3 °C. Pairs each map with explanatory text written for non-specialists, and offers the maps through an open API.",
+  "url": "https://probablefutures.org/maps/",
+  "embedUrl": "https://probablefutures.org/maps/",
+  "category": "Climate",
+  "license": "Creative Commons",
+  "status": "Production",
+  "features": [
+    "Climate projections",
+    "Scenario comparison",
+    "Educational content",
+    "Maps API"
+  ],
+  "icon": "🌡️",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://probablefutures.org/open-data/",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Front end is not published; maps are served through an open API"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Maps and data under a Creative Commons licence with raw downloads"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Embeddable maps plus a public maps API and data API"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Raster map tiles and CSV downloads; formats documented"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Hosted by Probable Futures on Mapbox; not self-hostable as a whole"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Nonprofit-led with partner institutions"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

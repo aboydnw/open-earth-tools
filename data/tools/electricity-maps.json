@@ -1,0 +1,52 @@
+{
+  "name": "Electricity Maps",
+  "organization": "Electricity Maps",
+  "description": "Live map of grid carbon intensity and electricity mix by country and zone, with hourly history. The app and its data parsers are open source and actively developed by a community of contributors.",
+  "url": "https://app.electricitymaps.com/map",
+  "embedUrl": "https://app.electricitymaps.com/map",
+  "category": "Energy",
+  "license": "AGPL 3.0",
+  "status": "Production",
+  "features": [
+    "Real-time",
+    "Monitoring",
+    "Comparison",
+    "Historical data"
+  ],
+  "icon": "⚡",
+  "embedSupported": false,
+  "embedNote": "Site sends a frame-blocking header, so the preview opens in a new tab",
+  "dataLink": "https://github.com/electricitymaps/electricitymaps-contrib",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "AGPL-3.0 at github.com/electricitymaps/electricitymaps-contrib"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Live view is free; historical data and the commercial API are paid"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web and mobile app; API requires a key"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Documented zone data and JSON API"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Company hosted; the app can be self-hosted from the repo"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Company stewarded with a large contributor community"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

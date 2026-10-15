@@ -1,0 +1,52 @@
+{
+  "name": "Copernicus Browser",
+  "organization": "European Commission / ESA",
+  "description": "Browse, compare, and download Sentinel, Landsat, and other open imagery in the browser, with band combinations and time-lapse. The friendliest open imagery browser, though some functions need a free login.",
+  "url": "https://browser.dataspace.copernicus.eu/",
+  "embedUrl": "https://browser.dataspace.copernicus.eu/",
+  "category": "Satellite Imagery",
+  "license": "Open Data",
+  "status": "Production",
+  "features": [
+    "Imagery browsing",
+    "Time-lapse",
+    "Comparison",
+    "Export"
+  ],
+  "icon": "🛰️",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://dataspace.copernicus.eu/",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Based on the open EO Browser; hosted build not published"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Copernicus Sentinel data are free and open"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web app with downloads; some functions need a free account"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Cloud-optimised GeoTIFF and standard EO formats"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Hosted by the Copernicus Data Space Ecosystem; data mirrored elsewhere"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "EU programme governance"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

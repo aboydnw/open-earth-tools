@@ -1,0 +1,52 @@
+{
+  "name": "Climate Shift Index",
+  "organization": "Climate Central",
+  "description": "Daily global map showing how much human-caused warming changed the likelihood of each day's temperature, on a scale from -5 to +5. Updated daily from a weather model and built for the public and journalists.",
+  "url": "https://www.climatecentral.org/climate-shift-index",
+  "embedUrl": "https://www.climatecentral.org/climate-shift-index",
+  "category": "Climate",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Real-time",
+    "Attribution",
+    "Monitoring",
+    "Location search"
+  ],
+  "icon": "🌡️",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://www.climatecentral.org/climate-shift-index",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Proprietary application"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Free to view; no open download or API"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web map; shareable images"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "Published methodology; formats not documented"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Hosted by Climate Central only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Nonprofit led"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

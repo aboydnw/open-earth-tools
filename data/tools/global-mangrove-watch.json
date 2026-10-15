@@ -1,0 +1,53 @@
+{
+  "name": "Global Mangrove Watch",
+  "organization": "Global Mangrove Alliance / Vizzuality",
+  "description": "Map and dashboard of mangrove extent, loss, gain, deforestation alerts, carbon, and biodiversity, by country or custom area. Built by Vizzuality for Wetlands International, The Nature Conservancy, and Aberystwyth University.",
+  "url": "https://www.globalmangrovewatch.org/",
+  "embedUrl": "https://www.globalmangrovewatch.org/",
+  "category": "Marine Ecosystems",
+  "license": "MIT",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Alerts",
+    "Analysis",
+    "Export",
+    "Custom areas"
+  ],
+  "icon": "🌿",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://www.globalmangrovewatch.org/",
+  "openness": {
+    "score": 6,
+    "level": "Fully Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "MIT licensed, actively developed at github.com/Vizzuality/mangrove-atlas"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Extent, change, and alert datasets are free to download"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web app with downloads and a documented API"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "GeoTIFF, vector, and CSV downloads"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Hosted by the alliance; the code can be self-hosted with setup"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Multi-organisation alliance with open contributions"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

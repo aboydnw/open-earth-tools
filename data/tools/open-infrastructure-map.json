@@ -1,0 +1,51 @@
+{
+  "name": "Open Infrastructure Map",
+  "organization": "OpenInfraMap",
+  "description": "Power lines, power plants, substations, pipelines, telecoms, and water infrastructure worldwide, drawn from OpenStreetMap. Fully open and self-hostable, though the map is utilitarian with little interpretive text.",
+  "url": "https://openinframap.org/",
+  "embedUrl": "https://openinframap.org/",
+  "category": "Energy",
+  "license": "BSD 3-Clause",
+  "status": "Production",
+  "features": [
+    "Mapping",
+    "Exploration",
+    "Infrastructure"
+  ],
+  "icon": "⚡",
+  "embedSupported": false,
+  "embedNote": "Site sends a frame-blocking header, so the preview opens in a new tab",
+  "dataLink": "https://github.com/openinframap/openinframap",
+  "openness": {
+    "score": 6,
+    "level": "Fully Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "BSD-3-Clause at github.com/openinframap/openinframap"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "OpenStreetMap data under ODbL"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web map with vector tiles; no embed"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Standard vector tiles from OpenStreetMap"
+      },
+      "Infrastructure": {
+        "score": "green",
+        "note": "Volunteer hosted and self-hostable"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Open community project on OpenStreetMap"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}
