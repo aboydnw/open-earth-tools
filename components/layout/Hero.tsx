@@ -69,29 +69,27 @@ export function Hero({ total, themeCount, histogram }: HeroProps) {
       onMouseLeave={handleLeave}
       className="relative min-h-[640px] overflow-hidden border-b border-ink"
     >
-      <svg
-        viewBox="0 0 1440 600"
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-        className="absolute -inset-5 h-[calc(100%+40px)] w-[calc(100%+40px)] animate-drift"
-      >
-        {CONTOURS.map(({ d, delay, index }, i) => (
-          <path
-            key={i}
-            className={index ? 'contour index' : 'contour'}
-            pathLength={1}
-            style={{ animationDelay: `${delay}ms` }}
-            d={d}
-          />
-        ))}
-      </svg>
+      <div aria-hidden="true" className="hero-map pointer-events-none absolute inset-0">
+        <svg
+          viewBox="0 0 1440 600"
+          preserveAspectRatio="xMidYMid slice"
+          className="absolute -inset-5 h-[calc(100%+40px)] w-[calc(100%+40px)] animate-drift"
+        >
+          {CONTOURS.map(({ d, delay, index }, i) => (
+            <path
+              key={i}
+              className={index ? 'contour index' : 'contour'}
+              pathLength={1}
+              style={{ animationDelay: `${delay}ms` }}
+              d={d}
+            />
+          ))}
+        </svg>
+        <div className="absolute inset-y-0 w-[120px] animate-swath border-l border-rust/45 bg-rust/5" />
+      </div>
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full opacity-[.16] mix-blend-multiply">
         <rect width="100%" height="100%" filter="url(#grain)" />
       </svg>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 w-[120px] animate-swath border-l border-rust/45 bg-rust/5"
-      />
       <div ref={vertical} aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-px bg-ink/35 opacity-0 transition-opacity" />
       <div ref={horizontal} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-ink/35 opacity-0 transition-opacity" />
       <div
@@ -118,7 +116,7 @@ export function Hero({ total, themeCount, histogram }: HeroProps) {
           <h1 className="font-wide text-[clamp(40px,6vw,76px)] font-[520] leading-none tracking-[-0.03em] [text-wrap:balance]">
             Earth-observation tools, mapped by how open they are.
           </h1>
-          <p className="mt-7 max-w-[560px] text-lg leading-[1.55] text-slate [text-wrap:pretty]">
+          <p className="mt-7 max-w-[560px] text-lg leading-[1.55] text-body [text-wrap:pretty]">
             A curated directory of web maps and viewers for climate, hazards, oceans and land. Each one is scored on six
             dimensions of openness, so you know what you can reuse, link to or run yourself.
           </p>
