@@ -1,5 +1,5 @@
-// Print SQL that loads every data/tools/*.json file into the D1 `tools` table.
-// Existing rows with the same id are overwritten.
+// Print SQL that makes the D1 `tools` table match data/tools/*.json exactly.
+// Existing rows with the same id are overwritten, and rows with no file are deleted.
 //
 //   node scripts/seed-sql.mjs > seed.sql
 //   npx wrangler d1 execute open-earth-tools --remote --file seed.sql
@@ -14,24 +14,28 @@ function quote(value) {
   return `'${value.replaceAll("'", "''")}'`
 }
 
-/** Build the seed SQL for the tool files in `dir`. */
+/** Build the SQL that makes the `tools` table match the tool files in `dir`. */
 export function seedSql(dir = TOOLS_DIR, now = new Date()) {
   const timestamp = now.toISOString()
-  return fs
+  const files = fs
     .readdirSync(dir)
     .filter((file) => file.endsWith('.json'))
     .sort()
-    .map((file) => {
-      const id = file.slice(0, -'.json'.length)
-      const tool = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'))
-      const createdAt = tool.addedAt ? `${tool.addedAt}T00:00:00.000Z` : timestamp
-      return (
-        `INSERT INTO tools (id, data, created_at, updated_at) VALUES ` +
-        `(${quote(id)}, ${quote(JSON.stringify(tool))}, ${quote(createdAt)}, ${quote(timestamp)}) ` +
-        `ON CONFLICT (id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at;`
-      )
-    })
-    .join('\n')
+  if (files.length === 0) {
+    throw new Error(`No tool files in ${dir}; refusing to empty the table.`)
+  }
+  const ids = files.map((file) => file.slice(0, -'.json'.length))
+  const upserts = files.map((file, index) => {
+    const tool = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'))
+    const createdAt = tool.addedAt ? `${tool.addedAt}T00:00:00.000Z` : timestamp
+    return (
+      `INSERT INTO tools (id, data, created_at, updated_at) VALUES ` +
+      `(${quote(ids[index])}, ${quote(JSON.stringify(tool))}, ${quote(createdAt)}, ${quote(timestamp)}) ` +
+      `ON CONFLICT (id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at;`
+    )
+  })
+  const prune = `DELETE FROM tools WHERE id NOT IN (${ids.map(quote).join(', ')});`
+  return [...upserts, prune].join('\n')
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

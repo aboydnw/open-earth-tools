@@ -43,6 +43,22 @@ describe('seed and nightly export', () => {
     expect(readDir(dir)).toEqual(readDir(TOOLS_DIR))
   })
 
+  it('deletes rows that have no tool file', () => {
+    const { sqlite } = createTestDatabase()
+    sqlite.exec(
+      `INSERT INTO tools (id, data, created_at, updated_at) VALUES ('gone', '{}', '2025-01-01', '2025-01-01')`
+    )
+    sqlite.exec(seedSql())
+    const ids = sqlite.prepare('SELECT id FROM tools').all() as { id: string }[]
+
+    expect(ids.map((row) => row.id)).not.toContain('gone')
+    expect(ids).toHaveLength(fs.readdirSync(TOOLS_DIR).filter((file) => file.endsWith('.json')).length)
+  })
+
+  it('refuses to seed from an empty folder', () => {
+    expect(() => seedSql(tempDir())).toThrow()
+  })
+
   it('removes files for deleted tools', () => {
     const dir = tempDir()
     fs.writeFileSync(path.join(dir, 'gone.json'), '{}')
