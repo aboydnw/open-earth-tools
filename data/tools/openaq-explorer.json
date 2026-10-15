@@ -1,0 +1,52 @@
+{
+  "name": "OpenAQ Explorer",
+  "organization": "OpenAQ",
+  "description": "Map of PM2.5, PM10, ozone, NO2, SO2, and CO from reference monitors and low-cost sensors worldwide, backed by an open aggregation platform and free API. The open counterpart to IQAir, with a plainer interface.",
+  "url": "https://explore.openaq.org/",
+  "embedUrl": "https://explore.openaq.org/",
+  "category": "Environmental Monitoring",
+  "license": "Open Source",
+  "status": "Production",
+  "features": [
+    "Real-time",
+    "Monitoring",
+    "Air quality",
+    "API access"
+  ],
+  "icon": "🌫️",
+  "embedSupported": false,
+  "embedNote": "Site sends a frame-blocking header, so the preview opens in a new tab",
+  "dataLink": "https://openaq.org/",
+  "openness": {
+    "score": 6,
+    "level": "Fully Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "green",
+        "note": "Open source under the OpenAQ GitHub organisation"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Aggregates open air quality data under open terms"
+      },
+      "Technical Accessibility": {
+        "score": "green",
+        "note": "Web app plus a free documented API"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "JSON API and CSV exports"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Nonprofit hosted; platform code can be self-hosted"
+      },
+      "Community Governance": {
+        "score": "green",
+        "note": "Nonprofit with open community governance"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

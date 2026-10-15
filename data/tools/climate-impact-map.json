@@ -1,0 +1,52 @@
+{
+  "name": "Climate Impact Map",
+  "organization": "Climate Impact Lab",
+  "description": "Compare projected temperature extremes, heat-related mortality, and energy costs for about 25,000 regions worldwide across emissions scenarios and time periods. Methodology is published and the data are downloadable.",
+  "url": "https://impactlab.org/map/",
+  "embedUrl": "https://impactlab.org/map/",
+  "category": "Climate",
+  "license": "CC BY 4.0",
+  "status": "Production",
+  "features": [
+    "Climate projections",
+    "Scenario comparison",
+    "Impact assessment",
+    "Export"
+  ],
+  "icon": "🌡️",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://impactlab.org/map/",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Map application code is not published"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Data released under CC BY 4.0 with regional spreadsheets"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web map with downloads; no public API"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "CSV downloads; projections also on Microsoft Planetary Computer"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Hosted by Climate Impact Lab only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "University and research consortium led"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

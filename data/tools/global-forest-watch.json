@@ -1,9 +1,9 @@
 {
-  "name": "Global Forest Watch",
+  "name": "Global Nature Watch (formerly Global Forest Watch)",
   "organization": "Global Forest Watch",
   "description": "Sophisticated web mapping platform with up-to-date forest monitoring data. Includes alerts, time sliders, and download tools.",
-  "url": "https://www.globalforestwatch.org/map/",
-  "embedUrl": "https://www.globalforestwatch.org/map/",
+  "url": "https://globalnaturewatch.org/map/",
+  "embedUrl": "https://globalnaturewatch.org/map/",
   "category": "Forests",
   "license": "Open Source",
   "status": "Production",
@@ -16,7 +16,7 @@
   "icon": "🌲",
   "embedSupported": true,
   "embedNote": "Web-based platform supports embedding",
-  "dataLink": "https://www.globalforestwatch.org/map/",
+  "dataLink": "https://globalnaturewatch.org/map/",
   "openness": {
     "score": 5,
     "level": "Mostly Open",

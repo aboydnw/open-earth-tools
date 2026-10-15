@@ -1,0 +1,52 @@
+{
+  "name": "Show Your Stripes",
+  "organization": "University of Reading",
+  "description": "Warming stripes graphics for any country, region, or city, from Ed Hawkins. Each image shows annual temperature change as a strip of colour with no axes or text, and can be downloaded and reused freely.",
+  "url": "https://showyourstripes.info/",
+  "embedUrl": "https://showyourstripes.info/",
+  "category": "Climate",
+  "license": "CC BY 4.0",
+  "status": "Production",
+  "features": [
+    "Visualization",
+    "Historical data",
+    "Educational content",
+    "Export"
+  ],
+  "icon": "📊",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://showyourstripes.info/",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Site code is not published; graphics are CC BY 4.0"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Built on open Berkeley Earth, ERA5, and national datasets"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Downloadable images; no API"
+      },
+      "Data Standards": {
+        "score": "yellow",
+        "note": "PNG images; source data documented"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "University hosting only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "Academic led"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

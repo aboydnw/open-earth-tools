@@ -1,0 +1,52 @@
+{
+  "name": "US Drought Monitor",
+  "organization": "National Drought Mitigation Center",
+  "description": "Weekly US drought severity map with county, state, and tribal statistics, produced by the University of Nebraska-Lincoln with USDA and NOAA. The standard public reference for drought, with free maps and GIS data.",
+  "url": "https://droughtmonitor.unl.edu/",
+  "embedUrl": "https://droughtmonitor.unl.edu/",
+  "category": "Water Resources",
+  "license": "Open Data",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Drought",
+    "Historical data",
+    "Export"
+  ],
+  "icon": "🌾",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://droughtmonitor.unl.edu/DmData/DataDownload.aspx",
+  "openness": {
+    "score": 3,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Application code is not published"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Maps and data are free to download"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web map with downloads and a data API"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "Shapefile, GeoJSON, and CSV"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "University hosting only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "University led with federal partners"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
       "img-src 'self' data: https:",
       "font-src 'self' data:",
       "connect-src 'self'",
-      "frame-src 'self' https://challenges.cloudflare.com https://kepler.gl https://observablehq.com https://food.theplotline.org https://foodtwin.theplotline.org https://www.earthdata.nasa.gov https://worldview.earthdata.nasa.gov https://dashboard.waterdata.usgs.gov https://oceancolor.gsfc.nasa.gov https://embed.windy.com https://earthquake.usgs.gov https://toolkit.climate.gov",
+      "frame-src 'self' https://challenges.cloudflare.com https://kepler.gl https://observablehq.com https://food.theplotline.org https://foodtwin.theplotline.org https://www.earthdata.nasa.gov https://worldview.earthdata.nasa.gov https://dashboard.waterdata.usgs.gov https://oceancolor.gsfc.nasa.gov https://embed.windy.com https://earthquake.usgs.gov https://toolkit.climate.gov https://globalnaturewatch.org https://probablefutures.org https://www.globalmangrovewatch.org https://impactlab.org https://coastal.climatecentral.org https://www.climatecentral.org https://coast.noaa.gov https://browser.dataspace.copernicus.eu https://livingatlas.arcgis.com https://allencoralatlas.org https://app.watchduty.org https://droughtmonitor.unl.edu https://showyourstripes.info",
       "frame-ancestors 'self'",
     ].join('; ')
   )

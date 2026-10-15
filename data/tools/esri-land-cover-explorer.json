@@ -1,0 +1,52 @@
+{
+  "name": "Esri Land Cover Explorer",
+  "organization": "Esri / Impact Observatory",
+  "description": "Swipe and time-compare a 10 m annual global land cover map from 2017 onward, with area statistics by class. Very polished and built for non-experts, but hosted only by Esri.",
+  "url": "https://livingatlas.arcgis.com/landcover/",
+  "embedUrl": "https://livingatlas.arcgis.com/landcover/",
+  "category": "Environmental Monitoring",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Land cover",
+    "Time comparison",
+    "Analysis",
+    "Export"
+  ],
+  "icon": "🌱",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://livingatlas.arcgis.com/landcover/",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Proprietary Esri application"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Land cover data released under CC BY 4.0"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web app with downloads; no open API"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "GeoTIFF downloads"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Esri hosting only"
+      },
+      "Community Governance": {
+        "score": "red",
+        "note": "Corporate control"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

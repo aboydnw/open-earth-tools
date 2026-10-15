@@ -1,0 +1,52 @@
+{
+  "name": "Copernicus Interactive Climate Atlas",
+  "organization": "Copernicus Climate Change Service",
+  "description": "Successor to the IPCC WGI Interactive Atlas, showing observed trends and projected change for regions worldwide at 1.5 to 4 °C warming levels. Draws on ERA5, CMIP6, and CORDEX from the Climate Data Store. More technical than Probable Futures but authoritative.",
+  "url": "https://atlas.climate.copernicus.eu/atlas",
+  "embedUrl": "https://atlas.climate.copernicus.eu/atlas",
+  "category": "Climate",
+  "license": "Open Data",
+  "status": "Production",
+  "features": [
+    "Climate projections",
+    "Regional analysis",
+    "Scenario comparison",
+    "Export"
+  ],
+  "icon": "🌍",
+  "embedSupported": false,
+  "embedNote": "Site sends a frame-blocking header, so the preview opens in a new tab",
+  "dataLink": "https://cds.climate.copernicus.eu/",
+  "openness": {
+    "score": 4,
+    "level": "Mostly Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "yellow",
+        "note": "Builds on the open IPCC Atlas code lineage; the hosted app itself is not published"
+      },
+      "Data Licensing": {
+        "score": "green",
+        "note": "Copernicus free and open data licence"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web app with figure and data export; no embed"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "NetCDF and CSV from the Climate Data Store"
+      },
+      "Infrastructure": {
+        "score": "yellow",
+        "note": "Hosted by ECMWF; underlying data are mirrored openly"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "EU programme governance with scientific partners"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}

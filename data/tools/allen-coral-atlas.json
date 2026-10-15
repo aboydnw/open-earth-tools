@@ -1,0 +1,52 @@
+{
+  "name": "Allen Coral Atlas",
+  "organization": "Arizona State University",
+  "description": "Satellite-derived global maps of coral reef habitat, geomorphology, bleaching, and turbidity. Free to use with downloadable habitat maps. Polished and endorsed by the UN Ocean Decade.",
+  "url": "https://allencoralatlas.org/atlas/",
+  "embedUrl": "https://allencoralatlas.org/atlas/",
+  "category": "Marine Ecosystems",
+  "license": "Freemium",
+  "status": "Production",
+  "features": [
+    "Monitoring",
+    "Habitat mapping",
+    "Bleaching alerts",
+    "Export"
+  ],
+  "icon": "🐠",
+  "embedSupported": true,
+  "embedNote": "No frame-blocking header seen; preview loads in an iframe",
+  "dataLink": "https://allencoralatlas.org/atlas/",
+  "openness": {
+    "score": 2,
+    "level": "Partially Open",
+    "assessedAt": "2026-10-15",
+    "dimensions": {
+      "Software Licensing": {
+        "score": "red",
+        "note": "Application code is not published"
+      },
+      "Data Licensing": {
+        "score": "yellow",
+        "note": "Maps are free to download with attribution terms"
+      },
+      "Technical Accessibility": {
+        "score": "yellow",
+        "note": "Web app with downloads after sign-in"
+      },
+      "Data Standards": {
+        "score": "green",
+        "note": "GeoJSON and GeoTIFF downloads"
+      },
+      "Infrastructure": {
+        "score": "red",
+        "note": "Hosted by Arizona State University only"
+      },
+      "Community Governance": {
+        "score": "yellow",
+        "note": "University led with partner institutions"
+      }
+    }
+  },
+  "addedAt": "2026-10-15"
+}
