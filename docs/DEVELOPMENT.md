@@ -117,7 +117,7 @@ The site key is public, but storing it as a secret means deploys never reset it.
 
 It refuses to run if D1 returns no rows, so an empty or broken database never wipes the backup.
 
-To restore, seed from the files as in step 3 above.
+To restore, run the **Restore database from backup** workflow from the Actions tab (or `gh workflow run restore.yml`). It loads every `data/tools/*.json` file into D1, overwriting rows with the same id. Run it after merging a PR that adds or edits tool files, since the nightly backup would otherwise remove files that are not in the database.
 
 ## Embedding and the Content Security Policy
 
