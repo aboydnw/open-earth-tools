@@ -1,114 +1,80 @@
-import Link from "next/link";
 import { Tool } from '@/types';
-import { OpennessScore } from './OpennessScore';
+import { ScoreBar, ThemeFill } from '@/components/survey/Symbology';
+import { levelLabel, pinFor, themeOf } from '@/lib/survey';
 
 interface ToolCardProps {
   tool: Tool;
-  onOpenModal: (tool: Tool) => void;
-  onGenerateEmbed?: (tool: Tool) => void;
+  /** Position in the results, used to stagger the entrance animation. */
+  index: number;
+  onOpen: (tool: Tool) => void;
   editMode?: boolean;
   onDelete?: (tool: Tool) => void;
   onEdit?: (tool: Tool) => void;
 }
 
-export function ToolCard({ tool, onOpenModal, onGenerateEmbed, editMode = false, onDelete, onEdit }: ToolCardProps) {
+/** Directory card: a theme map tile with a pin, the tool's name and its openness bar. */
+export function ToolCard({ tool, index, onOpen, editMode = false, onDelete, onEdit }: ToolCardProps) {
+  const theme = themeOf(tool);
+  const pin = pinFor(tool.name);
+  const score = tool.openness.score;
+
   return (
-    <div className="bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 hover:shadow-lg">
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
-              <span className="text-white text-xl font-semibold">{tool.icon}</span>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">{tool.name}</h3>
-              <p className="text-sm text-gray-500">{tool.organization}</p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col items-end gap-2">
-            <OpennessScore score={tool.openness.score} level={tool.openness.level} />
-            {tool.embedSupported ? (
-              <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
-                ✓ Embeddable
-              </span>
-            ) : (
-              <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-                ⚠ Embed Limited
-              </span>
-            )}
-          </div>
-        </div>
-
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">{tool.description}</p>
-
-        <div className="flex flex-wrap gap-2 mb-4">
-          {tool.features.slice(0, 3).map((feature, idx) => (
+    <li className="flex flex-col">
+      <button
+        type="button"
+        onClick={() => onOpen(tool)}
+        aria-label={`${tool.name}, ${tool.organization}. Openness ${score} of 6. Open details.`}
+        className="tool-card relative flex flex-1 flex-col border border-rule bg-sheet p-0 text-left"
+        style={{ animationDelay: `${Math.min(index, 16) * 35}ms` }}
+      >
+        <div className="relative h-[132px] w-full overflow-hidden border-b border-rule" style={{ background: theme.bg }}>
+          <ThemeFill theme={theme.key} className="pattern" />
+          <div aria-hidden="true" className="absolute h-0 w-0" style={{ left: pin.x, top: pin.y }}>
             <span
-              key={idx}
-              className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800"
-            >
-              {feature}
-            </span>
-          ))}
-          {tool.features.length > 3 && (
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-600">
-              +{tool.features.length - 3} more
-            </span>
-          )}
+              className="absolute -left-[9px] -top-[9px] h-[18px] w-[18px] animate-pin rounded-full border"
+              style={{ borderColor: theme.ink }}
+            />
+            <span className="absolute -left-1 -top-1 h-2 w-2 rounded-full bg-ink" />
+          </div>
+          <span className="absolute left-3 top-2.5 bg-sheet/85 px-1.5 py-0.5 font-mono text-[10.5px] uppercase tracking-[.1em] text-ink">
+            {theme.label}
+          </span>
+          <span className="absolute bottom-2.5 right-3 bg-sheet/85 px-1.5 py-0.5 font-mono text-[10.5px] text-ink">
+            {pin.coord}
+          </span>
+          <span className="crop-marks absolute inset-2" aria-hidden="true" />
         </div>
-
-        {editMode ? (
-          <div className="flex gap-2">
-            <button
-              onClick={() => onEdit && onEdit(tool)}
-              className="flex-1 px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-              Edit
-            </button>
-            <button
-              onClick={() => onDelete && onDelete(tool)}
-              className="flex-1 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              Delete
-            </button>
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <button
-              onClick={() => onOpenModal(tool)}
-              className="flex-1 px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded hover:bg-orange-600 transition-colors"
-            >
-              Preview Tool
-            </button>
-            <Link
-              href={tool.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 transition-colors"
-            >
-              Open Direct
-            </Link>
-            {onGenerateEmbed && (
-              <button
-                onClick={() => onGenerateEmbed(tool)}
-                className="px-3 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 transition-colors"
-                title="Generate Embed Code"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              </button>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
+        <div className="flex w-full flex-1 flex-col gap-1.5 px-[18px] pb-[18px] pt-4">
+          <span className="text-lg font-semibold leading-tight tracking-[-0.01em] [text-wrap:balance]">{tool.name}</span>
+          <span className="font-mono text-xs text-graphite">{tool.organization}</span>
+          <span className="mt-1 line-clamp-2 text-sm leading-normal text-slate">{tool.description}</span>
+          <span className="flex-1" />
+          <span className="mt-3 flex items-center gap-2.5 border-t border-dashed border-rule pt-3">
+            <ScoreBar score={score} />
+            <span className="font-mono text-xs text-ink">
+              {score}/6 · {levelLabel(score)}
+            </span>
+          </span>
+        </div>
+      </button>
+      {editMode && (
+        <div className="flex border border-t-0 border-rule">
+          <button
+            type="button"
+            onClick={() => onEdit?.(tool)}
+            className="min-h-[44px] flex-1 bg-sheet text-sm font-[550] transition-colors hover:bg-ink hover:text-sheet"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete?.(tool)}
+            className="min-h-[44px] flex-1 border-l border-rule bg-sheet text-sm font-[550] text-[#9B2C1F] transition-colors hover:bg-[#9B2C1F] hover:text-white"
+          >
+            Delete
+          </button>
+        </div>
+      )}
+    </li>
   );
 }

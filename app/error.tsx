@@ -8,29 +8,28 @@ export default function Error({
   reset: () => void
 }) {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-paper">
       <div className="text-center max-w-md mx-auto">
-        <div className="text-6xl mb-4">⚠️</div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Something went wrong</h1>
-        <p className="text-gray-600 mb-6">
+        <h1 className="font-wide mb-2 text-3xl font-[520] tracking-[-0.02em]">Something went wrong</h1>
+        <p className="mb-6 text-slate">
           {error.message || 'An unexpected error occurred while loading the page.'}
         </p>
-        <div className="space-x-4">
+        <div className="flex flex-wrap justify-center gap-3">
           <button
             onClick={reset}
-            className="inline-block px-6 py-3 bg-ds-orange text-white rounded-lg hover:bg-ds-dark-orange transition-colors"
+            className="btn-primary"
           >
             Try Again
           </button>
           <a 
             href="/"
-            className="inline-block px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            className="btn-secondary"
           >
             Return Home
           </a>
         </div>
         {process.env.NODE_ENV === 'development' && error.digest && (
-          <p className="text-xs text-gray-400 mt-4">Error ID: {error.digest}</p>
+          <p className="mt-4 font-mono text-xs text-graphite">Error ID: {error.digest}</p>
         )}
       </div>
     </div>

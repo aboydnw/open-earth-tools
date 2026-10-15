@@ -36,33 +36,32 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       }
 
       return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="flex min-h-screen items-center justify-center bg-paper">
           <div className="text-center max-w-md mx-auto p-8">
-            <div className="text-6xl mb-4">🔧</div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Something went wrong</h1>
-            <p className="text-gray-600 mb-6">
+            <h1 className="font-wide mb-2 text-3xl font-[520] tracking-[-0.02em]">Something went wrong</h1>
+            <p className="mb-6 text-slate">
               We encountered an unexpected error. Please try refreshing the page.
             </p>
-            <div className="space-x-4">
+            <div className="flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => window.location.reload()}
-                className="inline-block px-6 py-3 bg-ds-orange-500 text-white rounded-lg hover:bg-ds-orange-600 transition-colors"
+                className="btn-primary"
               >
                 Refresh Page
               </button>
               <a 
                 href="/"
-                className="inline-block px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="btn-secondary"
               >
                 Return Home
               </a>
             </div>
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mt-6 text-left">
-                <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
+                <summary className="cursor-pointer font-mono text-xs text-graphite">
                   Error Details (Development)
                 </summary>
-                <pre className="mt-2 text-xs bg-red-50 p-4 rounded border overflow-auto max-h-32">
+                <pre className="mt-2 max-h-32 overflow-auto border border-rule bg-sheet p-4 font-mono text-xs">
                   {this.state.error.toString()}
                 </pre>
               </details>

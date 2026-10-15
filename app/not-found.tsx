@@ -1,17 +1,12 @@
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-center">
-        <div className="text-6xl mb-4">🔍</div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h1>
-        <p className="text-gray-600 mb-6">
-          The page you're looking for doesn't exist.
-        </p>
-        <a 
-          href="/"
-          className="inline-block px-6 py-3 bg-ds-orange text-white rounded-lg hover:bg-ds-dark-orange transition-colors"
-        >
-          Return Home
+    <div className="flex min-h-screen items-center justify-center bg-paper p-8">
+      <div className="max-w-md text-center">
+        <p className="marginalia mb-4">404</p>
+        <h1 className="font-wide mb-2 text-3xl font-[520] tracking-[-0.02em]">Off the map</h1>
+        <p className="mb-6 text-slate">The page you’re looking for doesn’t exist.</p>
+        <a href="/" className="btn-primary">
+          Back to the directory
         </a>
       </div>
     </div>
